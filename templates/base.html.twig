@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/favicon.ico"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+
+	</head>
+	<body>
+		<header class="header-container">
+			<div class="header-logo-container">
+				<img src="{{ asset('build/images/logo.png') }}" alt="logo new hope">
+			</div>
+			<div class="header-menu-container">
+				<nav>
+					<li>
+						<a href="http://">TROUVER UN ANIMAL</a</li>
+					</li>
+					<li>
+						<a href="http://">TROUVER UNE ASSOCIATION</a>
+					</li>
+					<li>
+						<a href="http://">QUI SOMMES NOUS?</a>
+					</li>
+					<li>
+						<a href="http://">NOUS SOUTENIR</a>
+					</li>
+				</nav>
+			</div>
+		</header>
+	</body>
+</html>

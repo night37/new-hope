@@ -1,0 +1,21 @@
+.header-container{
+    background-color: var(--main-bg-color);
+    height: 100px;
+    width: 100%;
+}
+.header-container  {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 400px auto;
+    grid-template-areas: 
+    "header-logo" "header-menu-container"
+}
+.header-container { 
+    justify-content: space-between;
+}
+.header-logo-container{
+    grid-area: "header-logo";
+    display: flex;
+    justify-content: center;
+    
+}

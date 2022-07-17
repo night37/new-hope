@@ -1,4 +1,7 @@
-body {
-    background-color: lightgray;
-    
+:root {
+    --main-bg-color: #CEEBE9;
+}
+* { 
+    margin: 0;
+    padding: 0;
 }
