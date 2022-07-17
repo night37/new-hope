@@ -1,6 +1,8 @@
 #local env
-
 .env.local
+
+#node_modules
+/node_modules
 
 # Cache and logs (Symfony2)
 /app/cache/*
