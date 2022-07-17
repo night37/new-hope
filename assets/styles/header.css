@@ -6,16 +6,39 @@
 .header-container  {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 400px auto;
+    grid-template-columns: 200px 1fr;
     grid-template-areas: 
-    "header-logo" "header-menu-container"
+    "header-logo  header-menu-container"
 }
 .header-container { 
     justify-content: space-between;
 }
 .header-logo-container{
-    grid-area: "header-logo";
+    grid-area: header-logo;
     display: flex;
     justify-content: center;
     
+}
+.header-menu-container > * {
+    display: flex;
+}
+.header-menu-container {
+    grid-area: header-menu-container;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 100px;
+    list-style: none;
+    
+}
+.header-menu-item{
+    margin: 0 1rem;
+    color: #289990;
+    text-decoration: none;
+}
+.header-menu-item:hover {
+    color: #0B9990;
+    border-bottom: 1px solid #0B9990;
+    ;
+
 }
