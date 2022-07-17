@@ -1,9 +1,19 @@
 :root {
-    --main-bg-color: #CEEBE9;
-    --main-font-color: #289990;
-    --main-font-color-hover: #09756e;
+  --main-bg-color: #ceebe9;
+  --main-font-color: #289990;
+  --main-font-color-hover: #09756e;
 }
-* { 
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 100px auto 200px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "content"
+    "footer";
 }
