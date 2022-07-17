@@ -1,5 +1,7 @@
 :root {
     --main-bg-color: #CEEBE9;
+    --main-font-color: #289990;
+    --main-font-color-hover: #09756e;
 }
 * { 
     margin: 0;
