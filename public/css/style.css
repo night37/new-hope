@@ -1,0 +1,212 @@
+header {
+    background: #CEEBE990;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+}
+
+.container-header {
+    width: 1200px;
+    display: flex;
+}
+
+.img-logo {
+    width: 90px;
+    margin: 12px;
+}
+
+.container-header {
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu a {
+    margin: 10px;
+    text-transform: uppercase;
+    color: #289990;
+    text-decoration: none;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.hero {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, .7), rgba(255, 255, 255, .5)), url(../img/fond.jpg);
+    background-size: cover;
+    background-position: center;
+    padding-top: 110px;
+
+}
+
+.container-hero {
+    width: 1200px;
+    margin: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.box-recherche {
+    width: 650px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #289990;
+    padding: 40px;
+}
+
+.box-recherche a {
+    text-decoration: none;
+    color: #000;
+}
+
+.bouton-deroulant-recherche {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bouton-type-recherche a {
+    background-color: white;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.bouton-deroulant-recherche a {
+    background-color: white;
+    padding: 5px;
+    width: 250px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.bouton-trouver {
+    text-align: center;
+    border: 1px solid black;
+    background-color: white;
+    padding: 5px;
+    width: 100%;
+}
+
+.bouton-type-recherche {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.recherche-deroulante:nth-child(even) {
+    justify-self: end;
+}
+
+.bouton-trouver {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.container-card {
+    width: 1200px;
+    margin: auto;
+}
+
+.splide li {
+    padding: 30px;
+}
+
+.info {
+    border: 1px solid black;
+    box-shadow: -5px 7px 4px rgba(0, 0, 0, 0.25);
+    border-top-width: 0px;
+}
+
+.chiens-honneur,
+.chats-honneur,
+.autres-honneur {
+    margin-top: 50px;
+}
+
+footer {
+    background-color: #0B999099;
+}
+
+.container-footer {
+    width: 1200px;
+    margin: auto;
+    padding-top: 70px;
+    padding-bottom: 20px;
+
+}
+
+.haut-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu-footer a {
+    color: white;
+}
+
+.mention-copy a {
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+}
+
+.infos-sup-footer {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+}
+
+.mention-copy {
+    display: flex;
+    align-items: center;
+}
+
+.reseau img {
+    width: 30px;
+}
+
+.reseau {
+    display: flex;
+}
+
+.reseau a {
+    margin: 5px;
+}
+
+.splide__pagination {
+    top: 265px;
+}
+
+
+.name, .lieu {
+text-align: center;
+}
+
+.sexe {
+position: absolute;
+top: 210px;
+right: 35px;
+}
+
+.name{
+    margin-top: 15px;
+}
+
+.lieu{
+    margin-bottom: 15px;
+}
