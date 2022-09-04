@@ -44,11 +44,11 @@ class Animaux
     #[ORM\Column(type: Types::ARRAY)]
     private array $photos = [];
 
-    #[ORM\Column]
-    private ?int $association = null;
+    #[ORM\ManyToOne(inversedBy: 'animaux')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Associations $association_id = null;
 
-    #[ORM\Column]
-    private ?int $association_id = null;
+
 
     public function getId(): ?int
     {
@@ -175,15 +175,16 @@ class Animaux
         return $this;
     }
 
-    public function getAssociationId(): ?int
+    public function getAssociationId(): ?Associations
     {
         return $this->association_id;
     }
 
-    public function setAssociationId(int $association_id): self
+    public function setAssociationId(?Associations $association_id): self
     {
         $this->association_id = $association_id;
 
         return $this;
     }
+
 }

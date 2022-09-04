@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AssociationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AssociationsRepository::class)]
@@ -36,6 +38,14 @@ class Associations
 
     #[ORM\Column(length: 255)]
     private ?string $contact = null;
+
+    #[ORM\OneToMany(mappedBy: 'association_id', targetEntity: Animaux::class, orphanRemoval: true)]
+    private Collection $animaux;
+
+    public function __construct()
+    {
+        $this->animaux = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +144,36 @@ class Associations
     public function setContact(string $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Animaux>
+     */
+    public function getAnimaux(): Collection
+    {
+        return $this->animaux;
+    }
+
+    public function addAnimaux(Animaux $animaux): self
+    {
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux->add($animaux);
+            $animaux->setAssociationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimaux(Animaux $animaux): self
+    {
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getAssociationId() === $this) {
+                $animaux->setAssociationId(null);
+            }
+        }
 
         return $this;
     }
