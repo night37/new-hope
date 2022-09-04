@@ -1,8 +1,11 @@
-var splide = new Splide('.splide', {
+Splide.defaults = {
     type: 'loop',
     perPage: 4,
     focus: 'center',
-
-});
-
-splide.mount();
+  }
+  let elms = document.getElementsByClassName( 'splide' );
+  console.log(elms)
+  for ( let i = 0; i < elms.length; i++ ) {
+    new Splide( elms[ i ] ).mount();
+  }
+  
