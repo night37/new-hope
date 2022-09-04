@@ -44,6 +44,12 @@ class Animaux
     #[ORM\Column(type: Types::ARRAY)]
     private array $photos = [];
 
+    #[ORM\Column]
+    private ?int $association = null;
+
+    #[ORM\Column]
+    private ?int $association_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +171,18 @@ class Animaux
     public function setPhotos(array $photos): self
     {
         $this->photos = $photos;
+
+        return $this;
+    }
+
+    public function getAssociationId(): ?int
+    {
+        return $this->association_id;
+    }
+
+    public function setAssociationId(int $association_id): self
+    {
+        $this->association_id = $association_id;
 
         return $this;
     }
