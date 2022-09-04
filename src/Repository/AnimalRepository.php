@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Animal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Form\RegisterType;
+
 
 /**
  * @extends ServiceEntityRepository<Animal>
@@ -38,6 +40,8 @@ class AnimalRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
 
 //    /**
 //     * @return Animal[] Returns an array of Animal objects
