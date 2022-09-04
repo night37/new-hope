@@ -1,26 +1,67 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/splide.min.css') }}">
-    
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            
-        {% endblock %}
-        
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        <script src="{{ asset('js/splide.min.js') }}"></script>
-            <script src="{{ asset('js/slider.js') }}"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/splide.min.css') }}">
+
+    {% endblock %}
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        <div class="container-header">
+            <a href="#"><img class="img-logo" src="img/logo-new-hope.png" alt="logo"></a>
+            <div class="menu">
+                <a href="#">Trouver un animal</a>
+                <a href="#">Trouver une association</a>
+                <a href="#">Qui sommes nous</a>
+                <a href="#">Nous soutenir</a>
+            </div>
+        </div>
+    </header>
+    {% block body %}{% endblock %}
+    <script src="{{ asset('js/splide.min.js') }}"></script>
+    <script src="{{ asset('js/slider.js') }}"></script>
+
+
+<footer>
+    <section class="container-footer">
+        <div class="haut-footer">
+            <a href="{{ path('home') }}"><img class="img-logo" src="img/logo-new-hope.png" alt="logo"></a>
+            <div class="menu menu-footer">
+                <a href="{{ path('home') }}">Trouver un animal</a>
+                <a href="#">Trouver une association</a>
+                <a href="#">Qui sommes nous</a>
+                <a href="#">Nous soutenir</a>
+            </div>
+            <div class="reseau">
+                <a href="#"><img src="img/facebook.png" alt=""></a>
+                <a href="#"><img src="img/instagram.png" alt=""></a>
+            </div>
+        </div>
+        <div class="infos-sup-footer">
+            <div class="mention-copy">
+                <a href="#">Mentions légales</a>
+                <p class="copyright">New Hope © 2022 - Tous droits réservés </p>
+            </div>
+            <p class="realisateur">Site réalisé par Guillaume garnier et Léa dargenton</p>
+        </div>
+
+    </section>
+</footer>
+</body>
+
 </html>
