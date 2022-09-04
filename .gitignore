@@ -1,8 +1,8 @@
 /app/cache/*
+/var/cache/*
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
-/var/cache/*
 
 
 # Email spool folder
