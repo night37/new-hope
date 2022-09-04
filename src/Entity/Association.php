@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AssociationsRepository;
+use App\Repository\AssociationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AssociationsRepository::class)]
-class Associations
+#[ORM\Entity(repositoryClass: AssociationRepository::class)]
+class Association
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,6 +39,17 @@ class Associations
     #[ORM\Column(length: 255)]
     private ?string $contact = null;
 
+    #[ORM\OneToMany(mappedBy: 'association_id', targetEntity: Animal::class, orphanRemoval: true)]
+    private Collection $animal;
+
+    #[ORM\OneToMany(mappedBy: 'association_id', targetEntity: Animal::class, orphanRemoval: true)]
+    private Collection $animals;
+
+    public function __construct()
+    {
+        $this->animal = new ArrayCollection();
+        $this->animals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,4 +152,33 @@ class Associations
         return $this;
     }
 
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): self
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+            $animal->setAssociationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): self
+    {
+        if ($this->animals->removeElement($animal)) {
+            // set the owning side to null (unless already changed)
+            if ($animal->getAssociationId() === $this) {
+                $animal->setAssociationId(null);
+            }
+        }
+
+        return $this;
+    }
 }

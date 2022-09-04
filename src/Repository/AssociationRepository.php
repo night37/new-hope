@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Animaux;
+use App\Entity\Association;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Animaux>
+ * @extends ServiceEntityRepository<Association>
  *
- * @method Animaux|null find($id, $lockMode = null, $lockVersion = null)
- * @method Animaux|null findOneBy(array $criteria, array $orderBy = null)
- * @method Animaux[]    findAll()
- * @method Animaux[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Association|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Association|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Association[]    findAll()
+ * @method Association[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AnimauxRepository extends ServiceEntityRepository
+class AssociationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Animaux::class);
+        parent::__construct($registry, Association::class);
     }
 
-    public function add(Animaux $entity, bool $flush = false): void
+    public function add(Association $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class AnimauxRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Animaux $entity, bool $flush = false): void
+    public function remove(Association $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class AnimauxRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Animaux[] Returns an array of Animaux objects
+//     * @return Association[] Returns an array of Association objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class AnimauxRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Animaux
+//    public function findOneBySomeField($value): ?Association
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

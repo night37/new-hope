@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AnimauxRepository;
+use App\Repository\AnimalRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AnimauxRepository::class)]
-class Animaux
-{
-    #[ORM\Id]
+#[ORM\Entity(repositoryClass: AnimalRepository::class)]
+class Animal
+{ #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
@@ -44,9 +43,13 @@ class Animaux
     #[ORM\Column(type: Types::ARRAY)]
     private array $photos = [];
 
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Association $association_id = null;
+
     #[ORM\ManyToOne(inversedBy: 'animaux')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Associations $association_id = null;
+    // private ?Association $association_id = null;
 
 
 
@@ -175,16 +178,15 @@ class Animaux
         return $this;
     }
 
-    public function getAssociationId(): ?Associations
+    public function getAssociationId(): ?Association
     {
         return $this->association_id;
     }
 
-    public function setAssociationId(?Associations $association_id): self
+    public function setAssociationId(?Association $association_id): self
     {
         $this->association_id = $association_id;
 
         return $this;
     }
-
 }
