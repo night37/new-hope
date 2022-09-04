@@ -9,18 +9,9 @@
             <div class="box-recherche">
                 <div class="bouton-type-recherche">
                     <a href="#">Rechercher une association</a>
-                    <a href="#">Rechercher un animal</a>
+                    <button href="#">Rechercher un animal</button>
                 </div>
-                <div class="bouton-deroulant-recherche">
-                    <a href="" class="recherche-deroulante">Race</a>
-                    <a href="" class="recherche-deroulante">Gabarit</a>
-                    <a href="" class="recherche-deroulante">Age</a>
-                    <a href="" class="recherche-deroulante">Lieu d'adoption</a>
-                    <a href="" class="recherche-deroulante">Espece</a>
-                    <a href="" class="recherche-deroulante">Sexe</a>
-                    <a href="" class="recherche-deroulante">Pelage</a>
-                    <a href="" class="recherche-deroulante">Cas spécifique</a>
-                </div>
+                {% include './search/index.html.twig' %}
                 <a href="#" class="bouton-trouver">Trouver un nouveau compagnon</a>
             </div>
         </div>
