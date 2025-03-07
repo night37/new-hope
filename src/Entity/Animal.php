@@ -8,7 +8,7 @@ use App\Enum\Gender;
 use App\Enum\Race;
 use App\Enum\Size;
 use App\Enum\Type;
-use App\Enum\color;
+use App\Enum\Color;
 use App\Repository\AnimalRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -43,8 +43,8 @@ class Animal
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Size::class)]
     private array $size = [];
 
-    #[ORM\Column(enumType: color::class)]
-    private ?color $color = null;
+    #[ORM\Column(enumType: Color::class)]
+    private ?Color $color = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Race::class)]
     private array $race = [];
@@ -153,12 +153,12 @@ class Animal
         return $this;
     }
 
-    public function getColor(): ?color
+    public function getColor(): ?Color
     {
         return $this->color;
     }
 
-    public function setColor(color $color): static
+    public function setColor(Color $color): static
     {
         $this->color = $color;
 
