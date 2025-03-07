@@ -10,7 +10,6 @@ use App\Enum\Size;
 use App\Enum\Type;
 use App\Enum\Color;
 use App\Repository\AnimalRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
@@ -21,11 +20,11 @@ class Animal
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Gender::class)]
-    private array $gender = [];
+    #[ORM\Column(enumType: Gender::class)]
+    private ?Gender $gender = null;
 
     #[ORM\Column]
     private ?int $age = null;
@@ -40,23 +39,25 @@ class Animal
     #[ORM\Column]
     private ?bool $highlight = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Size::class)]
-    private array $size = [];
+    #[ORM\Column(enumType: Size::class)]
+    private ?Size $size = null;
 
     #[ORM\Column(enumType: Color::class)]
     private ?Color $color = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Race::class)]
-    private array $race = [];
-
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Affinity::class)]
+    #[ORM\Column(type: 'json')]
     private array $affinity = [];
 
     #[ORM\Column(enumType: AdoptionStatus::class)]
     private ?AdoptionStatus $adoption_status = null;
 
+    #[ORM\Column(type: 'json')]
+    private array $race = [];
+
     #[ORM\Column(enumType: Type::class)]
     private ?Type $type = null;
+
+    // --- Getters and Setters ---
 
     public function getId(): ?int
     {
@@ -68,22 +69,19 @@ class Animal
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return Gender[]
-     */
-    public function getGender(): array
+    public function getGender(): ?Gender
     {
         return $this->gender;
     }
 
-    public function setGender(array $gender): static
+    public function setGender(?Gender $gender): self
     {
         $this->gender = $gender;
 
@@ -95,7 +93,7 @@ class Animal
         return $this->age;
     }
 
-    public function setAge(int $age): static
+    public function setAge(int $age): self
     {
         $this->age = $age;
 
@@ -107,7 +105,7 @@ class Animal
         return $this->structure_id;
     }
 
-    public function setStructureId(?Structure $structure_id): static
+    public function setStructureId(?Structure $structure_id): self
     {
         $this->structure_id = $structure_id;
 
@@ -119,7 +117,7 @@ class Animal
         return $this->out_department;
     }
 
-    public function setOutDepartment(bool $out_department): static
+    public function setOutDepartment(bool $out_department): self
     {
         $this->out_department = $out_department;
 
@@ -131,23 +129,26 @@ class Animal
         return $this->highlight;
     }
 
-    public function setHighlight(bool $highlight): static
+    public function setHighlight(bool $highlight): self
     {
         $this->highlight = $highlight;
 
         return $this;
     }
 
-    /**
-     * @return Size[]
-     */
-    public function getSize(): array
+    public function getSize(): ?Size
     {
         return $this->size;
     }
 
-    public function setSize(array $size): static
+    public function setSize(?Size $size): self
     {
+          // Si une chaîne est fournie au lieu d'une Enum, on la convertit en instance de l'Enum
+        if (is_string($size)) {
+            $size = Size::from($size); // Convertir chaîne -> Enum (throw si invalide)
+        }
+
+    // Assigner l'instance (ou null) à la propriété
         $this->size = $size;
 
         return $this;
@@ -158,24 +159,14 @@ class Animal
         return $this->color;
     }
 
-    public function setColor(Color $color): static
+    public function setColor(?Color $color): self
     {
+        if (is_string($color)) {
+            $size = Color::from($color); // Convertir chaîne -> Enum (throw si invalide)
+        }
+
+    // Assigner l'instance (ou null) à la propriété
         $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * @return Race[]
-     */
-    public function getRace(): array
-    {
-        return $this->race;
-    }
-
-    public function setRace(array $race): static
-    {
-        $this->race = $race;
 
         return $this;
     }
@@ -185,12 +176,14 @@ class Animal
      */
     public function getAffinity(): array
     {
-        return $this->affinity;
+        // Transforme les valeurs en instances d'Affinity
+        return array_map(fn (string $value) => Affinity::from($value), $this->affinity);
     }
 
-    public function setAffinity(array $affinity): static
+    public function setAffinity(array $affinity): self
     {
-        $this->affinity = $affinity;
+        // Convertit les instances d'Affinity en leurs valeurs pour stockage en BDD
+        $this->affinity = array_map(fn (Affinity $enum) => $enum->value, $affinity);
 
         return $this;
     }
@@ -200,9 +193,41 @@ class Animal
         return $this->adoption_status;
     }
 
-    public function setAdoptionStatus(AdoptionStatus $adoption_status): static
+    public function setAdoptionStatus(?AdoptionStatus $adoption_status): self
     {
+        if (is_string($adoption_status)) {
+            $size = AdoptionStatus::from($adoption_status); // Convertir chaîne -> Enum (throw si invalide)
+        }
+
+    // Assigner l'instance (ou null) à la propriété
         $this->adoption_status = $adoption_status;
+
+        return $this;
+    }
+
+    /**
+     * @return Race[]
+     */
+    public function getRace(): array
+    {
+        // Transforme les valeurs en instances de Race
+        return array_map(fn (string $value) => Race::from($value), $this->race);
+    }
+
+    public function setRace(array $race): self
+    {
+        // Convertit les instances de Race en leurs valeurs pour stockage en BDD
+        $this->race = array_map(function ($enumOrString) {
+            if (is_string($enumOrString)) {
+                return Race::from($enumOrString); // Convertit une chaîne en Race
+            }
+    
+            if ($enumOrString instanceof Race) {
+                return $enumOrString->value; // Conserve la valeur de l'instance
+            }
+    
+            throw new \InvalidArgumentException('Invalid race specified.');
+        }, $race);
 
         return $this;
     }
@@ -212,8 +237,13 @@ class Animal
         return $this->type;
     }
 
-    public function setType(Type $type): static
+    public function setType(?Type $type): self
     {
+        if (is_string($type)) {
+            $type = Type::from($type); // Convertir chaîne -> Enum (throw si invalide)
+        }
+
+    // Assigner l'instance (ou null) à la propriété
         $this->type = $type;
 
         return $this;
