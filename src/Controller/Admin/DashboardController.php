@@ -17,6 +17,7 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
+   
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(AnimalCrudController::class)->generateUrl());
      
@@ -44,15 +45,17 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Html');
+            ->setTitle('Administration');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('User', 'fa fa-home', User::class);
-        yield MenuItem::linkToCrud('Animal', 'fas fa-list', Animal::class);
+     
+        yield MenuItem::linkToCrud('Animaux', 'fas fa-list', Animal::class);
+        yield MenuItem::linkToCrud('Structures', 'fas fa-list', Structure::class);
         yield MenuItem::linkToCrud('Structure', 'fas fa-list', Structure::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-list', User::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

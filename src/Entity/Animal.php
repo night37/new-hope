@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Enum\AdoptionStatus;
 use App\Enum\Affinity;
 use App\Enum\Gender;
-use App\Enum\Race;
+use App\Enum\Breed;
 use App\Enum\Size;
 use App\Enum\Type;
 use App\Enum\Color;
@@ -52,10 +52,16 @@ class Animal
     private ?AdoptionStatus $adoption_status = null;
 
     #[ORM\Column(type: 'json')]
-    private array $race = [];
+    private array $breed = [];
 
     #[ORM\Column(enumType: Type::class)]
     private ?Type $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
     // --- Getters and Setters ---
 
@@ -206,28 +212,28 @@ class Animal
     }
 
     /**
-     * @return Race[]
+     * @return Breed[]
      */
-    public function getRace(): array
+    public function getBreed(): array
     {
-        // Transforme les valeurs en instances de Race
-        return array_map(fn (string $value) => Race::from($value), $this->race);
+        // Transforme les valeurs en instances de Breed
+        return array_map(fn (string $value) => Breed::from($value), $this->breed);
     }
 
-    public function setRace(array $race): self
+    public function setBreed(array $breed): self
     {
-        // Convertit les instances de Race en leurs valeurs pour stockage en BDD
-        $this->race = array_map(function ($enumOrString) {
+        // Convertit les instances de Breed en leurs valeurs pour stockage en BDD
+        $this->breed = array_map(function ($enumOrString) {
             if (is_string($enumOrString)) {
-                return Race::from($enumOrString); // Convertit une chaîne en Race
+                return Breed::from($enumOrString); // Convertit une chaîne en Breed
             }
     
-            if ($enumOrString instanceof Race) {
+            if ($enumOrString instanceof Breed) {
                 return $enumOrString->value; // Conserve la valeur de l'instance
             }
     
-            throw new \InvalidArgumentException('Invalid race specified.');
-        }, $race);
+            throw new \InvalidArgumentException('Invalid breed specified.');
+        }, $breed);
 
         return $this;
     }
@@ -245,6 +251,30 @@ class Animal
 
     // Assigner l'instance (ou null) à la propriété
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -2,21 +2,26 @@
 
 namespace App\Controller\Admin;
 
-use App\Enum\Race;
+
+use App\Enum\Breed;
 use App\Enum\Type;
 use App\Enum\Size;
 use App\Enum\Color;
 use App\Enum\Gender;
 use App\Enum\Affinity;
 use App\Enum\AdoptionStatus;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 
 use App\Entity\Animal;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+
 
 class AnimalCrudController extends AbstractCrudController
 {
@@ -25,27 +30,39 @@ class AnimalCrudController extends AbstractCrudController
         return Animal::class;
     }
 
+
+    
+    
+    
     public function configureFields(string $pageName): iterable
-{
+    {
+     
+   
     return [
         ChoiceField::new('type', 'Type')
-            ->setChoices(
-                array_combine(
-                    array_map(fn($case) => ucfirst($case->value), Type::cases()), // Labels affichés
-                    array_map(fn($case) => $case, Type::cases()) 
+        ->setChoices(
+            array_combine(
+                array_map(fn($case) => ucfirst($case->value), Type::cases()), // Labels affichés
+                array_map(fn($case) => $case, Type::cases()) 
                 )
             ),
-        // Autres champs ici..
-        TextField::new('name', 'Nom'),
-        ChoiceField::new('race', 'Race')
+
+        ChoiceField::new('Breed', 'Race')
             ->setChoices(
                 array_combine(
-                    array_map(fn($case) => ucfirst($case->value), Race::cases()), // Labels affichés
-                    array_map(fn($case) => $case, Race::cases())
+                    array_map(fn($case) => ucfirst($case->value), Breed::cases()), // Labels affichés
+                    array_map(fn($case) => $case, Breed::cases())  
                 )
             )->allowMultipleChoices() // Permet la sélection multiple
             ->renderExpanded(false),
+        ImageField::new('picture', 'Photo')
+            ->setUploadDir('public/uploads/animals')
+            ->setBasePath('uploads/animals')
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->setRequired(true),
+        TextField::new('name', 'Nom'),
         TextField::new('age', 'Age'),
+
         ChoiceField::new('size', 'Taille')
             ->setChoices(
             array_combine(
@@ -53,7 +70,7 @@ class AnimalCrudController extends AbstractCrudController
                 array_map(fn($case) => $case, Size::cases())  
             )
         )->renderExpanded(false),
-
+        TextField::new('description', 'Description'),
         ChoiceField::new('color', 'Couleur')
             ->setChoices(
                 array_combine(
@@ -62,7 +79,7 @@ class AnimalCrudController extends AbstractCrudController
                 )
             )
             ->renderExpanded(false),
-        ChoiceField::new('gender')
+        ChoiceField::new('gender', 'Sexe')
             ->setChoices([
                 'Male' => Gender::Male,
                 'Female' => Gender::Female,
@@ -75,7 +92,7 @@ class AnimalCrudController extends AbstractCrudController
             ))
             ->allowMultipleChoices() // Permet la sélection multiple
             ->renderExpanded(false),
-            ChoiceField::new('AdoptionStatus', 'statut d\'adoption')
+            ChoiceField::new('AdoptionStatus', 'Statut d\'adoption')
             ->setChoices(array_combine(
                 array_map(fn($case) => ucfirst($case->value), AdoptionStatus::cases()), // Labels affichés
                 array_map(fn($case) => $case, AdoptionStatus::cases())  // Valeurs sauvegardées
@@ -86,8 +103,12 @@ class AnimalCrudController extends AbstractCrudController
 
         BooleanField::new('out_department', 'Adoptable en dehors du département'),
         BooleanField::new('highlight', 'Mettre en avant'),
-
-            
+                    
     ];
+}
+public function configureAssets(Assets $assets): Assets
+{
+    return $assets
+        ->addJsFile(Asset::new('js/animalForm/animalForm.js')->defer());   
 }
 }
