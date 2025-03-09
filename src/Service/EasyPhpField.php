@@ -15,6 +15,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\VichImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+
+
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 
@@ -64,6 +69,17 @@ class EasyPhpField
       return $booleanField;
     }
 
+    public function ImagePreview(string $fileName) {
+
+      $imagePreview = Field::new($fileName);
+      $imagePreview->setFormType(VichImageType::class);
+      $imagePreview->setLabel('Télécharger une nouvelle image');
+
+      
+      return $imagePreview;
+
+    }
+
     public function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
     {
       $imageField = ImageField::new($fieldName, $fieldLabel);
@@ -71,9 +87,16 @@ class EasyPhpField
       $imageField ->setBasePath($basePath);
       $imageField ->setUploadedFileNamePattern('[randomhash].[extension]');
       $imageField ->setRequired($required);
+      $imageField ->setFormTypeOptions([
+        "attr" => [
+          "accept" => "image/x-png,image/jpeg,image/jpg,image/png,image/webp"
+      ],
+      ]);
 
       if($multiple){
-        $imageField->allowMultipleUploads();
+        $imageField->setFormTypeOptions([
+          "multiple" => true,
+        ])  ;
       }
 
       return $imageField;

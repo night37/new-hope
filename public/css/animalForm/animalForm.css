@@ -1,0 +1,7 @@
+.custom-file {
+  display: inline-table;
+}
+.upload-preview-container {
+  display: flex;
+  gap: 1rem;
+}

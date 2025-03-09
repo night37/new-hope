@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
 
+
 class AnimalCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -32,15 +33,16 @@ class AnimalCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $easyPhpField = new EasyPhpField();
+   
+
         
      
    
     return [
         $easyPhpField->ChoiceField('type','Type','type'),
         $easyPhpField->ChoiceField('breed','breed','Race',true),
-        $easyPhpField->ImageField('picture', 'Thumbnail','public/uploads/animals','uploads/animals',true),
-        $easyPhpField->ImageField('picture', 'Thumbnail','public/uploads/animals','uploads/animals',true,true),
-
+        $easyPhpField->ImageField('thumbnail', 'Miniature','public/uploads/animals','uploads/animals',true),
+        $easyPhpField->ImageField('images', 'Photos','public/uploads/animals','uploads/animals',true,true),
         $easyPhpField->TextField('name','Nom'),
         $easyPhpField->TextField('age','Age'),
         $easyPhpField->ChoiceField('size','size','Taille'),
@@ -57,6 +59,9 @@ class AnimalCrudController extends AbstractCrudController
 public function configureAssets(Assets $assets): Assets
 {
     return $assets
-        ->addJsFile(Asset::new('js/animalForm/animalForm.js')->defer());   
+        ->addJsFile(Asset::new('js/animalForm/breed.js')->defer())
+        ->addJsFile(Asset::new('js/animalForm/preview.js')->defer())
+        ->addCssFile(Asset::new('css/animalForm/animalForm.css'));
+        
 }
 }

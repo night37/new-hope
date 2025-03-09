@@ -11,9 +11,9 @@ fetch("/js/animalForm/breedList.json")
     return response.text();
   })
   .then((text) => {
-    console.log("Contenu brut reçu :", text);
+
     list = JSON.parse(text); // Essayez de le parser
-    console.log("JSON converti :", breedList);
+  
   })
   .catch((error) => {
     console.error("Erreur lors du chargement JSON :", error);
@@ -68,3 +68,5 @@ document.addEventListener("DOMContentLoaded", function () {
     filterOptions();
   });
 });
+
+

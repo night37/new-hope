@@ -11,8 +11,10 @@ use App\Enum\Type;
 use App\Enum\Color;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
+#[Vich\Uploadable]
 class Animal
 {
     #[ORM\Id]
@@ -58,7 +60,11 @@ class Animal
     private ?Type $type = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $picture = null;
+    private ?string $thumbnail = null;
+
+        
+    #[ORM\Column(type: 'json')]
+    private $images = [];
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
@@ -114,6 +120,7 @@ class Animal
     public function setStructureId(?Structure $structure_id): self
     {
         $this->structure_id = $structure_id;
+       
 
         return $this;
     }
@@ -255,17 +262,38 @@ class Animal
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getThumbnail(): ?string
     {
-        return $this->picture;
+        return $this->thumbnail;
     }
 
-    public function setPicture(string $picture): static
+    public function setThumbnail(string $thumbnail): static
     {
-        $this->picture = $picture;
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
+
+
+    public function getImages(): array
+    {
+        // Transforme les valeurs en instances d'Affinity
+        return array_map(fn (string $value) => Images::from($value), $this->images);
+    }
+
+    public function setImages(array $image): self
+    {
+      //todo renvoyer le tableau des images
+        $this->image = $image;
+
+        return $this;
+    }
+
+
+
+
+
+    // Propriété temporaire pour les fichiers
 
     public function getDescription(): ?string
     {
