@@ -11,16 +11,11 @@ use App\Enum\Gender;
 use App\Enum\Affinity;
 use App\Enum\AdoptionStatus;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
-
-use App\Entity\Animal;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use App\Entity\Animal;
+use App\Service\EasyPhpField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
 
 
 class AnimalCrudController extends AbstractCrudController
@@ -36,73 +31,26 @@ class AnimalCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
+        $easyPhpField = new EasyPhpField();
+        
      
    
     return [
-        ChoiceField::new('type', 'Type')
-        ->setChoices(
-            array_combine(
-                array_map(fn($case) => ucfirst($case->value), Type::cases()), // Labels affichés
-                array_map(fn($case) => $case, Type::cases()) 
-                )
-            ),
+        $easyPhpField->ChoiceField('type','Type','type'),
+        $easyPhpField->ChoiceField('breed','breed','Race',true),
+        $easyPhpField->ImageField('picture', 'Thumbnail','public/uploads/animals','uploads/animals',true),
+        $easyPhpField->ImageField('picture', 'Thumbnail','public/uploads/animals','uploads/animals',true,true),
 
-        ChoiceField::new('Breed', 'Race')
-            ->setChoices(
-                array_combine(
-                    array_map(fn($case) => ucfirst($case->value), Breed::cases()), // Labels affichés
-                    array_map(fn($case) => $case, Breed::cases())  
-                )
-            )->allowMultipleChoices() // Permet la sélection multiple
-            ->renderExpanded(false),
-        ImageField::new('picture', 'Photo')
-            ->setUploadDir('public/uploads/animals')
-            ->setBasePath('uploads/animals')
-            ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(true),
-        TextField::new('name', 'Nom'),
-        TextField::new('age', 'Age'),
-
-        ChoiceField::new('size', 'Taille')
-            ->setChoices(
-            array_combine(
-                array_map(fn($case) => ucfirst($case->value), Size::cases()), // Labels affichés
-                array_map(fn($case) => $case, Size::cases())  
-            )
-        )->renderExpanded(false),
-        TextField::new('description', 'Description'),
-        ChoiceField::new('color', 'Couleur')
-            ->setChoices(
-                array_combine(
-                    array_map(fn($case) => ucfirst($case->value), Color::cases()), // Labels affichés
-                    array_map(fn($case) => $case, Color::cases())  
-                )
-            )
-            ->renderExpanded(false),
-        ChoiceField::new('gender', 'Sexe')
-            ->setChoices([
-                'Male' => Gender::Male,
-                'Female' => Gender::Female,
-             
-            ])->renderExpanded(false),// A
-        ChoiceField::new('affinity', 'Affinité')
-            ->setChoices(array_combine(
-                array_map(fn($case) => ucfirst($case->value), Affinity::cases()), // Labels affichés
-                array_map(fn($case) => $case, Affinity::cases())  
-            ))
-            ->allowMultipleChoices() // Permet la sélection multiple
-            ->renderExpanded(false),
-            ChoiceField::new('AdoptionStatus', 'Statut d\'adoption')
-            ->setChoices(array_combine(
-                array_map(fn($case) => ucfirst($case->value), AdoptionStatus::cases()), // Labels affichés
-                array_map(fn($case) => $case, AdoptionStatus::cases())  // Valeurs sauvegardées
-            ))->renderExpanded(false)
-            ->setFormTypeOptions([
-                'data' => AdoptionStatus::Available, // Set the default choice here
-            ]),
-
-        BooleanField::new('out_department', 'Adoptable en dehors du département'),
-        BooleanField::new('highlight', 'Mettre en avant'),
+        $easyPhpField->TextField('name','Nom'),
+        $easyPhpField->TextField('age','Age'),
+        $easyPhpField->ChoiceField('size','size','Taille'),
+        $easyPhpField->TextEditorField('description','Description'),
+        $easyPhpField->ChoiceField('color','color','Couleur'),
+        $easyPhpField->ChoiceField('gender','gender','Sexe'),
+        $easyPhpField->ChoiceField('affinity','affinity','Affinité',true),
+        $easyPhpField->ChoiceField('adoptionStatus','adoptionStatus','Statut d\'adoption',false,AdoptionStatus::Available),
+        $easyPhpField->BooleanField('out_department','Adoptable en dehors du département'),
+        $easyPhpField->BooleanField('highlight','Mettre en avant'),
                     
     ];
 }
