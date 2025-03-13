@@ -44,7 +44,7 @@ class AnimalCrudController extends AbstractCrudController
         $easyPhpField->ImageField('thumbnail', 'Miniature','public/uploads/animals','uploads/animals',true),
         $easyPhpField->ImageField('images', 'Photos','public/uploads/animals','uploads/animals',true,true),
         $easyPhpField->TextField('name','Nom'),
-        $easyPhpField->TextField('age','Age'),
+        $easyPhpField->IntegerField('age','Age'),
         $easyPhpField->ChoiceField('size','size','Taille'),
         $easyPhpField->TextEditorField('description','Description'),
         $easyPhpField->ChoiceField('color','color','Couleur'),
@@ -60,7 +60,7 @@ public function configureAssets(Assets $assets): Assets
 {
     return $assets
         ->addJsFile(Asset::new('js/animalForm/breed.js')->defer())
-        ->addJsFile(Asset::new('js/animalForm/preview.js')->defer())
+        ->addJsFile(Asset::new('js/animalForm/preview/preview.js')->defer()->htmlAttr('type', 'module'))
         ->addCssFile(Asset::new('css/animalForm/animalForm.css'));
         
 }

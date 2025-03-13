@@ -293,6 +293,7 @@ class Animal
 
 
 
+
     // Propriété temporaire pour les fichiers
 
     public function getDescription(): ?string
