@@ -19,8 +19,7 @@ class EasyPhpField
 
   public function IntegerField(string $fieldName, string $fieldLabel): IntegerField
   {
-    $integerField = IntegerField::new($fieldName, $fieldLabel);
-    return $integerField;
+    return IntegerField::new($fieldName, $fieldLabel);
   }
 
   public function TextField(string $fieldName, string $fieldLabel,  $data = null): TextField
@@ -84,24 +83,22 @@ class EasyPhpField
     $imageField->setBasePath($basePath);
     $imageField->setUploadedFileNamePattern('[randomhash].[extension]');
     $imageField->setRequired($required);
-    $imageField->setFormTypeOptions([
+    $imageField ->setFormTypeOptions([
       "attr" => [
         "accept" => "image/x-png,image/jpeg,image/jpg,image/png,image/webp"
       ],
-    ]);
+      "multiple" => $multiple,
+  ]);
+    
 
-    if ($multiple) {
-      $imageField->setFormTypeOptions([
-        "multiple" => true,
-      ]);
-    }
+
 
     return $imageField;
   }
 
   public function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
   {
-    $textEditorField = TextEditorField::new($fieldName, $fieldLabel);
-    return $textEditorField;
+    return TextEditorField::new($fieldName, $fieldLabel);
+     
   }
 }

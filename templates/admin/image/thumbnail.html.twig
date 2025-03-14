@@ -1,0 +1,24 @@
+{% block _Animal_thumbnail_widget %}
+	<div class="form-group">
+		<label for="{{ form.vars.id }}" class="form-label">{{ form.vars.label|trans({}, form.vars.translation_domain) }}</label>
+
+		<div class="input-group">
+			<input id="{{ form.vars.id }}" name="{{ form.vars.full_name }}" {% if form.vars.required %} required="required" {% endif %} type="file" class="form-control {% if not form.vars.valid %}is-invalid{% endif %}">
+			<button class="btn btn-outline-secondary" type="button">Parcourir</button>
+		</div>
+
+		{% if form.vars.value is not empty %}
+			<div class="image-preview mt-2">
+				<img src="{{ asset(form.vars.value) }}" alt="Aperçu" style="max-width: 200px; border: 1px solid #ddd;">
+			</div>
+		{% endif %}
+
+		{% if not form.vars.valid %}
+			<div class="invalid-feedback">
+				{% for error in form.vars.errors %}
+					{{ error.message }}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

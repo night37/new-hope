@@ -14,6 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use App\Entity\Animal;
 use App\Service\EasyPhpField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
@@ -64,4 +66,9 @@ public function configureAssets(Assets $assets): Assets
         ->addCssFile(Asset::new('css/animalForm/animalForm.css'));
         
 }
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setFormThemes(['admin/image/thumbnail.html.twig', '@EasyAdmin/crud/form_theme.html.twig']);
+
+    }
 }
