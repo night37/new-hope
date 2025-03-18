@@ -13,6 +13,8 @@ use App\Repository\AnimalRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+use function PHPSTORM_META\map;
+
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[Vich\Uploadable]
 class Animal
@@ -277,14 +279,16 @@ class Animal
 
     public function getImages(): array
     {
+ 
         // Transforme les valeurs en instances d'Affinity
-        return array_map(fn (string $value) => Images::from($value), $this->images);
+        return $this->images;
     }
 
     public function setImages(array $image): self
     {
       //todo renvoyer le tableau des images
-        $this->image = $image;
+      $this->images = $image;
+   
 
         return $this;
     }

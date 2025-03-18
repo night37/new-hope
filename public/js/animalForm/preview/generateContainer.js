@@ -4,6 +4,5 @@ export default function generateContainer(previewContainer, fileInput) {
   previewContainer.style.flexWrap = "wrap";
   previewContainer.style.marginTop = "50px";
 
-
   fileInput.parentNode.appendChild(previewContainer);
 }

@@ -78,18 +78,20 @@ class EasyPhpField
 
   public function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
   {
+
     $imageField = ImageField::new($fieldName, $fieldLabel);
     $imageField->setUploadDir($uploadDir);
     $imageField->setBasePath($basePath);
     $imageField->setUploadedFileNamePattern('[randomhash].[extension]');
     $imageField->setRequired($required);
-    $imageField ->setFormTypeOptions([
+
+    $imageField->setFormTypeOptions([
       "attr" => [
         "accept" => "image/x-png,image/jpeg,image/jpg,image/png,image/webp"
       ],
       "multiple" => $multiple,
-  ]);
-    
+    ]);
+
 
 
 
@@ -99,6 +101,5 @@ class EasyPhpField
   public function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
   {
     return TextEditorField::new($fieldName, $fieldLabel);
-     
   }
 }

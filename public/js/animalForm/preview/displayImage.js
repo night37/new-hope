@@ -1,5 +1,4 @@
 export default function displayImage(previewContainer, fileInput, src) {
-
   const previewImage = document.createElement("img");
 
   previewImage.style.maxWidth = "150px";
@@ -12,6 +11,4 @@ export default function displayImage(previewContainer, fileInput, src) {
   previewContainer.appendChild(previewImage);
   fileInput.parentNode.appendChild(previewContainer);
   previewImage.style.display = "block";
- 
 }
-
