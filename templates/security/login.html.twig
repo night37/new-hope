@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %} {% block title %}Se connecter{% endblock %} {%
+block body %} <div class="min-h-screen bg-cover bg-center flex items-center
+justify-center" style="background-image: url('{{
+  asset("assets/images/login_background.jpg")
+}}')">
+<div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full opacity-75">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+    Se connecter
+  </h2>
+
+  {% if error %}
+  <div
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+  >
+    {{ error.messageKey|trans(error.messageData, 'security') }}
+  </div>
+  {% endif %} {% if app.user %}
+  <div
+    class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4"
+  >
+    You are logged in as {{ app.user.userIdentifier }},
+    <a href="{{ path('app_logout') }}" class="text-blue-500 underline">
+      >Logout</a
+    >
+  </div>
+  {% endif %}
+  <div class="mb-4">
+    <p class="text-sm text-gray-600 mb-4 mt-4">
+      Vous n'avez pas de compte ?&nbsp;
+      <a
+        href="{{ path('app_register') }}"
+        class="text-blue-600 hover:text-blue-500"
+        >Créer un compte</a
+      >
+    </p>
+    <form method="post" class="gap-4 flex flex-col">
+      <div>
+        <label for="inputEmail" class="block text-sm font-medium text-gray-700"
+          >Email</label
+        >
+        <input
+          type="email"
+          value="{{ last_username }}"
+          name="email"
+          id="inputEmail"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          autocomplete="email"
+          required
+          autofocus
+        />
+      </div>
+
+      <div>
+        <label
+          for="inputPassword"
+          class="block text-sm font-medium text-gray-700"
+          >Mot de passe</label
+        >
+        <input
+          type="password"
+          name="password"
+          id="inputPassword"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <input
+        type="hidden"
+        name="_csrf_token"
+        value="{{ csrf_token('authenticate') }}"
+      />
+
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          name="_remember_me"
+          id="rememberMe"
+          class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+        />
+        <label for="rememberMe" class="ml-2 block text-sm text-gray-900"
+          >Se souvenir de moi</label
+        >
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Se connecter
+      </button>
+    </form>
+    <div class="mt-4 text-center">
+      <a href="#" class="text-sm text-blue-600 hover:text-blue-500"
+        >Mot de passe oublié ?</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}
