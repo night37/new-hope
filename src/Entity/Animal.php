@@ -71,6 +71,9 @@ class Animal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column]
+    private ?bool $isVisible = false;
+
     // --- Getters and Setters ---
 
     public function getId(): ?int
@@ -308,6 +311,18 @@ class Animal
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function isVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): static
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }

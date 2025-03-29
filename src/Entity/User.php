@@ -25,11 +25,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $roles = [];
+
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Structure $structure_id = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $surname = null;
 
     public function getId(): ?int
     {
@@ -105,5 +110,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): static
+    {
+        $this->surname = $surname;
+
+        return $this;
     }
 }
