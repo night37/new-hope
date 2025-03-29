@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class UserController extends AbstractController
 {
-    #[Route('/subscribe', name: 'app_user')]
+    #[Route('/inscription', name: 'app_register')]
     public function index(Request $request, EntityManagerInterface $entityManager ): Response
     {
         $user = new User();
