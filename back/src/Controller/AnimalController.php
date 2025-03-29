@@ -14,12 +14,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/animal')]
 final class AnimalController extends AbstractController
 {
-    #[Route(name: 'app_animal_index', methods: ['GET'])]
+    #[Route('/api/getAnimalsList',name: 'get_animals_list', methods: ['GET'])]
     public function index(AnimalRepository $animalRepository): Response
     {
-        return $this->render('animal/index.html.twig', [
-            'animals' => $animalRepository->findAll(),
-        ]);
+      
+        return $this->json([
+                'message' => 'j\'toute la liste des animaux',
+                'timestamp' => time(),
+                'animals' => $animalRepository->findAll(),
+            ]);
+    
     }
 
     #[Route('/new', name: 'app_animal_new', methods: ['GET', 'POST'])]
