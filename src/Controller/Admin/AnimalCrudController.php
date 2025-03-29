@@ -53,6 +53,7 @@ class AnimalCrudController extends AbstractCrudController
             $easyPhpField->ChoiceField('adoptionStatus', 'adoptionStatus', 'Statut d\'adoption', false, AdoptionStatus::Available),
             $easyPhpField->BooleanField('out_department', 'Adoptable en dehors du département'),
             $easyPhpField->BooleanField('highlight', 'Mettre en avant'),
+            $easyPhpField->BooleanField('isVisible', 'Publier'),
 
         ];
     }

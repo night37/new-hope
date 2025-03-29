@@ -29,26 +29,28 @@ export default function displayPreviewImages(previewContainer, fileInput, e) {
         displayImage(previewContainer, fileInput, file);
       } else {
         let list = document.querySelector(".fileupload-list");
-        let table = list.querySelector(".fileupload-table");
-        list.style.position = "absolute";
-        list.style.opacity = 0;
-        list.style.width = 0;
-        list.style.top = "-9999px";
-        let tableInnerText = table.innerText.split(" ");
-        let getpicturesUrl = tableInnerText.map((innerText) => {
-          if (innerText.length > 0) {
-            return innerText.split("\t")[0];
-          }
-        });
-        getpicturesUrl.forEach((url) => {
-          if (url) {
-            displayImage(
-              previewContainer,
-              fileInput,
-              `/uploads/animals/${url}`
-            );
-          }
-        });
+        if (list) {
+          let table = list.querySelector(".fileupload-table");
+          list.style.position = "absolute";
+          list.style.opacity = 0;
+          list.style.width = 0;
+          list.style.top = "-9999px";
+          let tableInnerText = table.innerText.split(" ");
+          let getpicturesUrl = tableInnerText.map((innerText) => {
+            if (innerText.length > 0) {
+              return innerText.split("\t")[0];
+            }
+          });
+          getpicturesUrl.forEach((url) => {
+            if (url) {
+              displayImage(
+                previewContainer,
+                fileInput,
+                `/uploads/animals/${url}`
+              );
+            }
+          });
+        }
       }
     });
   }

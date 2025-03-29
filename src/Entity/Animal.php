@@ -72,7 +72,7 @@ class Animal
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?bool $isVisible = false;
+    private ?bool $isVisible = null;
 
     // --- Getters and Setters ---
 
@@ -295,11 +295,6 @@ class Animal
 
         return $this;
     }
-
-
-
-
-
 
     // Propriété temporaire pour les fichiers
 
