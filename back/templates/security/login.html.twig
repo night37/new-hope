@@ -37,10 +37,9 @@ justify-center" style="background-image: url('{{
       <input
         type="hidden"
         name="_csrf_token"
+        data-controller="csrf-protection"
         value="{{ csrf_token('authenticate') }}"
       />
-      
-
       <div>
         <label for="inputEmail" class="block text-sm font-medium text-gray-700"
           >Email</label
@@ -92,7 +91,9 @@ justify-center" style="background-image: url('{{
       </button>
     </form>
     <div class="mt-4 text-center">
-      <a href="#" class="text-sm text-blue-600 hover:text-blue-500"
+      <a
+        href="{{ path('app_forgot_password_request') }}"
+        class="text-sm text-blue-600 hover:text-blue-500"
         >Mot de passe oublié ?</a
       >
     </div>
