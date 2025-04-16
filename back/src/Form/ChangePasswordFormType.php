@@ -38,10 +38,16 @@ class ChangePasswordFormType extends AbstractType
                         new PasswordStrength(),
                         new NotCompromisedPassword(),
                     ],
-                    'label' => 'New password',
+                    'label' => 'Nouveau mot de passe',
+                    'attr' => [
+                        'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                    ]
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'Retaper le mot de passe',
+                    'attr' => [
+                        'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                    ]
                 ],
                 'invalid_message' => 'The password fields must match.',
                 // Instead of being set onto the object directly,
