@@ -27,7 +27,7 @@ final class UserController extends AbstractController
             try {
             $entityManager->persist($user);             
             $entityManager->flush();
-            $this->addFlash('success', 'Utilisateur enregistré avec succès.');
+            $this->addFlash('success', 'Le compte a été crée avec succès.');
 
         } catch (UniqueConstraintViolationException $e) {
             $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
