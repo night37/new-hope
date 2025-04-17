@@ -38,6 +38,9 @@
             "config/routes/easyadmin.yaml"
         ]
     },
+    "gregwar/captcha-bundle": {
+        "version": "v2.3.0"
+    },
     "nelmio/cors-bundle": {
         "version": "2.5",
         "recipe": {

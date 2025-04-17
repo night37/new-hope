@@ -50,6 +50,15 @@ justify-center" style="background-image: url('{{
     {{ form_label(form.password.second) }}
     {{ form_widget(form.password.second) }}
   </div>
+  <div class="mb-4">
+    <div class="flex gap-1 flex-col">
+      {{ form_label(form.captcha) }}
+      {{ form_widget(form.captcha) }}
+      <div class="text-red-600 text-sm mt-1 font-semibold">
+        {{ form_errors(form.captcha) }}
+      </div>
+    </div>
+  </div>
 
   <div class="mb-4">
     {{ form_widget(form.submit, { label: "Créer le compte" }) }}

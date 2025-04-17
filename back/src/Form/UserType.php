@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -76,6 +77,22 @@ class UserType extends AbstractType
                         ]
                     ]
                 ])
+         
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha',
+                'label_attr' => [
+                    'class' => 'block text-sm font-medium text-gray-700'
+                ],
+                'attr' => [
+                    'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                ],
+                'session_key' => 'captcha',
+                'invalid_message' => 'Captcha incorrect.',
+                'height' => 38,
+                'width' => 200,
+                'bypass_code' => null,
+                'humanity' => 1,
+            ])              
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'label' => 'Créer un compte',
