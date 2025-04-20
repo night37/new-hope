@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
-    private ?bool $isActive = null;
+    private ?bool $isVerified = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -150,14 +150,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function isVerified(): ?bool
     {
-        return $this->isActive;
+        return $this->isVerified;
     }
 
-    public function setIsActive(bool $isActive): static
+    public function setIsVerified(bool $isVerified): static
     {
-        $this->isActive = $isActive;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

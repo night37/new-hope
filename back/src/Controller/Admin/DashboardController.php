@@ -18,7 +18,11 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-   
+        
+        if($this->getUser() === null) {
+            return $this->redirectToRoute('app_login');
+        }
+        
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(AnimalCrudController::class)->generateUrl());
      
