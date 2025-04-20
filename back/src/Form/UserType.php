@@ -6,6 +6,9 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -55,9 +58,24 @@ class UserType extends AbstractType
                     'type' => PasswordType::class,
                     'required' => true,
                     'invalid_message' => 'Les mots de passe ne correspondent pas',
-                    
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez entrer un mot de passe',
+                        ]),
+                        new Length([
+                            'min' => 8,
+                            'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
+                            'max' => 4096, // valeur max recommandée par Symfony
+                        ]),
+                        new Regex([
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
+                            'message' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
+                        ]),
+                    ],                    
                     'first_options' => [
                         'label' => 'Mot de passe',
+
+                        
                         'label_attr' => [
                             'class' => 'block text-sm font-medium text-gray-700'
                         ],
@@ -90,7 +108,6 @@ class UserType extends AbstractType
                 'invalid_message' => 'Captcha incorrect.',
                 'height' => 38,
                 'width' => 200,
-                'bypass_code' => null,
                 'humanity' => 1,
             ])              
             ->add('submit', SubmitType::class, [

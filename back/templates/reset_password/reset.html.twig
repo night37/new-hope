@@ -10,7 +10,10 @@
       {{ form_start(resetForm, {'attr': {'class': 'gap-4 flex flex-col'}}) }}
 
           {{ form_widget(resetForm.plainPassword, { 'attr' : {'class' : 'flex flex-col gap-4'}}) }}
-          {{ form_errors(resetForm.plainPassword, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+
+          <div class="error-message"> 
+            {{ form_errors(resetForm.plainPassword, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+          </div>
           <div>
             <small>
               Choisissez un mot de passe fort et unique pour votre compte.
