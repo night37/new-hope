@@ -36,6 +36,7 @@ security:
         # by default, the feature is enabled by checking a checkbox in the
         # login form, uncomment the following line to always enable it.
         #always_remember_me: true
+      access_denied_handler: App\Security\AccessDeniedHandler
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -46,8 +47,9 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/user/\d+/edit, roles: [ROLE_ADMIN, ROLE_USER] }
+    - { path: ^/user, roles: [ROLE_ADMIN] }
+    - { path: ^/structure, roles: [ROLE_ADMIN] }
 
 when@test:
   security:
