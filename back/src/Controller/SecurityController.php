@@ -9,11 +9,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/', name: 'app_login')]  // The login route                                                                  
+    #[Route(path: '/connexion', name: 'app_login')]  // The login route                                                                  
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('admin_user_index');
+            $id = $this->getUser()->getId();
+            // dd($this->getUser()->getId());
+            return $this->redirect('/user/'.$id.'/edit');    
         }
 
         // get the login error if there is one

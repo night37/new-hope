@@ -2,27 +2,42 @@
 
 namespace App\Service;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 
 
 class EasyPhpField
 {
+   public static function EmailField(string $fieldName, string $fieldLabel,  $data = null): TextField
+  {
+    $emailField = TextField::new($fieldName, $fieldLabel);
+    if ($data) {
+      $emailField->setFormTypeOptions([
+        'data' => $data,
+      ]);
+    }
+    return $emailField->setFormTypeOption('attr', [
+      'type' => 'email',
+      'autocomplete' => 'off',
+    ]);
+  }
 
-  public function IntegerField(string $fieldName, string $fieldLabel): IntegerField
+   public static function IntegerField(string $fieldName, string $fieldLabel): IntegerField
   {
     return IntegerField::new($fieldName, $fieldLabel);
   }
 
-  public function TextField(string $fieldName, string $fieldLabel,  $data = null): TextField
+   public static function TextField(string $fieldName, string $fieldLabel,  $data = null): TextField
   {
     $textField = TextField::new($fieldName, $fieldLabel);
     if ($data) {
@@ -34,7 +49,7 @@ class EasyPhpField
   }
 
 
-  public function ChoiceField(string $type, string $fieldName, string $fieldLabel, bool $multiple = false, $data = null): ChoiceField
+   public static function ChoiceField(string $type, string $fieldName, string $fieldLabel, bool $multiple = false, $data = null): ChoiceField
   {
     $enumClass = 'App\\Enum\\' . ucfirst($type);
     $choiceField = ChoiceField::new($fieldName, $fieldLabel)
@@ -54,7 +69,7 @@ class EasyPhpField
     }
     return $choiceField;
   }
-  public function BooleanField(string $fieldName, string $fieldLabel,  $data = null): BooleanField
+   public static function BooleanField(string $fieldName, string $fieldLabel,  $data = null): BooleanField
   {
     $booleanField = BooleanField::new($fieldName, $fieldLabel);
     if ($data) {
@@ -65,7 +80,7 @@ class EasyPhpField
     return $booleanField;
   }
 
-  public function ImagePreview(string $fileName)
+   public static function ImagePreview(string $fileName)
   {
 
     $imagePreview = Field::new($fileName);
@@ -76,7 +91,7 @@ class EasyPhpField
     return $imagePreview;
   }
 
-  public function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
+   public static function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
   {
 
     $imageField = ImageField::new($fieldName, $fieldLabel);
@@ -98,8 +113,36 @@ class EasyPhpField
     return $imageField;
   }
 
-  public function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
+   public static function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
   {
     return TextEditorField::new($fieldName, $fieldLabel);
+  }
+
+  public static function PasswordField(): TextField
+  {
+    $passwordField = TextField::new('password', 'Mot de passe');
+
+    $passwordField->setFormType(RepeatedType::class);
+    $passwordField->setFormTypeOptions([
+      'type' => PasswordType::class,
+      'first_options' => [
+        'label' => 'Nouveau mot de passe',
+        'row_attr' => [
+          'class' => 'col-md-6 col-xxl-5',
+          'style' => 'padding-right: 12px;' 
+        ],
+      ],
+      'second_options' => [
+        'label' => 'Confirmation du mot de passe',
+        'row_attr' => [
+                 'class' => 'col-md-6 col-xxl-5',
+                 'style' => 'padding-right: 12px;'
+          ],
+        ],
+      'invalid_message' => 'Les mots de passe ne correspondent pas',
+      
+    ]);
+    
+    return $passwordField;
   }
 }
