@@ -38,17 +38,6 @@ class EmailVerifier
         $this->mailer->send($email);
     }
 
-    /**
-     * @throws VerifyEmailExceptionInterface
-     */
-    public function handleEmailConfirmation(Request $request, UserInterface $user): void
-    {
-        
-        $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, $user->getId(), $user->getEmail());
 
- 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-        $this->addFlash('success', 'Le compte a été crée avec succès.');
-    }
+   
 }
