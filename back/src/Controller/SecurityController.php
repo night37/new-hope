@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -10,12 +11,23 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'app_login')]  // The login route                                                                  
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
         if ($this->getUser()) {
-            $id = $this->getUser()->getId();
-            // dd($this->getUser()->getId());
-            return $this->redirect('/user/'.$id.'/edit');    
+            if($this->getUser()->isVerified() === false) {
+
+                $this->container->get('security.token_storage')->setToken(null);
+                $request = $this->container->get('request_stack')->getCurrentRequest();
+                $request->getSession()->invalidate();
+                $this->addFlash('danger', 'Pour confirmer votre adresse e-mail, veuillez cliquer sur le lien contenu dans l\'e-mail que nous vous avons envoyé. Si vous n\'avez pas reçu cet e-mail ou si le lien a expiré, cliquez ici pour demander l\'envoi d\'un nouvel e-mail de confirmation.');
+
+                return $this->redirectToRoute('app_login');          
+                
+            }else{
+
+                $id = $this->getUser()->getId();
+                return $this->redirect('/user/'.$id.'/edit');    
+            }
         }
 
         // get the login error if there is one

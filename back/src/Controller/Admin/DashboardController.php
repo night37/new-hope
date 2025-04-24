@@ -55,13 +55,29 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-     
-        yield MenuItem::linkToCrud('gérer les animaux', 'fas fa-list', Animal::class);
-        yield MenuItem::linkToCrud('liste des structures', 'fas fa-list', Structure::class);
-        yield MenuItem::linkToCrud('gérer ma structure', 'fas fa-list', Structure::class);
-        yield MenuItem::linkToCrud('liste des utilisateurs', 'fas fa-list', User::class);
-        yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class);
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+
+        $structureId = $this->getUser()->getStructureId();
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::subMenu('gestion de comptes', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
+            MenuItem::linkToCrud('ajouter un compte', 'fas fa-plus', User::class)->setAction('new'),
+            MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($this->getUser()->getId())
+
+        ])->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($this->getUser()->getId())->setPermission('ROLE_USER');
+        yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
+            MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),
+        ]);
+        MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index')->setPermission('ROLE_USER');
+        yield MenuItem::subMenu('gestion des structures', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('liste des structures', 'fas fa-list', Structure::class)->setAction('index'),
+            MenuItem::linkToCrud('ajouter une structure', 'fas fa-plus', Structure::class)->setAction('new'),
+        ])->setPermission('ROLE_ADMIN');
+        if(isset($structureId)) {
+            yield MenuItem::linkToCrud('gérer ma structure', 'fas fa-list', Structure::class)->setAction('edit')->setEntityId($structureId)->setPermission('ROLE_USER');
+        } 
+        yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out'); 
     }
 
 }
