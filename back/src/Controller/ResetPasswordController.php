@@ -86,20 +86,18 @@ class ResetPasswordController extends AbstractController
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            return $this->redirectToRoute('app_login');
         }
 
         try {
             /** @var User $user */
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
-                '%s - %s',
-                $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_VALIDATE, [], 'ResetPasswordBundle'),
-                $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            ));
 
-            return $this->redirectToRoute('app_forgot_password_request');
+            $this->addFlash('danger',"Une erreur est survenue lors de la modification de votre mot de passe. Veuillez réessayer.");
+
+            return $this->redirectToRoute('app_login');
+
         }
 
         // The token is valid; allow the user to change their password.
@@ -119,7 +117,7 @@ class ResetPasswordController extends AbstractController
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
-
+            $this->addFlash('success',"Votre mot de passe a été réinitialisé avec succès.");
             return $this->redirectToRoute('app_login');
         }
 
