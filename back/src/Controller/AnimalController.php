@@ -25,15 +25,16 @@ final class AnimalController extends AbstractController
             ]);
     
     }
-
     #[Route('/new', name: 'app_animal_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
-
+  
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($animal);
             $entityManager->flush();
 

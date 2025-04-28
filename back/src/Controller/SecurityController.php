@@ -35,6 +35,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]                                                             
     public function login(): Response
     {
+
         if ($this->getUser()) {
             $response = $this->emailService->verifyEmail($this->getUser(), $this->getUser()->getEmail());
             if ($response) {
@@ -44,6 +45,11 @@ class SecurityController extends AbstractController
     
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
+
+        if($error){
+            $this->addFlash('danger', 'Identifiants invalides.');
+        }
+        
         return $this->render('security/login.html.twig', ['email' => $lastUsername, 'error' => $error]);
     }
 

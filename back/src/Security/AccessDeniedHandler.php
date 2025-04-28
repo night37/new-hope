@@ -21,7 +21,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
         // Add a flash message (optional)
-        $request->getSession()->getFlashBag()->add('error', 'Vous n\'avez pas les permissions nécessaires pour accéder à cette page.');
+        $request->getSession()->getFlashBag()->add('danger', 'Vous n\'avez pas les permissions nécessaires pour accéder à cette page.');
         
         // Redirect to a different page depending on user role or request path
         return new RedirectResponse($this->urlGenerator->generate('app_logout'));

@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -123,10 +124,12 @@ class EasyPhpField
     $passwordField = TextField::new('password', 'Mot de passe');
 
     $passwordField->setFormType(RepeatedType::class);
+    $passwordField->setRequired(false);
     $passwordField->setFormTypeOptions([
       'type' => PasswordType::class,
       'first_options' => [
         'label' => 'Nouveau mot de passe',
+        'empty_data' => '',
         'row_attr' => [
           'class' => 'col-md-6 col-xxl-5',
           'style' => 'padding-right: 12px;' 
@@ -134,6 +137,7 @@ class EasyPhpField
       ],
       'second_options' => [
         'label' => 'Confirmation du mot de passe',
+        'empty_data' => '',
         'row_attr' => [
                  'class' => 'col-md-6 col-xxl-5',
                  'style' => 'padding-right: 12px;'
@@ -144,5 +148,17 @@ class EasyPhpField
     ]);
     
     return $passwordField;
+  }
+  public static function DateField(string $label) {
+
+    $dateField = DateTimeField::new($label);
+
+    // $dateField->hideOnForm(); 
+    // $dateField->setFormTypeOption('disabled', true);
+    
+
+    return $dateField;
+   
+    
   }
 }

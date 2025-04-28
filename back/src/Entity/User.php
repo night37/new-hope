@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\Role;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -73,6 +74,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $password): static
     {
+
+        if ((empty($password) || $password === '') && $this->password !== null) {
+            // Ne change pas le mot de passe existant
+            return $this;
+        }
+
         $this->password = $password;
 
         return $this;
@@ -80,15 +87,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
- 
-
+    
+        // dd($this->roles);
         return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(Role $roles): self
     {
-        
-        $this->roles = $roles;
+   
+        if ($roles === Role::ROLE_ADMIN) {
+            $this->roles = ['ROLE_ADMIN'];
+        } else {
+            $this->roles = ['ROLE_USER'];
+        }
 
         return $this;
     }
