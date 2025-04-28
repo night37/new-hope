@@ -14,7 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
+use App\Security\EmailVerifier;
 
 
 class EasyPhpField
@@ -77,9 +77,10 @@ class EasyPhpField
       $booleanField->setFormTypeOptions([
         'data' => $data,
       ]);
+      $booleanField->hideOnIndex(); 
     }
     return $booleanField;
-  }
+  } 
 
    public static function ImagePreview(string $fileName)
   {

@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->roles;
     }
 
-    public function setRoles(Role $roles): self
+    public function setRoles(Role|Array $roles): self
     {
    
         if ($roles === Role::ROLE_ADMIN) {
