@@ -12,26 +12,31 @@ use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
+
 class EmailService {
     private $router;
     private $requestStack;
     private $tokenStorage;
+    private $emailVerifier;
+    
   
     public function __construct(
       
         UrlGeneratorInterface $router,
         RequestStack $requestStack,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        EmailVerifier $emailVerifier
     ) {
         $this->router = $router;
         $this->requestStack = $requestStack;
         $this->tokenStorage = $tokenStorage;
+        $this->emailVerifier = $emailVerifier;
     }
 
     public function verifyEmail($user, $email) 
     {
         if (!$user->isVerified()) {
-          return $this->sendVerificationEmail($user, $email);
+          return $this->sendVerificationEmail( $email);
         }
 
         $id = $user->getId();
@@ -39,7 +44,7 @@ class EmailService {
         return new RedirectResponse('/user/'.$id.'/edit');  
     }
       
-    public function sendVerificationEmail($user, $email) 
+    public function sendVerificationEmail($email) 
     {
         $request = $this->requestStack->getCurrentRequest();
         
@@ -59,7 +64,7 @@ class EmailService {
         return new RedirectResponse($this->router->generate('app_login'));
     }
 
-    public function resendVerificationEmail(Request $request, UserRepository $userRepository, EmailVerifier $emailVerifier)
+    public function resendVerificationEmail(Request $request, UserRepository $userRepository)
     {
 
         $email = $request->query->get('email');
@@ -88,7 +93,7 @@ class EmailService {
             ->subject('Confirmation de votre adresse email')
             ->htmlTemplate('registration/confirmation_email.html.twig');
         
-        $emailVerifier->sendEmailConfirmation(
+        $this->emailVerifier->sendEmailConfirmation(
             'app_verify_email', 
             $user,
             $email
@@ -96,6 +101,19 @@ class EmailService {
         
         $session->getFlashBag()->add('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
         return new RedirectResponse($this->router->generate('app_login'));
+    }
+
+    public function sendEmailConfirmation($user) 
+    {
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        (new TemplatedEmail())
+            ->from(new Address('mailer@example.com', 'AcmeMailBot'))
+            ->to($user->getEmail())
+            ->subject('Please Confirm your Email')
+            ->htmlTemplate('registration/confirmation_email.html.twig')
+            ->context([
+                'user' => $user,
+            ]));
     }
 
    

@@ -4,25 +4,31 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\EmailService;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
-use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 final class UserController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier,private VerifyEmailHelperInterface $verifyEmailHelper)
+    private $emailService;
+
+
+    public function __construct(private EmailVerifier $emailVerifier,private VerifyEmailHelperInterface $verifyEmailHelper, EmailService $emailService)
     {
 
+        $this->emailService = $emailService;
     }
+
+
 
 
     #[Route('/inscription', name: 'app_register')]
@@ -42,16 +48,9 @@ final class UserController extends AbstractController
             try {
             $entityManager->persist($user);             
             $entityManager->flush();
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            (new TemplatedEmail())
-                ->from(new Address('mailer@example.com', 'AcmeMailBot'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-                ->context([
-                    'user' => $user,
-                ])
-        );
+            
+            $this->emailService->sendEmailConfirmation($user);
+           
             $this->addFlash('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
 
         } catch (UniqueConstraintViolationException $e) {

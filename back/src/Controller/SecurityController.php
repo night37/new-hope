@@ -61,9 +61,9 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/resend-verification-email-link', name: 'app_resend_verification_email_link')]
-    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository, EmailVerifier $emailVerifier): Response
+    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository): Response
     {
-        return $this->emailService->resendVerificationEmail($request, $userRepository, $emailVerifier);
+        return $this->emailService->resendVerificationEmail($request, $userRepository);
     }
 
 }
