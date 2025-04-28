@@ -3,20 +3,23 @@
 namespace App\Controller\Admin;
 
 
-use App\Enum\Breed;
-use App\Enum\Type;
 use App\Enum\Size;
+use App\Enum\Type;
+use App\Enum\Breed;
 use App\Enum\Color;
 use App\Enum\Gender;
+use App\Entity\Animal;
 use App\Enum\Affinity;
+use App\Enum\DateField;
 use App\Enum\AdoptionStatus;
+use App\Service\EasyPhpField;
+use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
-use App\Entity\Animal;
-use App\Service\EasyPhpField;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use App\Service\TimestampService;
 
 
 
@@ -33,9 +36,10 @@ class AnimalCrudController extends AbstractCrudController
     {
       
         $require = $pageName != "edit";
+   
 
 
-        return [
+        $fields = [
             easyPhpField::ChoiceField('type', 'Type', 'type'),
             easyPhpField::ChoiceField('breed', 'breed', 'Race', true),
             easyPhpField::ImageField('thumbnail', 'Miniature', 'public/uploads/animals', 'uploads/animals', $require),
@@ -51,8 +55,9 @@ class AnimalCrudController extends AbstractCrudController
             easyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
             easyPhpField::BooleanField('highlight', 'Mettre en avant'),
             easyPhpField::BooleanField('isVisible', 'Publier'),
-
         ];
+       
+        return $fields;
     }
     public function configureAssets(Assets $assets): Assets
     {
@@ -61,9 +66,27 @@ class AnimalCrudController extends AbstractCrudController
             ->addJsFile(Asset::new('js/animalForm/preview/preview.js')->defer()->htmlAttr('type', 'module'))
             ->addCssFile(Asset::new('css/animalForm/animalForm.css'));
     }
-    // public function configureCrud(Crud $crud): Crud
-    // {
-    //     return $crud->setFormThemes(['admin/image/thumbnail.html.twig', '@EasyAdmin/crud/form_theme.html.twig']);
 
-    // }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $timestampService = new TimestampService($entityInstance);        
+        if (method_exists($entityInstance, 'setCreatedAt')) {
+
+            $timestampService->getCreatedAt();
+        }
+        
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $timestampService = new TimestampService($entityInstance);  
+        if (method_exists($entityInstance, 'setUpdatedAt')) {
+            $timestampService->getUpdatedAt();
+        }
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+
+
 }

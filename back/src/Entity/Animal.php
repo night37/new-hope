@@ -12,13 +12,22 @@ use App\Enum\Color;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 use function PHPSTORM_META\map;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[Vich\Uploadable]
 class Animal
 {
+
+    private ?\DateTimeInterface $created_at = null;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+        
+    }
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -74,11 +83,13 @@ class Animal
     #[ORM\Column]
     private ?bool $isVisible = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $createdAt ;
+
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt;
 
     // --- Getters and Setters ---
 
@@ -235,6 +246,7 @@ class Animal
     public function getBreed(): array
     {
         // Transforme les valeurs en instances de Breed
+        // dd($this->breed);
         return array_map(fn (string $value) => Breed::from($value), $this->breed);
     }
 
@@ -335,6 +347,7 @@ class Animal
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
+
         $this->createdAt = $createdAt;
 
         return $this;
