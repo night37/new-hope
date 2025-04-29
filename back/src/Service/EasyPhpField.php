@@ -9,12 +9,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;      
 
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use App\Security\EmailVerifier;
 
 
 class EasyPhpField
@@ -38,14 +38,18 @@ class EasyPhpField
     return IntegerField::new($fieldName, $fieldLabel);
   }
 
-   public static function TextField(string $fieldName, string $fieldLabel,  $data = null): TextField
+   public static function TextField(string $fieldName, string $fieldLabel, $isDisabled=false,  $data = null,): TextField
   {
     $textField = TextField::new($fieldName, $fieldLabel);
+    $textField->setDisabled($isDisabled);
+
     if ($data) {
       $textField->setFormTypeOptions([
         'data' => $data,
+        
       ]);
     }
+
     return $textField;
   }
 
@@ -153,13 +157,13 @@ class EasyPhpField
   public static function DateField(string $label) {
 
     $dateField = DateTimeField::new($label);
-
-    // $dateField->hideOnForm(); 
-    // $dateField->setFormTypeOption('disabled', true);
-    
-
+ 
     return $dateField;
    
     
+  }
+  public static function TelephoneField(string $phoneNumber): TelephoneField
+  {
+    return TelephoneField::new($phoneNumber);
   }
 }
