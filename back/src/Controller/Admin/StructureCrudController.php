@@ -3,10 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Structure;
+use \App\Service\EasyPhpField;
+use App\Service\TimestampService;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class StructureCrudController extends AbstractCrudController
 {
@@ -15,14 +15,46 @@ class StructureCrudController extends AbstractCrudController
         return Structure::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            EasyPhpField::TextField('name', 'Nom de la structure'),
+            EasyPhpField::TextField('street', 'Rue'),
+            EasyPhpField::IntegerField('zip_code', 'Code postal'),
+            EasyPhpField::TextField('city', 'Ville'),
+            EasyPhpField::TelephoneField('phone', 'Téléphone'),
+            EasyPhpField::TextField('email', 'Email'),
+            EasyPhpField::TextEditorField('description', 'Description'),
+            EasyPhpField::IntegerField('latitude', 'Latitude'),
+            EasyPhpField::IntegerField('longitude', 'Longitude'),
+
+
+            
         ];
     }
-    */
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $timestampService = new TimestampService($entityInstance);   
+           
+        if (method_exists($entityInstance, 'setCreatedAt')) {
+
+            $timestampService->getCreatedAt();
+        }
+        
+        parent::persistEntity($entityManager, $entityInstance);
+
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $timestampService = new TimestampService($entityInstance);  
+        if (method_exists($entityInstance, 'setUpdatedAt')) {
+            $timestampService->getUpdatedAt();
+        }
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+
+    
 }

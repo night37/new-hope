@@ -5,15 +5,20 @@ namespace App\Controller\Admin;
 use App\Enum\Role;
 use App\Entity\User;
 use App\Service\EasyPhpField;
-use App\Service\TimestampService;
 use App\Service\EmailService;
+use App\Service\TimestampService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -57,11 +62,16 @@ class UserCrudController extends AbstractCrudController
         if($isAdmin) {
             
             $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
-            $fields[] = easyPhpField::TextField('structure_id', 'Structure');
-            $fields[] = easyPhpField::BooleanField('isVerified', 'Vérifié') ;
+            $fields[] = easyPhpField::TextField('structure_id', 'Structure', false);
+            $fields[] = easyPhpField::BooleanField('isVerified', 'Vérifié');
+            
+            $fields[] = AssociationField::new('structure_id', 'Structure')
+            ->setRequired(false)
+            ->autocomplete();
             
         }
-        if( $selectedUser && $selectedUser->getId() !== null) {
+        if( $selectedUser && $selectedUser->getId() !== null && !$isAdmin) {
+            $fields[] = EasyPhpField::TextField('structure_id', 'Structure', true);
             $fields[] = easyPhpField::PasswordField();
         }
 
@@ -120,5 +130,33 @@ class UserCrudController extends AbstractCrudController
         }
         parent::updateEntity($entityManager, $entityInstance);
     }
+
+    protected function getRedirectResponseAfterSave(AdminContext $context, string $action): RedirectResponse
+    {
+        $submitButtonName = $context->getRequest()->request->all()['ea']['newForm']['btn'];
+        
+        // dd($submitButtonName);
+        if ('saveAndReturn' === $submitButtonName) {
+            // when using pretty admin URLs
+            return $this->redirectToRoute('admin');
+            
+            // when using legacy admin URLs
+            $url = $this->container->get(AdminUrlGenerator::class)
+            ->setAction(Action::DETAIL)
+            ->setEntityId($context->getEntity()->getPrimaryKeyValue())
+            ->generateUrl();
+            
+            return $this->redirect($url);
+        }
+
+        return parent::getRedirectResponseAfterSave($context, $action);
+    }
+
+    
+
+    
+
+
+    
   
 }

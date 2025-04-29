@@ -12,19 +12,35 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 #[AdminDashboard(routePath: '/', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+
+    public function __construct(
+        private ChartBuilderInterface $chartBuilder,
+    ) {
+    }
+
     public function index(): Response
     {
+        
         
         if($this->getUser() === null) {
             return $this->redirectToRoute('app_login');
         }
+
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
+        // ...set chart data and options somehow
+
+        return $this->render('admin/dashboard.html.twig', [
+            'chart' => $chart,
+        ]);
         
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(AnimalCrudController::class)->generateUrl());
+        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        // return $this->redirect($adminUrlGenerator->setController(AnimalCrudController::class)->generateUrl());
      
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -51,7 +67,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Administration');
-            
+
     }
 
     public function configureMenuItems(): iterable

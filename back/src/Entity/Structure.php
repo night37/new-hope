@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StructureRepository::class)]
 class Structure
 {
+
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
