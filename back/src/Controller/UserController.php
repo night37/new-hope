@@ -49,7 +49,7 @@ final class UserController extends AbstractController
             $entityManager->persist($user);             
             $entityManager->flush();
             
-            $this->emailService->sendEmailConfirmation($user);
+            $this->emailService->sendEmailConfirmation($user, false);
            
             $this->addFlash('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
 

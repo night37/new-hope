@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 
@@ -24,10 +25,12 @@ class UserCrudController extends AbstractCrudController
 {
 
     private $emailService;
+    private $passwordHasher;
 
-    public function __construct(EmailService $emailService) {
+    public function __construct(EmailService $emailService, UserPasswordHasherInterface $passwordHasher){
 
          $this->emailService = $emailService;
+            $this->passwordHasher = $passwordHasher;
 
     }
 
@@ -56,7 +59,7 @@ class UserCrudController extends AbstractCrudController
             $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
             $fields[] = easyPhpField::TextField('structure_id', 'Structure');
             $fields[] = easyPhpField::BooleanField('isVerified', 'Vérifié') ;
-            $fields[] = EasyPhpField::PasswordField();
+            // $fields[] = EasyPhpField::PasswordField();
         }
         if( $selectedUser && $selectedUser->getId() !== null) {
             $fields[] = easyPhpField::TextField('password', 'Mot de passe', $selectedUser->getPassword());
@@ -70,28 +73,9 @@ class UserCrudController extends AbstractCrudController
         }
 
         if($selectedUser && $selectedUser->getId() === null) {
-             TextField::new('password', 'Mot de passe')
-             ->setFormTypeOptions([
-                'type' => PasswordType::class,
-                'first_options' => [
-                  'label' => 'Nouveau mot de passe',
-                  'empty_data' => '',
-                  'row_attr' => [
-                    'class' => 'col-md-6 col-xxl-5',
-                    'style' => 'padding-right: 12px;' 
-                  ],
-                ],
-                'second_options' => [
-                  'label' => 'Confirmation du mot de passe',
-                  'empty_data' => '',
-                  'row_attr' => [
-                           'class' => 'col-md-6 col-xxl-5',
-                           'style' => 'padding-right: 12px;'
-                    ],
-                  ],
-                'invalid_message' => 'Les mots de passe ne correspondent pas',
-                
-              ]);
+            $random = random_bytes(10);
+            $hashedPassword = $this->passwordHasher->hashPassword($selectedUser, $random);
+            $selectedUser->setPassword($hashedPassword);
         } 
 
         return $fields;
@@ -109,6 +93,7 @@ class UserCrudController extends AbstractCrudController
     {
         $selectedUser = $this->getContext()->getEntity()->getInstance();
         $timestampService = new TimestampService($entityInstance);   
+        $selectedUser->setIsVerified(true);
           
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
@@ -119,7 +104,7 @@ class UserCrudController extends AbstractCrudController
 
         if ($selectedUser->getId() !== null) {
 
-            $this->emailService->sendEmailConfirmation($selectedUser);
+            $this->emailService->sendEmailConfirmation($selectedUser, true);
 
         }
       
