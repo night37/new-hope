@@ -62,10 +62,10 @@ class UserCrudController extends AbstractCrudController
             // $fields[] = EasyPhpField::PasswordField();
         }
         if( $selectedUser && $selectedUser->getId() !== null) {
-            $fields[] = easyPhpField::TextField('password', 'Mot de passe', $selectedUser->getPassword());
+            $fields[] = easyPhpField::PasswordField();
         }
 
-        if($selectedUser && $selectedUser->getId() !== null) {
+        if($selectedUser && $selectedUser->getId() !== null && $isAdmin) {
             $role = $selectedUser->getRoles()[0];
             $roleEnum = constant("App\\Enum\\Role::$role");
             $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false, $roleEnum);
