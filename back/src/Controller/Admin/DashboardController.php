@@ -51,6 +51,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Administration');
+            
     }
 
     public function configureMenuItems(): iterable

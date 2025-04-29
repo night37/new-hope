@@ -55,11 +55,11 @@ class UserCrudController extends AbstractCrudController
         ];
         
         if($isAdmin) {
-            // $fields[] = easyPhpField::PasswordField();  
+            
             $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
             $fields[] = easyPhpField::TextField('structure_id', 'Structure');
             $fields[] = easyPhpField::BooleanField('isVerified', 'Vérifié') ;
-            // $fields[] = EasyPhpField::PasswordField();
+            
         }
         if( $selectedUser && $selectedUser->getId() !== null) {
             $fields[] = easyPhpField::PasswordField();
@@ -86,7 +86,7 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle('index', 'Liste des utilisateurs')
             ->setPageTitle('new', 'Créer un utilisateur')
-            ->setPageTitle('edit', 'Modifier un utilisateur');        
+            ->setPageTitle('edit', 'Modifier mon compte utilisateur');        
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
