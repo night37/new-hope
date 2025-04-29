@@ -96,14 +96,15 @@ class EmailService {
         $this->emailVerifier->sendEmailConfirmation(
             'app_verify_email', 
             $user,
-            $email
+            $email,
+            false
         );
         
         $session->getFlashBag()->add('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
         return new RedirectResponse($this->router->generate('app_login'));
     }
 
-    public function sendEmailConfirmation($user) 
+    public function sendEmailConfirmation($user, ?bool $sendResetPassword): void
     {
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
         (new TemplatedEmail())
@@ -113,7 +114,7 @@ class EmailService {
             ->htmlTemplate('registration/confirmation_email.html.twig')
             ->context([
                 'user' => $user,
-            ]));
+            ]), $sendResetPassword);
     }
 
    

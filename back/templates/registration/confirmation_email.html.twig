@@ -4,14 +4,24 @@
 <p>Bonjour {{ user.name }} {{ user.surname }},</p>
 <p>
   Merci de vous être inscrit sur notre site. Avant de pouvoir vous connecter,
-  nous avons besoin de vérifier votre adresse email.
+  nous avons besoin de vérifier votre adresse email
 </p>
 <p>
-  Veuillez cliquer sur le lien ci-dessous pour confirmer votre adresse email :
+  Veuillez cliquer sur le lien ci-dessous pour confirmer votre adresse email 
+{% if sendResetPassword %}
+  et définir un mot de passe.
+{% else %}
+  et vous connecter.
+{% endif %}
+  :
 </p>
 <p>
   <strong>Ce lien est valide pendant {{ expiresAt|date('d/m/Y H:i') }}</strong>
 </p>
-<a href="{{ signedUrl }}">Vérifier mon email</a>
+{% if sendResetPassword %}
+  <a href="{{ url('app_reset_password', { token: resetToken.token }) }}"> définir un mot de passe </a>
+{% else %}
+  <a href="{{ signedUrl }}">vérifier mon email</a>
+{% endif %}
 
 {% endblock %}
