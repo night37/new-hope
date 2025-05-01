@@ -6,29 +6,23 @@ namespace App\Service;
 class TimestampService
 {
 
-  private $entityInstance;
-  private $now;
 
-  public function __construct($entityInstance){
-    $this->entityInstance = $entityInstance;
-  }
-
-  public function getCreatedAt(): \DateTimeInterface
+  public function getCreatedAt($entityInstance): \DateTimeInterface
   {
   
       $now = new \DateTimeImmutable();
-      $this->entityInstance->setCreatedAt($now);
-      $this->entityInstance->setUpdatedAt($now);
-      return $this->entityInstance->getCreatedAt();
+      $entityInstance->setCreatedAt($now);
+      $entityInstance->setUpdatedAt($now);
+      return $entityInstance->getCreatedAt();
     
   }
 
-    public function getupdatedAt(): \DateTimeInterface
+    public function getupdatedAt($entityInstance): \DateTimeInterface
   {
   
       $now = new \DateTimeImmutable();
-      $this->entityInstance->setUpdatedAt($now);
-      return $this->entityInstance->getCreatedAt();
+      $entityInstance->setUpdatedAt($now);
+      return $entityInstance->getCreatedAt();
     
   }
 

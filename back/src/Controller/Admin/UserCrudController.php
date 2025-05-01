@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Enum\Role;
 use App\Entity\User;
-use App\Service\EasyPhpField;
+use App\Service\EasyPhpFieldService as EasyPhpField;
 use App\Service\EmailService;
 use App\Service\TimestampService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,16 +54,16 @@ class UserCrudController extends AbstractCrudController
         
     
         $fields = [
-            easyPhpField::EmailField('email', 'Email'),
-            easyPhpField::TextField('name', 'Prénom'),
-            easyPhpField::TextField('surname', 'Nom'),
+            EasyPhpField::EmailField('email', 'Email'),
+            EasyPhpField::TextField('name', 'Prénom'),
+            EasyPhpField::TextField('surname', 'Nom'),
         ];
         
         if($isAdmin) {
             
-            $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
-            $fields[] = easyPhpField::TextField('structure_id', 'Structure', false);
-            $fields[] = easyPhpField::BooleanField('isVerified', 'Vérifié');
+            $fields[] = EasyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
+            $fields[] = EasyPhpField::TextField('structure_id', 'Structure', false);
+            $fields[] = EasyPhpField::BooleanField('isVerified', 'Vérifié');
             
             $fields[] = AssociationField::new('structure_id', 'Structure')
             ->setRequired(false)
@@ -72,13 +72,13 @@ class UserCrudController extends AbstractCrudController
         }
         if( $selectedUser && $selectedUser->getId() !== null && !$isAdmin) {
             $fields[] = EasyPhpField::TextField('structure_id', 'Structure', true);
-            $fields[] = easyPhpField::PasswordField();
+            $fields[] = EasyPhpField::PasswordField();
         }
 
         if($selectedUser && $selectedUser->getId() !== null && $isAdmin) {
             $role = $selectedUser->getRoles()[0];
             $roleEnum = constant("App\\Enum\\Role::$role");
-            $fields[] = easyPhpField::ChoiceField('role', 'roles', 'Rôle',false, $roleEnum);
+            $fields[] = EasyPhpField::ChoiceField('role', 'roles', 'Rôle',false, $roleEnum);
 
         }
 

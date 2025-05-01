@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 
-class EasyPhpField
+class EasyPhpFieldService
 {
    public static function EmailField(string $fieldName, string $fieldLabel,  $data = null): TextField
   {

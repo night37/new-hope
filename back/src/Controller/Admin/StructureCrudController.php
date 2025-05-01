@@ -3,13 +3,28 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Structure;
-use \App\Service\EasyPhpField;
+use App\Service\EasyPhpFieldService as EasyPhpField;
 use App\Service\TimestampService;
+use App\Service\LocationService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
+
+
+
+
 class StructureCrudController extends AbstractCrudController
 {
+
+   
+
+    public function __construct(    
+    private TimestampService $timestampService, 
+    private LocationService $locationService
+    )
+    {}
+
+
     public static function getEntityFqcn(): string
     {
         return Structure::class;
@@ -25,22 +40,19 @@ class StructureCrudController extends AbstractCrudController
             EasyPhpField::TextField('city', 'Ville'),
             EasyPhpField::TelephoneField('phone', 'Téléphone'),
             EasyPhpField::TextField('email', 'Email'),
-            EasyPhpField::TextEditorField('description', 'Description'),
-            EasyPhpField::IntegerField('latitude', 'Latitude'),
-            EasyPhpField::IntegerField('longitude', 'Longitude'),
-
-
-            
+            EasyPhpField::TextEditorField('description', 'Description'),            
         ];
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        $timestampService = new TimestampService($entityInstance);   
-           
+     
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
-            $timestampService->getCreatedAt();
+            $this->timestampService->getCreatedAt($entityInstance);
+        }
+        if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
+            $this->locationService->getCoordinates($entityInstance);
         }
         
         parent::persistEntity($entityManager, $entityInstance);
@@ -49,9 +61,14 @@ class StructureCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        $timestampService = new TimestampService($entityInstance);  
+      
         if (method_exists($entityInstance, 'setUpdatedAt')) {
-            $timestampService->getUpdatedAt();
+            $this->timestampService->getUpdatedAt($entityInstance);
+            
+        }
+
+        if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
+            $this->locationService->getCoordinates($entityInstance);
         }
         parent::updateEntity($entityManager, $entityInstance);
     }
