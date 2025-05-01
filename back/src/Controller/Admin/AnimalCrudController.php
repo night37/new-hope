@@ -12,7 +12,7 @@ use App\Entity\Animal;
 use App\Enum\Affinity;
 use App\Enum\DateField;
 use App\Enum\AdoptionStatus;
-use App\Service\EasyPhpField;
+use App\Service\EasyPhpFieldService as EasyPhpField;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
@@ -40,21 +40,21 @@ class AnimalCrudController extends AbstractCrudController
 
 
         $fields = [
-            easyPhpField::ChoiceField('type', 'Type', 'type'),
-            easyPhpField::ChoiceField('breed', 'breed', 'Race', true),
-            easyPhpField::ImageField('thumbnail', 'Miniature', 'public/uploads/animals', 'uploads/animals', $require),
-            easyPhpField::ImageField('images', 'Photos', 'public/uploads/animals', 'uploads/animals',  $require, true),
-            easyPhpField::TextField('name', 'Nom'),
-            easyPhpField::IntegerField('age', 'Age'),
-            easyPhpField::ChoiceField('size', 'size', 'Taille'),
-            easyPhpField::TextEditorField('description', 'Description'),
-            easyPhpField::ChoiceField('color', 'color', 'Couleur'),
-            easyPhpField::ChoiceField('gender', 'gender', 'Sexe'),
-            easyPhpField::ChoiceField('affinity', 'affinity', 'Affinité',  true),
-            easyPhpField::ChoiceField('adoptionStatus', 'adoptionStatus', 'Statut d\'adoption', false, AdoptionStatus::Available),
-            easyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
-            easyPhpField::BooleanField('highlight', 'Mettre en avant'),
-            easyPhpField::BooleanField('isVisible', 'Publier'),
+            EasyPhpField::ChoiceField('type', 'Type', 'type'),
+            EasyPhpField::ChoiceField('breed', 'breed', 'Race', true),
+            EasyPhpField::ImageField('thumbnail', 'Miniature', 'public/uploads/animals', 'uploads/animals', $require),
+            EasyPhpField::ImageField('images', 'Photos', 'public/uploads/animals', 'uploads/animals',  $require, true),
+            EasyPhpField::TextField('name', 'Nom'),
+            EasyPhpField::IntegerField('age', 'Age'),
+            EasyPhpField::ChoiceField('size', 'size', 'Taille'),
+            EasyPhpField::TextEditorField('description', 'Description'),
+            EasyPhpField::ChoiceField('color', 'color', 'Couleur'),
+            EasyPhpField::ChoiceField('gender', 'gender', 'Sexe'),
+            EasyPhpField::ChoiceField('affinity', 'affinity', 'Affinité',  true),
+            EasyPhpField::ChoiceField('adoptionStatus', 'adoptionStatus', 'Statut d\'adoption', false, AdoptionStatus::Available),
+            EasyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
+            EasyPhpField::BooleanField('highlight', 'Mettre en avant'),
+            EasyPhpField::BooleanField('isVisible', 'Publier'),
         ];
        
         return $fields;
