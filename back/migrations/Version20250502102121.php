@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250428121419 extends AbstractMigration
+final class Version20250502102121 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,10 @@ final class Version20250428121419 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE animal CHANGE structure_id_id structure_id_id INT NOT NULL, CHANGE created_at created_at DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)', CHANGE updated_at updated_at DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)'
+            ALTER TABLE structure ADD structure_type VARCHAR(255) NOT NULL
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE user DROP structuretype
         SQL);
     }
 
@@ -29,7 +32,10 @@ final class Version20250428121419 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE animal CHANGE structure_id_id structure_id_id INT DEFAULT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)', CHANGE updated_at updated_at DATETIME DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)'
+            ALTER TABLE structure DROP structure_type
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE user ADD structuretype LONGTEXT NOT NULL COMMENT '(DC2Type:array)'
         SQL);
     }
 }

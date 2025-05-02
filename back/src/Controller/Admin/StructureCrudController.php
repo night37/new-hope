@@ -35,12 +35,13 @@ class StructureCrudController extends AbstractCrudController
     {
         return [
             EasyPhpField::TextField('name', 'Nom de la structure'),
+            EasyPhpField::ChoiceField('structureType', 'structureType', 'type de structure'),
             EasyPhpField::TextField('street', 'Rue'),
             EasyPhpField::IntegerField('zip_code', 'Code postal'),
             EasyPhpField::TextField('city', 'Ville'),
             EasyPhpField::TelephoneField('phone', 'Téléphone'),
             EasyPhpField::TextField('email', 'Email'),
-            EasyPhpField::TextEditorField('description', 'Description'),            
+            EasyPhpField::TextEditorField('description', 'Description'),       
         ];
     }
 
@@ -70,6 +71,7 @@ class StructureCrudController extends AbstractCrudController
         if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
             $this->locationService->getCoordinates($entityInstance);
         }
+
         parent::updateEntity($entityManager, $entityInstance);
     }
 
