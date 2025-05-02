@@ -31,11 +31,13 @@ class UserCrudController extends AbstractCrudController
 
     private $emailService;
     private $passwordHasher;
+    private $timestampService;
 
-    public function __construct(EmailService $emailService, UserPasswordHasherInterface $passwordHasher){
+    public function __construct(EmailService $emailService, UserPasswordHasherInterface $passwordHasher,TimestampService $timestampService){
 
-         $this->emailService = $emailService;
-            $this->passwordHasher = $passwordHasher;
+        $this->emailService = $emailService;
+        $this->passwordHasher = $passwordHasher;
+        $this->timestampService = $timestampService;
 
     }
 
@@ -102,12 +104,11 @@ class UserCrudController extends AbstractCrudController
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         $selectedUser = $this->getContext()->getEntity()->getInstance();
-        $timestampService = new TimestampService($entityInstance);   
         $selectedUser->setIsVerified(true);
           
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
-            $timestampService->getCreatedAt();
+            $this->timestampService->getCreatedAt($entityInstance);
         }
         
         parent::persistEntity($entityManager, $entityInstance);
@@ -124,9 +125,8 @@ class UserCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        $timestampService = new TimestampService($entityInstance);  
         if (method_exists($entityInstance, 'setUpdatedAt')) {
-            $timestampService->getUpdatedAt();
+            $this->timestampService->getUpdatedAt($entityInstance);
         }
         parent::updateEntity($entityManager, $entityInstance);
     }

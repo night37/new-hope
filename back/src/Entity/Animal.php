@@ -231,7 +231,7 @@ class Animal
     public function setAdoptionStatus(?AdoptionStatus $adoption_status): self
     {
         if (is_string($adoption_status)) {
-            $size = AdoptionStatus::from($adoption_status); // Convertir chaîne -> Enum (throw si invalide)
+            $adoption_status = AdoptionStatus::from($adoption_status); // Convertir chaîne -> Enum (throw si invalide)
         }
 
     // Assigner l'instance (ou null) à la propriété

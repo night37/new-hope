@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\StructureType;
 use App\Repository\StructureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,7 +36,7 @@ class Structure
     private ?string $city = null;
 
     #[ORM\Column]
-    private ?int $phone = null;
+    private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -60,6 +61,9 @@ class Structure
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(enumType: StructureType::class)]
+    private ?StructureType $StructureType = null;
 
     public function __construct()
     {
@@ -119,12 +123,12 @@ class Structure
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(int $phone): static
+    public function setPhone(string $phone): static
     {
         $this->phone = $phone;
 
@@ -231,5 +235,21 @@ class Structure
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getStructureType(): ?StructureType
+    {
+        return $this->StructureType;
+    }
+
+    public function setStructureType(StructureType $StructureType): static
+    {
+    
+        $this->StructureType = $StructureType;
+      
+
+        return $this;
+
+        
     }
 }

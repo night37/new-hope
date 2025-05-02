@@ -9,12 +9,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;      
-
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;      
 
 
 class EasyPhpFieldService
@@ -164,6 +165,21 @@ class EasyPhpFieldService
   }
   public static function TelephoneField(string $phoneNumber): TelephoneField
   {
-    return TelephoneField::new($phoneNumber);
+    $phoneNumberField = TelephoneField::new($phoneNumber);
+    $phoneNumberField->setLabel('Téléphone');
+    
+    return $phoneNumberField;
   }
+
+  public static function AssociationField(string $fieldName, string $fieldLabel): AssociationField
+  {
+    return AssociationField::new($fieldName, $fieldLabel)
+      ->setRequired(false)
+      ->autocomplete()
+      ->setFormTypeOption('attr', [
+        'class' => 'form-control',
+        'placeholder' => 'Sélectionner une option',
+      ]);
+  }
+
 }

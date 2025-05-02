@@ -26,6 +26,12 @@ use App\Service\TimestampService;
 
 class AnimalCrudController extends AbstractCrudController
 {
+
+    public function __construct(
+        private TimestampService $timestampService,
+    )
+    {
+    }
     public static function getEntityFqcn(): string
     {
         return Animal::class;
@@ -70,10 +76,10 @@ class AnimalCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        $timestampService = new TimestampService($entityInstance);        
+              
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
-            $timestampService->getCreatedAt();
+            $this->timestampService->getCreatedAt($entityInstance);
         }
         
         parent::persistEntity($entityManager, $entityInstance);
@@ -81,9 +87,9 @@ class AnimalCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        $timestampService = new TimestampService($entityInstance);  
         if (method_exists($entityInstance, 'setUpdatedAt')) {
-            $timestampService->getUpdatedAt();
+            
+            $this->timestampService->getUpdatedAt($entityInstance);
         }
         parent::updateEntity($entityManager, $entityInstance);
     }
