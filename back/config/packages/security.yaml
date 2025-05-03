@@ -16,13 +16,14 @@ security:
       security: false
     main:
       lazy: true
-      provider: users_in_memory
+      provider: app_user_provider
       custom_authenticator: App\Security\LoginAuthenticator
       form_login:
         username_parameter: email
         login_path: app_login
         check_path: app_login
         enable_csrf: true
+        target_path_parameter: _target_path
       entry_point: form_login
       logout:
         path: app_logout
@@ -50,7 +51,9 @@ security:
   access_control:
     - { path: ^/user/\d+/edit, roles: [ROLE_ADMIN, ROLE_USER] }
     - { path: ^/user, roles: [ROLE_ADMIN] }
+    - { path: ^/animal, roles: [ROLE_ADMIN, ROLE_USER] }
     - { path: ^/structure, roles: [ROLE_ADMIN] }
+    - { path: ^/demande-nouvelle-struture, roles: [ROLE_ADMIN, ROLE_USER] }
 
 when@test:
   security:

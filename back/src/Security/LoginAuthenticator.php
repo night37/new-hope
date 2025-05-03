@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,12 +43,10 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     $email = $request->request->get('email', '');
     $password = $request->request->get('password', '');
 
-    // Vérifiez que les valeurs d'email et de password sont bien récupérées
     if (!$email || !$password) {
         throw new CustomUserMessageAuthenticationException('Email ou mot de passe manquant');
     }
 
-    // Retourne l'objet Passport
     return new Passport(
         new UserBadge($email, function ($userIdentifier) {
             $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
@@ -68,15 +67,26 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        $user = $token->getUser();
+    
+        if ($user instanceof User && !$user->isVerified()) {
+            $request->getSession()->getFlashBag()->add('danger', 
+                'Vous devez vérifier votre email avant de pouvoir accéder à votre compte.'
+            );
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
+        }
+    
+        if ($targetPath = $request->getSession()->get('_security.main.target_path')) {
+            $request->getSession()->remove('_security.main.target_path');
+            return new RedirectResponse($targetPath);
+        }
+    
+        return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 
-        protected function getLoginUrl(Request $request): string
-        {
-            return $this->urlGenerator->generate(self::LOGIN_ROUTE);
-        }
+    protected function getLoginUrl(Request $request): string
+    {
+        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
     }

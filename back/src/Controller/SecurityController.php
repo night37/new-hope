@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\EmailService;
+use App\Security\EmailVerifier;
+use App\Repository\UserRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use App\Repository\UserRepository;
-use App\Security\EmailVerifier;
-use Symfony\Component\HttpFoundation\Request;
-use App\Service\EmailService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
@@ -33,24 +34,49 @@ class SecurityController extends AbstractController
 
 
     #[Route(path: '/connexion', name: 'app_login')]                                                             
-    public function login(): Response
+    public function login(Request $request): Response
     {
-
-        if ($this->getUser()) {
-            $response = $this->emailService->verifyEmail($this->getUser(), $this->getUser()->getEmail());
-            if ($response) {
-                return $response;
+        // Sauvegarde du chemin cible
+        $targetPath = $request->getSession()->get('_security.main.target_path');
+        
+        if (!$targetPath && $request->headers->get('referer')) {
+            $referer = $request->headers->get('referer');
+            // Évitez de rediriger vers la page de connexion
+            if (!str_contains($referer, 'connexion')) {
+                $request->getSession()->set('_security.main.target_path', $referer);
             }
         }
     
+        // Si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            // Vérifier si l'email est vérifié
+            if (!$this->getUser()->isVerified()) {
+                // Si non vérifié, rediriger vers la vérification
+                return $this->emailService->sendVerificationEmail($this->getUser()->getEmail());
+            }
+            
+            // Si vérifié et qu'on a un target_path, l'utiliser
+            if ($targetPath) {
+                return new RedirectResponse($targetPath);
+            }
+            
+            // Sinon rediriger vers la page de profil
+            return new RedirectResponse('/user/'.$this->getUser()->getId().'/edit');
+        }
+        
+        // Code pour afficher le formulaire de connexion
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
-
+    
         if($error){
             $this->addFlash('danger', 'Identifiants invalides.');
         }
         
-        return $this->render('security/login.html.twig', ['email' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'email' => $lastUsername, 
+            'error' => $error,
+            'target_path' => $request->getSession()->get('_security.main.target_path')
+        ]);
     }
 
 
