@@ -42,7 +42,7 @@ class AnimalCrudController extends AbstractCrudController
     {
       
         $require = $pageName != "edit";
-   
+        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
 
 
         $fields = [
@@ -61,8 +61,13 @@ class AnimalCrudController extends AbstractCrudController
             EasyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
             EasyPhpField::BooleanField('highlight', 'Mettre en avant'),
             EasyPhpField::BooleanField('isVisible', 'Publier'),
+            
         ];
-       
+        if($isAdmin) {
+            $fields[] = EasyPhpField::AssociationField('structure_id', 'structure_id', 'Structure', 'structure_id', true, false, true);
+        } 
+
+
         return $fields;
     }
     public function configureAssets(Assets $assets): Assets

@@ -41,7 +41,7 @@ class EmailService {
 
         $id = $user->getId();
 
-        return new RedirectResponse('/user/'.$id.'/edit');  
+        // return new RedirectResponse('/user/'.$id.'/edit');  
     }
       
     public function sendVerificationEmail($email) 
