@@ -34,7 +34,7 @@ final class StructureController extends AbstractController
         ]);
     }
 
-    #[Route('/demande-nouvelle-struture', name: 'app_create_structure')]
+    #[Route('/demande-creation-struture', name: 'app_create_structure')]
     public function createStructureRequest(Request $request, EntityManagerInterface $entityManager): Response
     {
         $structure = new Structure();
@@ -45,6 +45,7 @@ final class StructureController extends AbstractController
             $structure = $form->getData();
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
+            $structure->setIsActif(false);
             $this->locationService->getCoordinates($structure);
         
 

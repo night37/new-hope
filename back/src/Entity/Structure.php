@@ -65,6 +65,11 @@ class Structure
     #[ORM\Column(enumType: StructureType::class)]
     private ?StructureType $StructureType = null;
 
+
+
+    #[ORM\Column]
+    private ?bool $isActif = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -251,5 +256,18 @@ class Structure
         return $this;
 
         
+    }
+
+    public function isActif(): ?bool
+    {
+        return $this->isActif;
+    }
+
+
+    public function setIsActif(bool $isActif): static
+    {
+        $this->isActif = $isActif;
+
+        return $this;
     }
 }

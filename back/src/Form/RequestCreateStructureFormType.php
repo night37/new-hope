@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Structure;
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -87,7 +88,7 @@ class RequestCreateStructureFormType extends AbstractType
                     'class' => 'block text-sm font-medium text-gray-700'
                 ],
                 'attr' => [
-                    'placeholder' => 'Entrez une description',
+                    'placeholder' => 'Entrez la description de la structure',
                     'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
                     'rows' => 4
                 ]
@@ -103,6 +104,20 @@ class RequestCreateStructureFormType extends AbstractType
                     'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
                 ]
             ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha',
+                'label_attr' => [
+                    'class' => 'block text-sm font-medium text-gray-700'
+                ],
+                'attr' => [
+                    'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                ],
+                'session_key' => 'captcha',
+                'invalid_message' => 'Captcha incorrect.',
+                'height' => 38,
+                'width' => 200,
+                'humanity' => 1,
+            ])    
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer la structure',
