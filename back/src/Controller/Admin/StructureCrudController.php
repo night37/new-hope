@@ -33,7 +33,9 @@ class StructureCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        return [
+
+        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
+        $field =  [
             EasyPhpField::TextField('name', 'Nom de la structure'),
             EasyPhpField::ChoiceField('structureType', 'structureType', 'type de structure'),
             EasyPhpField::TextField('street', 'Rue'),
@@ -43,6 +45,13 @@ class StructureCrudController extends AbstractCrudController
             EasyPhpField::TextField('email', 'Email'),
             EasyPhpField::TextEditorField('description', 'Description'),       
         ];
+
+        if ($isAdmin) {
+            $field[] =  EasyPhpField::BooleanField('isActif', 'actif');
+            
+        } 
+
+        return $field;
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
