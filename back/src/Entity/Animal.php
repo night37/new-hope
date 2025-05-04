@@ -2,20 +2,33 @@
 
 namespace App\Entity;
 
-use App\Enum\AdoptionStatus;
-use App\Enum\Affinity;
-use App\Enum\Gender;
-use App\Enum\Breed;
 use App\Enum\Size;
 use App\Enum\Type;
+use App\Enum\Breed;
 use App\Enum\Color;
-use App\Repository\AnimalRepository;
+use App\Enum\Gender;
+use App\Enum\Affinity;
+use App\Enum\AdoptionStatus;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnimalRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use function PHPSTORM_META\map;
+
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[Vich\Uploadable]
+#[ApiResource(
+    normalizationContext: ['groups' => ['animal:read']],
+    operations: [
+        new Get(),
+        new GetCollection()
+
+    ]
+    
+)]
 class Animal
 {
 
@@ -33,53 +46,68 @@ class Animal
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(enumType: Gender::class)]
     private ?Gender $gender = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column]
     private ?int $age = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure_id = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column]
     private ?bool $out_department = null;
 
     #[ORM\Column]
+    #[Groups(['animal:read'])]
     private ?bool $highlight = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(enumType: Size::class)]
     private ?Size $size = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(enumType: Color::class)]
     private ?Color $color = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(type: 'json')]
     private array $affinity = [];
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(enumType: AdoptionStatus::class)]
     private ?AdoptionStatus $adoption_status = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(type: 'json')]
     private array $breed = [];
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(enumType: Type::class)]
     private ?Type $type = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(length: 255)]
     private ?string $thumbnail = null;
 
-        
+    #[Groups(['animal:read'])]
     #[ORM\Column(type: 'json')]
     private $images = [];
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column]
     private ?bool $isVisible = null;
 

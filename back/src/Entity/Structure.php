@@ -3,11 +3,23 @@
 namespace App\Entity;
 
 use App\Enum\StructureType;
-use App\Repository\StructureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use App\Repository\StructureRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    normalizationContext: ['groups' => ['animal:read']],
+    operations: [
+        new Get(),
+        new GetCollection()
+
+    ]    
+)]
 #[ORM\Entity(repositoryClass: StructureRepository::class)]
 class Structure
 {
@@ -23,6 +35,7 @@ class Structure
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['animal:read'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
