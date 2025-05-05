@@ -15,8 +15,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;      
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class EasyPhpFieldService
 {
@@ -171,15 +171,18 @@ class EasyPhpFieldService
     return $phoneNumberField;
   }
 
-  public static function AssociationField(string $fieldName, string $fieldLabel): AssociationField
+  public static function AssociationField(string $fieldName, string $fieldLabel, Bool $disabled = false): AssociationField
   {
     return AssociationField::new($fieldName, $fieldLabel)
       ->setRequired(false)
+
       ->autocomplete()
       ->setFormTypeOption('attr', [
         'class' => 'form-control',
         'placeholder' => 'Sélectionner une option',
-      ]);
+        'disabled' => $disabled,
+      ])
+      ->addCssClass( $disabled ? 'remove-delete-btn' : '');
   }
 
 }

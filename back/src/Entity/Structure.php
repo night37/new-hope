@@ -258,6 +258,7 @@ class Structure
 
     public function removeAnimal(Animal $animal): static
     {
+      
         if ($this->animal->removeElement($animal)) {
             // set the owning side to null (unless already changed)
             if ($animal->getStructureId() === $this) {
@@ -267,6 +268,7 @@ class Structure
 
         return $this;
     }
+    
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {

@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Structure;
-use App\Service\EasyPhpFieldService as EasyPhpField;
-use App\Service\TimestampService;
 use App\Service\LocationService;
+use App\Service\TimestampService;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use App\Service\EasyPhpFieldService as EasyPhpField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
@@ -44,8 +46,8 @@ class StructureCrudController extends AbstractCrudController
             EasyPhpField::TelephoneField('phone', 'Téléphone'),
             EasyPhpField::TextField('email', 'Email'),
             EasyPhpField::TextEditorField('description', 'Description'),
-            EasyPhpField::AssociationField('users', 'membres'),
-            EasyPhpField::AssociationField('animal', 'animaux')
+            EasyPhpField::AssociationField('users', 'membres', true),
+            EasyPhpField::AssociationField('animal', 'animaux', true)
         ];
 
         if ($isAdmin) {
@@ -73,6 +75,7 @@ class StructureCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+     
       
         if (method_exists($entityInstance, 'setUpdatedAt')) {
             $this->timestampService->getUpdatedAt($entityInstance);
@@ -85,6 +88,28 @@ class StructureCrudController extends AbstractCrudController
 
         parent::updateEntity($entityManager, $entityInstance);
     }
+
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if (!$entityInstance instanceof Structure) {
+            return;
+        }
+      
+        try {
+            parent::deleteEntity($entityManager, $entityInstance);
+        }
+        catch (\Exception $e) {
+            $this->addFlash('danger', 'Impossible de supprimer cette structure car des animaux lui sont associés.');
+        }
+    }
+    public function configureAssets(Assets $assets): Assets
+    {
+        return $assets
+            ->addCssFile(Asset::new('css/admin/fields/fields.css'));
+    }
+
+
+    
 
     
 }
