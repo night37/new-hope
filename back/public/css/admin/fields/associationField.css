@@ -1,0 +1,6 @@
+.remove-delete-btn {
+  .remove {
+    background-color: red;
+    display: none !important;
+  }
+}
