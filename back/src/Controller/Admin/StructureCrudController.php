@@ -43,7 +43,9 @@ class StructureCrudController extends AbstractCrudController
             EasyPhpField::TextField('city', 'Ville'),
             EasyPhpField::TelephoneField('phone', 'Téléphone'),
             EasyPhpField::TextField('email', 'Email'),
-            EasyPhpField::TextEditorField('description', 'Description'),       
+            EasyPhpField::TextEditorField('description', 'Description'),
+            EasyPhpField::AssociationField('users', 'membres'),
+            EasyPhpField::AssociationField('animal', 'animaux')
         ];
 
         if ($isAdmin) {

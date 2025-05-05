@@ -24,6 +24,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+
+    public function __toString(): string
+    {
+        return "$this->name "."$this->surname"  ?? '';
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,6 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Structure $structure_id = null;
 
     #[ORM\Column(length: 100)]

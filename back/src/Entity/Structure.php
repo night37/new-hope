@@ -11,6 +11,7 @@ use App\Repository\StructureRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\Animal;
 
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
@@ -23,7 +24,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: StructureRepository::class)]
 class Structure
 {
-
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->animal = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -66,8 +71,11 @@ class Structure
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure_id')]
-    private Collection $users;
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure_id',cascade: ['persist'])]
+    private Collection $users; 
+
+    #[ORM\OneToMany(mappedBy: 'structure_id', targetEntity: Animal::class)]
+    private Collection $animal;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -83,10 +91,7 @@ class Structure
     #[ORM\Column]
     private ?bool $isActif = null;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -225,6 +230,38 @@ class Structure
             // set the owning side to null (unless already changed)
             if ($user->getStructureId() === $this) {
                 $user->setStructureId(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimal(): Collection
+    {
+    
+        return $this->animal;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animal->contains($animal)) {
+            $this->animal->add($animal);
+            $animal->setStructureId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): static
+    {
+        if ($this->animal->removeElement($animal)) {
+            // set the owning side to null (unless already changed)
+            if ($animal->getStructureId() === $this) {
+                $animal->setStructureId(null);
             }
         }
 
