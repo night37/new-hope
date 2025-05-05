@@ -64,12 +64,24 @@ class AnimalCrudController extends AbstractCrudController
             
         ];
         if($isAdmin) {
-            $fields[] = EasyPhpField::AssociationField('structure_id', 'structure_id', 'Structure', 'structure_id', true, false, true);
+            $fields[] = EasyPhpField::AssociationField('structure_id', 'structure');
         } 
 
 
         return $fields;
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInPlural('Animaux')
+            ->setEntityLabelInSingular('Animal')
+            ->setPageTitle('index', 'Animaux')
+            ->setPageTitle('new', 'Ajouter un animal')
+            ->setPageTitle('edit', 'Modifier un animal');
+
+    }
+
     public function configureAssets(Assets $assets): Assets
     {
         return $assets

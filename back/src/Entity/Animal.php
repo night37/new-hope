@@ -34,6 +34,12 @@ class Animal
 
     private ?\DateTimeInterface $created_at = null;
 
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
+
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
