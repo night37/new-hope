@@ -25,7 +25,7 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v4
-    - name: go to back working directory
+    - name: change working directory to back
       working-directory: ./back
     # - name: Copy .env.test.local
     #   run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
