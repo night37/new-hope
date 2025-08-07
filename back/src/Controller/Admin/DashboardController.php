@@ -82,15 +82,19 @@ class DashboardController extends AbstractDashboardController
 
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($this->getUser()->getId())->setPermission('ROLE_USER');
-        yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
-            MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
-            MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),
-        ]);
-        MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index')->setPermission('ROLE_USER');
-        yield MenuItem::subMenu('gestion des structures', 'fas fa-list')->setSubItems([
-            MenuItem::linkToCrud('liste des structures', 'fas fa-list', Structure::class)->setAction('index'),
-            MenuItem::linkToCrud('ajouter une structure', 'fas fa-plus', Structure::class)->setAction('new'),
-        ])->setPermission('ROLE_ADMIN');
+
+  
+        if($this->getUser()->getStructureId() != null) {
+            yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
+                MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
+                MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),
+            ]);
+            MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index')->setPermission('ROLE_USER');
+            yield MenuItem::subMenu('gestion des structures', 'fas fa-list')->setSubItems([
+                MenuItem::linkToCrud('liste des structures', 'fas fa-list', Structure::class)->setAction('index'),
+                MenuItem::linkToCrud('ajouter une structure', 'fas fa-plus', Structure::class)->setAction('new'),
+            ])->setPermission('ROLE_ADMIN');
+        }
         if(isset($structureId)) {
             yield MenuItem::linkToCrud('gérer ma structure', 'fas fa-list', Structure::class)->setAction('edit')->setEntityId($structureId)->setPermission('ROLE_USER');
         } 
