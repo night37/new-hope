@@ -15,7 +15,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
-#[AdminDashboard(routePath: '/', routeName: 'admin')]
+
+
+
+
+
+#[AdminDashboard(routePath: 'backoffice', routeName: 'admin')]
+
 class DashboardController extends AbstractDashboardController
 {
 
