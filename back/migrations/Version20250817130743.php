@@ -44,4 +44,4 @@ final class Version20250817130743 extends AbstractMigration
             ALTER TABLE structure DROP is_active
         SQL);
     }
-}
+# (Delete the entire file: back/migrations/Version20250817130743.php)
