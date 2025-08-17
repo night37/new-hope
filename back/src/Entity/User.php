@@ -108,14 +108,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
     
-        // dd($this->roles);
         return $this->roles;
     }
 
     public function setRoles(Role|Array $roles): self
     {
-   
-        if ($roles === Role::ROLE_ADMIN) {
+      
+        if ($roles[0] === Role::ROLE_ADMIN->value) {
             $this->roles = ['ROLE_ADMIN'];
         } else {
             $this->roles = ['ROLE_USER'];
@@ -222,6 +221,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setIsActive(bool $isActive): static
     {
+        
         $this->isActive = $isActive;
 
         return $this;

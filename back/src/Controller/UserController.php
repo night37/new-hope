@@ -40,6 +40,7 @@ final class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(['ROLE_USER']);
             $user->setIsVerified(false);
+            $user->setIsActive(false);
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setUpdatedAt(new \DateTimeImmutable());
             $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
@@ -50,8 +51,7 @@ final class UserController extends AbstractController
             $entityManager->flush();
             
             $this->emailService->sendEmailConfirmation($user, false);
-           
-            $this->addFlash('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
+            $this->emailService->displayMessage('success','Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.'); 
 
         } catch (UniqueConstraintViolationException $e) {
             $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
@@ -82,12 +82,18 @@ final class UserController extends AbstractController
             $this->addFlash('error', 'une erreur est survenue lors de la vérification de votre compte.(user null)');
         }
         try {
-            $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, $user->getId(), $user->getEmail());
-            $user->setIsVerified(true);
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('success', 'Votre compte a été vérifié avec succès. Vous pouvez maintenant vous connecter.');
+            if(!$user->isVerified()){
+                $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, $user->getId(), $user->getEmail());
+                $user->setIsVerified(true);
+                $user->setIsActive(true);
+                $user->setUpdatedAt(new \DateTimeImmutable());
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->emailService->displayMessage('success','Votre compte a été vérifié avec succès. Vous pouvez maintenant vous connecter.'); 
+            }else{
+                $this->emailService->displayMessage('info','Votre compte est déjà vérifié.'); 
+            }
+           
 
 
         } catch (VerifyEmailExceptionInterface $exception) {
