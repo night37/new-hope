@@ -95,7 +95,6 @@ class Structure
     private ?bool $isActive = null;
 
 
-    private ?bool $isActive = null;
     public function getId(): ?int
     {
         return $this->id;
