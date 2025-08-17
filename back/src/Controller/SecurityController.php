@@ -35,6 +35,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/')]
     public function index(): Response
     {
+    
         return $this->redirectToRoute('app_login');
     }
 
@@ -67,7 +68,7 @@ class SecurityController extends AbstractController
             }
             
             // Sinon rediriger vers la page de profil 
-            return new RedirectResponse('/user/'.$this->getUser()->getId().'/edit');
+            return new RedirectResponse('/backoffice/user/'.$this->getUser()->getId().'/edit');
         }
         
         // Code pour afficher le formulaire de connexion

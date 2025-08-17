@@ -35,12 +35,12 @@ class SetAdminRoleCommand extends Command
         $email = $input->getArgument('email');
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['email' => $email]);
-
+        
         if (!$user) {
             $output->writeln('User not found');
             return Command::FAILURE;
         }
-
+        
         $user->setRoles(['ROLE_ADMIN']);
         $this->entityManager->flush();
 
