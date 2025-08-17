@@ -91,8 +91,11 @@ class Structure
     #[ORM\Column]
     private ?bool $isActif = null;
 
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
 
+    private ?bool $isActive = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -319,6 +322,18 @@ class Structure
     public function setIsActif(bool $isActif): static
     {
         $this->isActif = $isActif;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
