@@ -1,9 +1,9 @@
+login_page:
+    path: /
+    controller: App\Controller\SecurityController::index
 controllers:
   resource:
     path: ../src/Controller/
     namespace: App\Controller
   type: attribute
   prefix: /backoffice
-test_root:
-    path: /
-    controller: App\Controller\Admin\DashboardController::index

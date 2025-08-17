@@ -40,8 +40,7 @@ class EmailService {
         }
 
         $id = $user->getId();
-
-        // return new RedirectResponse('/user/'.$id.'/edit');  
+        return new RedirectResponse('/user/'.$id.'/edit');  
     }
       
     public function sendVerificationEmail($email) 
@@ -57,9 +56,9 @@ class EmailService {
         $request->getSession()->invalidate();
         
         $session = $this->requestStack->getSession();
-        $session->getFlashBag()->add('danger', 
-            'Vous n\'avez pas encore confirmé votre adresse e-mail ! Veuillez cliquer sur le lien contenu dans l\'e-mail que nous vous avons envoyé.</br> Si vous ne l\'avez pas reçu ou si le lien a expiré, <a class="text-blue-600" href="' . $resendLink . '">cliquez ici</a> pour en recevoir un nouveau.'
-        );
+        self::displayMessage('danger', 'Vous n\'avez pas encore confirmé votre adresse e-mail ! Veuillez cliquer sur le lien contenu dans l\'e-mail que nous vous avons envoyé.</br> Si vous ne l\'avez pas reçu ou si le lien a expiré, <a class="text-blue-600" href="' . $resendLink . '">cliquez ici</a> pour en recevoir un nouveau.');
+
+
 
         return new RedirectResponse($this->router->generate('app_login'));
     }
@@ -68,21 +67,20 @@ class EmailService {
     {
 
         $email = $request->query->get('email');
-        $session = $this->requestStack->getSession();
+      
         if (!$email) {
-            $session->getFlashBag()->add('danger', 'Aucune adresse email fournie.');
+            self::displayMessage('danger', 'Aucune adresse email fournie.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
         
-        $user = $userRepository->findOneBy(['email' => $email]);
-        
+        $user = $userRepository->findOneBy(['email' => $email]);       
         if (!$user) {
-            $session->getFlashBag()->add('danger', 'L\'adresse email n\'est pas associée à un compte.');
+            self::displayMessage('danger', 'L\'adresse email n\'est pas associée à un compte.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
         
         if ($user->isVerified()) {
-            $session->getFlashBag()->add('info', 'Votre compte est déjà vérifié. Vous pouvez vous connecter.');
+            self::displayMessage('info', 'Votre compte est déjà vérifié. Vous pouvez vous connecter.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
         
@@ -99,8 +97,7 @@ class EmailService {
             $email,
             false
         );
-        
-        $session->getFlashBag()->add('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
+        self::displayMessage('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
         return new RedirectResponse($this->router->generate('app_login'));
     }
 
@@ -115,6 +112,14 @@ class EmailService {
             ->context([
                 'user' => $user,
             ]), $sendResetPassword);
+    }
+
+
+    public function displayMessage( string $type, string $message): void 
+    {
+        $session = $this->requestStack->getSession();
+        $session->getFlashBag()->add( $type, $message);
+
     }
 
    

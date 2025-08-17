@@ -67,6 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?bool $isActive = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,14 +108,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
     
-        // dd($this->roles);
         return $this->roles;
     }
 
     public function setRoles(Role|Array $roles): self
     {
-   
-        if ($roles === Role::ROLE_ADMIN) {
+      
+        if ($roles[0] === Role::ROLE_ADMIN->value) {
             $this->roles = ['ROLE_ADMIN'];
         } else {
             $this->roles = ['ROLE_USER'];
@@ -208,6 +210,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        
+        $this->isActive = $isActive;
 
         return $this;
     }
