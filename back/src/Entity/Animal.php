@@ -125,6 +125,9 @@ class Animal
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt;
 
+    #[ORM\Column]
+    private ?bool $isActive = null;
+
     // --- Getters and Setters ---
 
     public function getId(): ?int
@@ -395,6 +398,18 @@ class Animal
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
