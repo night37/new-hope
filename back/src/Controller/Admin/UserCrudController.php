@@ -64,16 +64,16 @@ class UserCrudController extends AbstractCrudController
         if($isAdmin) {
             
             $fields[] = EasyPhpField::ChoiceField('role', 'roles', 'Rôle',false);
-            $fields[] = EasyPhpField::TextField('structure_id', 'Structure', false);
+            $fields[] = EasyPhpField::TextField('structure', 'Structure', false);
             $fields[] = EasyPhpField::BooleanField('isVerified', 'Vérifié');
             
-            $fields[] = AssociationField::new('structure_id', 'Structure')
+            $fields[] = AssociationField::new('structure', 'Structure')
             ->setRequired(false)
             ->autocomplete();
             
         }
         if( $selectedUser && $selectedUser->getId() !== null && !$isAdmin) {
-            $fields[] = EasyPhpField::TextField('structure_id', 'Structure', true);
+            $fields[] = EasyPhpField::TextField('structure', 'Structure', true);
             $fields[] = EasyPhpField::PasswordField();
         }
 

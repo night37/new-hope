@@ -71,10 +71,10 @@ class Structure
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure_id',cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure',cascade: ['persist'])]
     private Collection $users; 
 
-    #[ORM\OneToMany(mappedBy: 'structure_id', targetEntity: Animal::class)]
+    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Animal::class)]
     private Collection $animal;
 
     #[ORM\Column]
@@ -86,10 +86,6 @@ class Structure
     #[ORM\Column(enumType: StructureType::class)]
     private ?StructureType $StructureType = null;
 
-
-
-    #[ORM\Column]
-    private ?bool $isActif = null;
 
     #[ORM\Column]
     private ?bool $isActive = null;
@@ -230,8 +226,8 @@ class Structure
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getStructureId() === $this) {
-                $user->setStructureId(null);
+            if ($user->getStructure() === $this) {
+                $user->setStructure(null);
             }
         }
 
@@ -252,7 +248,7 @@ class Structure
     {
         if (!$this->animal->contains($animal)) {
             $this->animal->add($animal);
-            $animal->setStructureId($this);
+            $animal->setStructure($this);
         }
 
         return $this;
@@ -263,8 +259,8 @@ class Structure
       
         if ($this->animal->removeElement($animal)) {
             // set the owning side to null (unless already changed)
-            if ($animal->getStructureId() === $this) {
-                $animal->setStructureId(null);
+            if ($animal->getStructure() === $this) {
+                $animal->setStructure(null);
             }
         }
 
@@ -312,23 +308,11 @@ class Structure
         
     }
 
-    public function isActif(): ?bool
-    {
-        return $this->isActif;
-    }
-
-
-    public function setIsActif(bool $isActif): static
-    {
-        $this->isActif = $isActif;
-
-        return $this;
-    }
-
     public function isActive(): ?bool
     {
         return $this->isActive;
     }
+
 
     public function setIsActive(bool $isActive): static
     {
