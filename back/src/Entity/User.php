@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?Structure $structure_id = null;
+    private ?Structure $structure = null;
 
     #[ORM\Column(length: 100)]
     private ?string $name = null;
@@ -113,24 +113,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(Role|Array $roles): self
     {
-      
-        if ($roles[0] === Role::ROLE_ADMIN->value) {
-            $this->roles = ['ROLE_ADMIN'];
-        } else {
-            $this->roles = ['ROLE_USER'];
-        }
-
+        $this->roles = [$roles->name];
         return $this;
     }
 
-    public function getStructureId(): ?Structure
+    public function getStructure(): ?Structure
     {
-        return $this->structure_id;
+        return $this->structure;
     }
 
-    public function setStructureId(?Structure $structure_id): static
+    public function setStructure(?Structure $structure): static
     {
-        $this->structure_id = $structure_id;
+        $this->structure = $structure;
 
         return $this;
     }

@@ -64,7 +64,7 @@ class AnimalCrudController extends AbstractCrudController
             
         ];
         if($isAdmin) {
-            $fields[] = EasyPhpField::AssociationField('structure_id', 'structure');
+            $fields[] = EasyPhpField::AssociationField('structure', 'structure');
         } 
 
 
