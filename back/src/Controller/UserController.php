@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Enum\Role;
 use App\Form\UserType;
 use App\Service\EmailService;
 use App\Security\EmailVerifier;
@@ -38,7 +39,7 @@ final class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(Role::ROLE_USER);
             $user->setIsVerified(false);
             $user->setIsActive(false);
             $user->setCreatedAt(new \DateTimeImmutable());
@@ -67,7 +68,7 @@ final class UserController extends AbstractController
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $id = $request->query->get('id'); // retrieve the user id from the url  
+        $id = $request->query->get('id'); 
 
         if (null === $id) {
             return $this->redirectToRoute('app_login');
@@ -102,7 +103,6 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
 
         return $this->redirectToRoute('app_login');
     }

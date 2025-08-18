@@ -45,7 +45,7 @@ final class StructureController extends AbstractController
             $structure = $form->getData();
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
-            $structure->setIsActif(false);
+            $structure->setIsActive(false);
             $this->locationService->getCoordinates($structure);
         
 
@@ -57,10 +57,7 @@ final class StructureController extends AbstractController
             }
 
 
-            // Traiter les données (par exemple, enregistrer dans la base de données)
-            // ...
 
-            // Rediriger ou afficher un message de succès
             return $this->redirectToRoute('app_create_structure');
         }
         

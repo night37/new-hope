@@ -79,7 +79,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
 
-        $structureId = $this->getUser()->getStructureId();
+        $structureId = $this->getUser()->getStructure();
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::subMenu('gestion de comptes', 'fas fa-list')->setSubItems([
             MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
@@ -90,7 +90,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($this->getUser()->getId())->setPermission('ROLE_USER');
 
   
-        if($this->getUser()->getStructureId() != null) {
+        if($this->getUser()->getStructure() != null) {
             yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
                 MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
                 MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),

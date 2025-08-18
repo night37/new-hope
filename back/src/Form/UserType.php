@@ -106,6 +106,7 @@ class UserType extends AbstractType
                 ],
                 'session_key' => 'captcha',
                 'invalid_message' => 'Captcha incorrect.',
+                'bypass_code'=> "test",
                 'height' => 38,
                 'width' => 200,
                 'humanity' => 1,

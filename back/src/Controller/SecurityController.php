@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class SecurityController extends AbstractController
 {
@@ -42,32 +43,16 @@ class SecurityController extends AbstractController
 
     #[Route(path: '/connexion', name: 'app_login')]                                                             
     public function login(Request $request): Response
-    {
-        // Sauvegarde du chemin cible
-        $targetPath = $request->getSession()->get('_security.main.target_path');
-        
-        if (!$targetPath && $request->headers->get('referer')) {
-            $referer = $request->headers->get('referer');
-            // Évitez de rediriger vers la page de connexion
-            if (!str_contains($referer, 'connexion')) {
-                $request->getSession()->set('_security.main.target_path', $referer);
-            }
-        }
-    
-        // Si l'utilisateur est déjà connecté
+    {        
         if ($this->getUser()) {
-            // Vérifier si l'email est vérifié
             if (!$this->getUser()->isVerified()) {
-                // Si non vérifié, rediriger vers la vérification
                 return $this->emailService->sendVerificationEmail($this->getUser()->getEmail());
+            }else if (!$this->getUser()->isActive()){
+                EmailService::displayMessage('danger',"Votre compte n'est pas activé, veuillez vous contacter l'administrateur");
+                return new RedirectResponse('/');
+                
             }
-            
-            // Si vérifié et qu'on a un target_path, l'utiliser
-            if ($targetPath) {
-                return new RedirectResponse($targetPath);
-            }
-            
-            // Sinon rediriger vers la page de profil 
+
             return new RedirectResponse('/backoffice/user/'.$this->getUser()->getId().'/edit');
         }
         

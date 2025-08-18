@@ -4,6 +4,7 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Enum\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -35,13 +36,15 @@ class SetAdminRoleCommand extends Command
         $email = $input->getArgument('email');
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['email' => $email]);
+
         
         if (!$user) {
             $output->writeln('User not found');
             return Command::FAILURE;
         }
         
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles(Role::ROLE_ADMIN);
+   
         $this->entityManager->flush();
 
         $output->writeln('User set as admin successfully');
