@@ -19,7 +19,7 @@ class LocationService
         ?LoggerInterface $logger = null
     ) {
         $this->client = $client;
-        $this->url = $_ENV['APP_GEOLOCATION_URL'];
+        $this->url = $_ENV['GEOLOCATION_URL'];
         $this->requestStack = $requestStack;
         $this->logger = $logger;
     }
