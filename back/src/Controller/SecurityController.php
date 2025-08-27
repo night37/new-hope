@@ -44,19 +44,23 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]                                                             
     public function login(Request $request): Response
     {        
-        if ($this->getUser()) {
-            if (!$this->getUser()->isVerified()) {
-                return $this->emailService->sendVerificationEmail($this->getUser()->getEmail());
-            }else if (!$this->getUser()->isActive()){
-                EmailService::displayMessage('danger',"Votre compte n'est pas activé, veuillez vous contacter l'administrateur");
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+        $baseUrl = $request->getSchemeAndHttpHost();
+        $basePath = $request->getBasePath();
+        
+        if ($user) {
+            if (!$user->isVerified()) {
+                return $this->emailService->sendVerificationEmail($user->getEmail());
+            }else if (!$user->isActive()){
+                $this->emailService->displayMessage('danger',"Votre compte n'est pas activé, veuillez vous contacter l'administrateur");
                 return new RedirectResponse('/');
                 
             }
-
-            return new RedirectResponse('/backoffice/user/'.$this->getUser()->getId().'/edit');
+            return new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
+ 
         }
         
-        // Code pour afficher le formulaire de connexion
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
     
