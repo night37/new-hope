@@ -38,7 +38,9 @@ jobs:
     - name: Install Dependencies
       working-directory: ./back
       run: composer install
+    - name: Create schema
       run: php bin/console doctrine:schema:create
+    - name: cache clear
       run: php bin/console cache:clear
     # - name: Create Database
     #   run: |
