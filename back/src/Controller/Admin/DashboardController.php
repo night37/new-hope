@@ -56,9 +56,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
         $structureId = $user->getStructure();
+
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::subMenu('gestion de comptes', 'fas fa-list')->setSubItems([
             MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
@@ -67,8 +69,6 @@ class DashboardController extends AbstractDashboardController
 
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');
-
-  
         if($user->getStructure() != null) {
             yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
                 MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),

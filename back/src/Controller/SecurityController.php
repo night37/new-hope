@@ -58,7 +58,6 @@ class SecurityController extends AbstractController
                 
             }
             return new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
- 
         }
         
         $error = $this->authenticationUtils->getLastAuthenticationError();
