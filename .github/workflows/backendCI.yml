@@ -32,7 +32,12 @@ jobs:
         
     - name: Install Dependencies
       run: composer install      
-    - name: Deploy and clear cache on server
+    - name: Create schema
+      run: php bin/console doctrine:schema:create  
+    - name: Clear cache
+      run: php bin/console cache:clear
+    - name: Deploy to server
       run: |
-        rsync -avz --delete --exclude='.env' ./ user@server:/path/
-        ssh user@server "cd /path && php bin/console cache:clear"
+        rsync -avz --delete \
+          --exclude='.env' \
+          --exclude='.git' \
