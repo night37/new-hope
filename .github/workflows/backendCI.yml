@@ -15,6 +15,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
+        tools: composer:2.2
     - name: Create temporary .env for build
       run: |
         echo "APP_ENV=prod" > .env
@@ -32,4 +33,4 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
         
     - name: Install Dependencies
-      run: composer2 install      
+      run: composer install      
