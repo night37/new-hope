@@ -17,6 +17,11 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
+    - name: Create temporary .env for build
+      run: |
+        echo "APP_ENV=prod" > .env
+        echo "APP_SECRET=temp-build-secret" >> .env
+        echo "DATABASE_URL=mysql://temp:temp@localhost/temp" >> .env
         
     - name: Cache Composer packages
       id: composer-cache
@@ -28,7 +33,12 @@ jobs:
     - name: Install Dependencies
       run: composer install      
     - name: Create schema
-      run: php bin/console doctrine:schema:create
-      
+      run: php bin/console doctrine:schema:create  
     - name: Clear cache
       run: php bin/console cache:clear
+    - name: Deploy to server
+      run: |
+        rsync -avz --delete \
+          --exclude='.env' \
+          --exclude='.git' \
+          ./ user@your-server:/path/to/app/
