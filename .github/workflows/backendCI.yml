@@ -30,8 +30,6 @@ jobs:
         
     - name: Install Dependencies
       run: composer install      
-    - name: Create schema
-      # run: php bin/console doctrine:schema:create  
     - name: Deploy to server
       run: |
         rsync -avz --delete \
