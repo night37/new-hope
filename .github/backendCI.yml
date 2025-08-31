@@ -1,5 +1,11 @@
+name: backendCI
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 jobs:
-  symfony-tests:
+  backend:
     runs-on: ubuntu-latest
     defaults:
       run:
