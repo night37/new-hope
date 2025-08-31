@@ -32,8 +32,6 @@ jobs:
       run: composer install      
     - name: Create schema
       run: php bin/console doctrine:schema:create  
-    - name: Clear cache
-      run: php bin/console cache:clear --no-warmup
     - name: Deploy to server
       run: |
         rsync -avz --delete \
