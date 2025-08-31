@@ -61,23 +61,15 @@ class DashboardController extends AbstractDashboardController
         $user = $this->getUser();
         $structureId = $user->getStructure();
 
-        /** @var \App\Entity\User|null $user */
-        $user = $this->getUser();
-        $structureId = $user->getStructure();
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::subMenu('gestion de comptes', 'fas fa-list')->setSubItems([
             MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
             MenuItem::linkToCrud('ajouter un compte', 'fas fa-plus', User::class)->setAction('new'),
             MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())
-            MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())
 
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');
-        if($user->getStructure() != null) {
-        yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');
-
-  
-        if($user->getStructure() != null) {
+        if($structureId != null) {
             yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
                 MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
                 MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),
