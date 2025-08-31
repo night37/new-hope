@@ -42,7 +42,10 @@ d8856e,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/api/getAnimalsList,1
 7d2189,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/api/getAnimalsList,1756640738,,200,request
 42bc6f,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/api/getAnimalsList,1756640739,,200,request
 8a0692,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/api/getAnimalsList,1756640807,,200,request
+<<<<<<< HEAD
 0bdc51,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/,1756643859,,301,request
 8e7783,172.18.0.6,GET,https://new-hope.ddev.site/backoffice,1756643859,,302,request
 7441e6,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/connexion,1756643859,,200,request
 c45094,172.18.0.6,GET,https://new-hope.ddev.site/backoffice/connexion,1756643952,,200,request
+=======
+>>>>>>> preprod
