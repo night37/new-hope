@@ -26,8 +26,7 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
         
     - name: Install Dependencies
-      run: composer install
-      
+      run: composer install      
     - name: Create schema
       run: php bin/console doctrine:schema:create
       
