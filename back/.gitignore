@@ -34,6 +34,7 @@
 !bin/console
 !bin/symfony_requirements
 /vendor/
+/node_modules/
 
 # Assets and user uploads
 /web/bundles/
