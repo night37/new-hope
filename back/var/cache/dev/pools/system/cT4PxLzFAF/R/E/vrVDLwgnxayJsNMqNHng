@@ -1,0 +1,39 @@
+<?php //easyadmin.routes.fqcn_to_route
+
+return [PHP_INT_MAX, [
+    'App\\Controller\\Admin\\DashboardController' => [
+        '' => [
+            '' => 'admin',
+        ],
+        'App\\Controller\\Admin\\AnimalCrudController' => [
+            'index' => 'admin_animal_index',
+            'new' => 'admin_animal_new',
+            'batchDelete' => 'admin_animal_batch_delete',
+            'autocomplete' => 'admin_animal_autocomplete',
+            'renderFilters' => 'admin_animal_render_filters',
+            'edit' => 'admin_animal_edit',
+            'delete' => 'admin_animal_delete',
+            'detail' => 'admin_animal_detail',
+        ],
+        'App\\Controller\\Admin\\StructureCrudController' => [
+            'index' => 'admin_structure_index',
+            'new' => 'admin_structure_new',
+            'batchDelete' => 'admin_structure_batch_delete',
+            'autocomplete' => 'admin_structure_autocomplete',
+            'renderFilters' => 'admin_structure_render_filters',
+            'edit' => 'admin_structure_edit',
+            'delete' => 'admin_structure_delete',
+            'detail' => 'admin_structure_detail',
+        ],
+        'App\\Controller\\Admin\\UserCrudController' => [
+            'index' => 'admin_user_index',
+            'new' => 'admin_user_new',
+            'batchDelete' => 'admin_user_batch_delete',
+            'autocomplete' => 'admin_user_autocomplete',
+            'renderFilters' => 'admin_user_render_filters',
+            'edit' => 'admin_user_edit',
+            'delete' => 'admin_user_delete',
+            'detail' => 'admin_user_detail',
+        ],
+    ],
+]];
