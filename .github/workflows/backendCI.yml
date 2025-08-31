@@ -2,8 +2,6 @@ name: backendCI
 on:
   push:
     branches: [ preprod ]
-  pull_request:
-    branches: [ preprod ]
 jobs:
   backend:
     runs-on: ubuntu-latest
