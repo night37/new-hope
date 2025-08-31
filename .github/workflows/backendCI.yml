@@ -19,6 +19,7 @@ jobs:
       run: |
         echo "APP_ENV=prod" > .env
         echo "GEOLOCATION_URL=https://api-adresse.data.gouv.fr" >> .env
+        echo "APP_SECRET=dummy-secret-for-ci-only-$(date +%s)" >> .env
         echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/fake.db" >> .env
         
     - name: Cache Composer packages
