@@ -22,7 +22,7 @@ jobs:
       id: composer-cache
       uses: actions/cache@v3
       with:
-        path: vendor
+        path: .back/vendor
         key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
         
     - name: Install Dependencies
