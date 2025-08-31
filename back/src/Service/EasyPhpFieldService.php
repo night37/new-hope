@@ -61,10 +61,18 @@ class EasyPhpFieldService
     $choiceField = ChoiceField::new($fieldName, $fieldLabel)
       ->setChoices(
         array_combine(
-          array_map(fn($case) => ucfirst($case->value), $enumClass::cases()), // Labels affichés
-          array_map(fn($case) => $case, $enumClass::cases())
+            array_map(fn($case) => ucfirst($case->value), $enumClass::cases()), // Labels (français)
+            $enumClass::cases() // Valeurs enum
+
         )
-      )->renderExpanded(false);
+      )
+      ->renderExpanded(false)
+      ->formatValue(function ($element) {
+        if (is_array($element) && isset($element['value'])) {
+                return ucfirst($element['value']);
+        }
+        return $element && is_object($element) ? ucfirst($element->value) : '';
+      });
     if ($multiple) {
       $choiceField->allowMultipleChoices();
     };
@@ -122,7 +130,9 @@ class EasyPhpFieldService
 
    public static function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
   {
-    return TextEditorField::new($fieldName, $fieldLabel);
+    return TextEditorField::new($fieldName, $fieldLabel)->formatValue(function($element){
+      return htmlspecialchars_decode($element);
+    });
   }
 
   public static function PasswordField(): TextField
