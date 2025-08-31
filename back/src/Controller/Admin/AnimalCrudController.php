@@ -61,6 +61,7 @@ class AnimalCrudController extends AbstractCrudController
             EasyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
             EasyPhpField::BooleanField('highlight', 'Mettre en avant'),
             EasyPhpField::BooleanField('isVisible', 'Publier'),
+            EasyPhpField::BooleanField('isActive', 'Actif'),
             
         ];
         if($isAdmin) {
