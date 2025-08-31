@@ -18,8 +18,8 @@ jobs:
     - name: Create temporary .env for build
       run: |
         echo "APP_ENV=prod" > .env
-        echo "APP_SECRET=temp-build-secret" >> .env
-        echo "DATABASE_URL=mysql://temp:temp@localhost/temp" >> .env
+        echo "APP_ENV=prod" > .env
+        echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/fake.db" >> .env
         
     - name: Cache Composer packages
       id: composer-cache
