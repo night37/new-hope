@@ -35,7 +35,9 @@ jobs:
     - name: Install Dependencies
       run: composer install
   frontend:
+      build:
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -44,12 +46,24 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        cache: 'npm'
     
-    - name: Install Dependencies
+    - name: Install and Build
       working-directory: ./front
-      run: npm install
-      
-    - name: Build Assets
-      working-directory: ./front
-      run: npm run build
+      run: |
+        npm install
+        npm run build
+    
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-build
+        path: ./front/dist/  # ou ./front/build/
+    
+    # - name: Deploy to Hostinger
+    #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    #   with:
+    #     server: ${{ secrets.FTP_SERVER }}
+    #     username: ${{ secrets.FTP_USERNAME }}
+    #     password: ${{ secrets.FTP_PASSWORD }}
+    #     local-dir: ./front/dist/
+    #     server-dir: /public_html/
