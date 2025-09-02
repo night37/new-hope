@@ -1,15 +1,17 @@
 @import "tailwindcss";
-
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #CEEBE9;
+  --color-secondary: #73C9C2;
+  --color-third: #171717;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme {
-  --color-primary: #CEEBE9;
-  --color-secondary: rgba(13, 167, 157, 0.6);
-  --color-third: #171717;
-}
 
 
 .text-small {
