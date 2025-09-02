@@ -1,3 +1,3 @@
 export default function Animal() {
-  return <h1>Hello Next.js!</h1>
+  return <h1>animal page .js!</h1>
 }
