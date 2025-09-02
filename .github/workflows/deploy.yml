@@ -45,7 +45,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: '21'
     
     - name: Install and Build
       working-directory: ./front
@@ -57,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: frontend-build
-        path: ./front/dist/  # ou ./front/build/
+        path: ./front/build/  # ou ./front/build/
     
     # - name: Deploy to Hostinger
     #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
