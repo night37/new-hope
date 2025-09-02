@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Caveat, Handlee } from "next/font/google";
-import { Header } from "./Components/header/Header"
+import { Header } from "./Partials/header/Header";
+import { Footer } from "./Partials/footer/Footer";
 
-import "./globals.css";
+import "./globals.scss";
 
 const caveat = Caveat({
   variable: "--font-cavea",
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
         <Header font={caveat}/>
         {children}
+        <Footer font={caveat}/>
       </body>
     </html>
   );
