@@ -1,0 +1,10 @@
+a {
+    position: relative;
+    &:hover{
+        &::before{
+            content: url("/patte.svg");
+            position: absolute;
+            left: -20px;
+        }
+    }
+}
