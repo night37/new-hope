@@ -57,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: frontend-build
-        path: ./front/build/  # ou ./front/build/
+        path: ./front/dist/  # ou ./front/build/
     
     # - name: Deploy to Hostinger
     #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
