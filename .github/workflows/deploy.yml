@@ -37,20 +37,19 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      working-directory: ./front
+      run: npm install
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # or your preferred version
-          cache: 'npm'
-          cache-dependency-path: './front/package-lock.json' # if you have package-lock.json
-      
-      - name: Install Dependencies
-        working-directory: ./front
-        run: npm install
-        
-      - name: Build Assets
-        working-directory: ./front
-        run: npm run build
+    - name: Build Assets
+      working-directory: ./front
+      run: npm run build
