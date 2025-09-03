@@ -49,7 +49,8 @@ class SecurityController extends AbstractController
         $baseUrl = $request->getSchemeAndHttpHost();
         $basePath = $request->getBasePath();
         
-        if ($user) {
+ 
+        if ( $this->getUser()) {
             if (!$user->isVerified()) {
                 return $this->emailService->sendVerificationEmail($user->getEmail());
             }else if (!$user->isActive()){

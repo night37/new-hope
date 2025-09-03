@@ -1,7 +1,14 @@
 api_platform:
-  title: Hello API Platform
-  version: 1.0.0
-  defaults:
-    stateless: false
-    cache_headers:
-      vary: ["Content-Type", "Authorization", "Origin"]
+    title: 'My API'
+    version: '1.0.0'
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+        html: ['text/html']
+    docs_formats:
+        jsonld: ['application/ld+json']
+        jsonopenapi: ['application/vnd.openapi+json']
+        html: ['text/html']
+    # Enable GraphQL if needed
+    graphql:
+        enabled: true
