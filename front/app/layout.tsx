@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Caveat, Handlee } from "next/font/google";
-import { Header } from "../Components/header/Header";
-import { Footer } from "../Components/footer/Footer";
+import { Header } from "../components/layout/header/Header";
+import { Footer } from "../components/layout/footer/Footer";
 
 import "./globals.scss";
 
