@@ -12,7 +12,13 @@
   --foreground: #171717;
 }
 
+.font-caveat {
+  font-family: var(--font-caveat), cursive;
+}
 
+.font-handlee {
+  font-family: var(--font-handlee), cursive;
+}
 
 .text-small {
   font-size: 14px;

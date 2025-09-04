@@ -29,9 +29,9 @@ export function Hero () {
 
 
   return (
-    <div className="bg-[url(/hero.png)] bg-no-repeat bg-fit p-[100px] flex justify-center">
-      <div className="container bg-white/50 flex flex-col py-[50px]">
-          <div className="radio-container flex gap-10 justify-center">
+    <div className="bg-[url(/hero.png)] bg-no-repeat bg-fit  px-[290px] py-[98px] w-full flex justify-center">
+      <div className="container bg-white/50 flex flex-col py-[50px] rounded-xl">
+          <div className="radio-container flex gap-20 justify-center">
             {radioBtns.map((radio, key) =>  {
               return(
               <div key={key} className="flex w-fit"  onClick={()=>handleRadioClick(key)}>
@@ -40,7 +40,7 @@ export function Hero () {
               )
             })}
           </div>
-          <div className="form-container">
+          <div className="form-container container grid grid-cols-12 p-[185px] ">
             {radioBtns[0].isActive ? <AnimalForm/> : <AssociationForm/>}
           </div>
       </div>

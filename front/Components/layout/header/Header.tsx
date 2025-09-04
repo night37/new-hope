@@ -6,11 +6,9 @@ import { Menu } from "./Menu"
 import "./style.scss"
 
 
-type HeaderProps = {
-  font: { className: string }
-};
 
-export function Header ({font}: HeaderProps) {
+
+export function Header () {
     
   const [isOpen, setIsOpen] = useState(false)
 
@@ -26,10 +24,9 @@ export function Header ({font}: HeaderProps) {
       document.body.style.overflow = "unset"
     }
   }, [isOpen])
-
     return(
-        <header className={`${font.className} bg-secondary w-full`}>
-          <div className={`${font.className} text-l container mx-auto py-[16.5px] grid items-center grid-cols-12`}> 
+        <header className={`font-caveat bg-secondary w-full`}>
+          <div className={`font-caveat text-l container mx-auto py-[16.5px] grid items-center grid-cols-12`}> 
             <div className="col-span-2 lg:col-span-3 xl:col-span-5">
               <Link href="/" className="z-10">
                   <Image
