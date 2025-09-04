@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 9ddcd7,172.18.0.6,GET,https://new-hope.ddev.site/,1756638956,48908b,500,request
 48908b,172.18.0.6,GET,https://new-hope.ddev.site/,1756638956,,500,request
 709cd8,172.18.0.6,GET,https://new-hope.ddev.site/,1756639011,,302,request
@@ -158,3 +159,9 @@ a89fd3,172.18.0.6,GET,https://new-hope.ddev.site/assets/bundles/apiplatform/styl
 eb50b4,172.18.0.6,GET,https://new-hope.ddev.site/assets/bundles/apiplatform/init-common-ui-U2e6ZIW.js,1756669054,,500,request
 1891be,172.18.0.6,GET,https://new-hope.ddev.site/assets/bundles/apiplatform/swagger-ui/swagger-ui-bundle-1u9fz1J.js,1756669054,820859,500,request
 820859,172.18.0.6,GET,https://new-hope.ddev.site/assets/bundles/apiplatform/swagger-ui/swagger-ui-bundle-1u9fz1J.js,1756669054,,500,request
+=======
+491bbe,::1,GET,http://localhost/new-hope/back/public/api,1756889129,,200,request
+068482,::1,GET,http://localhost/new-hope/back/public/api,1756889556,,200,request
+704ee4,::1,GET,http://localhost/new-hope/back/public/api,1756889575,,200,request
+1ace2b,::1,GET,http://localhost/new-hope/back/public/backoffice/connexion,1756891342,,200,request
+>>>>>>> Stashed changes
