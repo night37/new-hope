@@ -1,0 +1,70 @@
+name: deploy
+on:
+  push:
+    branches: [ preprod ]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        tools: composer:2.2
+
+    - name: Create temporary .env for build
+      run: |
+        echo "APP_ENV=prod" > .env
+        echo "GEOLOCATION_URL=https://api-adresse.data.gouv.fr" >> .env
+        echo "MAILER_WEB_URL=https://example.com" >> .env
+        echo "MAILER_DSN=\"smtp://127.0.0.1:1025\"" >> .env
+        echo "APP_SECRET=dummy-secret-for-ci-only-$(date +%s)" >> .env
+        echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/fake.db" >> .env
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: ./back/vendor  # ← Corrigé (.back -> ./back)
+        key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
+
+    - name: Install Dependencies
+      run: composer install
+
+  frontend:  # ← Corrigé (supprimé "build:")
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '21'
+
+    - name: Install and Build
+      working-directory: ./front
+      run: |
+        npm install
+        npm run build
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-build
+        path: ./front/build/
+
+    # - name: Deploy to Hostinger
+    #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    #   with:
+    #     server: ${{ secrets.FTP_SERVER }}
+    #     username: ${{ secrets.FTP_USERNAME }}
+    #     password: ${{ secrets.FTP_PASSWORD }}
+    #     local-dir: ./front/build/  # ← Changé de dist/ à build/
+    #     server-dir: /public_html/
