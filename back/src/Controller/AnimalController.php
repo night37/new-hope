@@ -1,7 +1,13 @@
 <?php
 
 namespace App\Controller;
-
+use App\Enum\AdoptionStatus;
+use App\Enum\Affinity;
+use App\Enum\Breed;
+use App\Enum\Color;
+use App\Enum\Gender;
+use App\Enum\Size;
+use App\Enum\Type;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
@@ -82,5 +88,39 @@ final class AnimalController extends AbstractController
         }
 
         return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('filtersList', name: 'api_animal_filtersList', methods: ['GET'])]
+    public function filtersList(): Response
+    {
+
+        $enums = [
+            'status d\'adoption' => $this->getEnumData(AdoptionStatus::class),
+            'affinité' => $this->getEnumData(Affinity::class),
+            'couleurs' => $this->getEnumData(Color::class),
+            'races' => $this->getEnumData(Breed::class),
+            'genres' => $this->getEnumData(Gender::class),
+            'tailles' => $this->getEnumData(Size::class),
+            'types' => $this->getEnumData(Type::class),
+        ];
+        
+        return $this->json($enums);
+    }
+    
+    private function getEnumData(string $enumClass): array
+    {
+        return array_map(function($case) {
+            $data = [
+                'name' => $case->name,
+                'value' => $case->value ?? $case->name,
+            ];
+            
+            // Ajouter des méthodes personnalisées si elles existent
+            if (method_exists($case, 'getLabel')) {
+                $data['label'] = $case->getLabel();
+            }
+            
+            return $data;
+        }, $enumClass::cases());
     }
 }
