@@ -15,3 +15,11 @@ fe6524,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757089497,,404,req
 38271c,172.18.0.6,GET,https://new-hope.ddev.site/api/,1757089505,,301,request
 fbc85f,172.18.0.6,GET,https://new-hope.ddev.site/api,1757089505,,200,request
 6c47df,172.18.0.6,GET,https://new-hope.ddev.site/api/animal/filtersList,1757089536,,200,request
+2317e6,172.18.0.6,GET,https://new-hope.ddev.site/api/animal/filtersList,1757089642,,200,request
+6b2193,172.18.0.6,GET,https://new-hope.ddev.site/api/a,1757089646,84f281,404,request
+84f281,172.18.0.6,GET,https://new-hope.ddev.site/api/a,1757089646,,404,request
+e1edd2,172.18.0.6,GET,https://new-hope.ddev.site/api,1757089648,,200,request
+d70e59,172.18.0.6,GET,https://new-hope.ddev.site/api,1757094400,,200,request
+70081c,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757094401,38879b,404,request
+38879b,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757094401,,404,request
+b5e247,172.18.0.6,GET,https://new-hope.ddev.site/api/animal/filtersList,1757094437,,200,request

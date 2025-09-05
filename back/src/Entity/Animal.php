@@ -23,8 +23,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
     operations: [
-        new Get(),
-        new GetCollection(),
         new Get(
             name: 'api_animal_filtersList', 
             uriTemplate: '/animal/filtersList',
