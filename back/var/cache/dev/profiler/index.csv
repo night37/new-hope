@@ -23,3 +23,9 @@ d70e59,172.18.0.6,GET,https://new-hope.ddev.site/api,1757094400,,200,request
 70081c,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757094401,38879b,404,request
 38879b,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757094401,,404,request
 b5e247,172.18.0.6,GET,https://new-hope.ddev.site/api/animal/filtersList,1757094437,,200,request
+328b9a,172.18.0.6,GET,https://new-hope.ddev.site/api,1757234578,,200,request
+b7a054,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757234579,9ccb30,404,request
+9ccb30,172.18.0.6,GET,https://new-hope.ddev.site/favicon.ico,1757234579,,404,request
+ae8e26,172.18.0.6,GET,https://new-hope.ddev.site/api,1757234629,,200,request
+e87322,172.18.0.6,GET,https://new-hope.ddev.site/api,1757234654,,200,request
+306f18,172.18.0.6,GET,https://new-hope.ddev.site/api,1757234953,,200,request
