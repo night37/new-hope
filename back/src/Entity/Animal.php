@@ -24,9 +24,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     normalizationContext: ['groups' => ['animal:read']],
     operations: [
         new Get(
-            name: 'api_animal_jessaispas', 
-            uriTemplate: '/animal/testttt',
-            controller: 'App\Controller\AnimalController::filtersList'
+            name: 'api_animal_filters', 
+            uriTemplate: '/animal/filters',
+            controller: 'App\Controller\AnimalController::filters'
+            
+
         )
 
     ]
