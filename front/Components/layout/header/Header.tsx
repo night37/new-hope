@@ -27,7 +27,7 @@ export function Header () {
     return(
         <header className={`font-caveat bg-secondary w-full`}>
           <div className={`font-caveat text-l container mx-auto py-[16.5px] grid items-center grid-cols-12`}> 
-            <div className="col-span-2 lg:col-span-3 xl:col-span-5">
+            <div className="col-span-2 lg:col-span-3">
               <Link href="/" className="z-10">
                   <Image
                     src="/logo.svg"
@@ -37,7 +37,7 @@ export function Header () {
                   />
               </Link>
             </div>
-            <div className="menu-container lg:col-span-9 xl:col-span-7 col-span-10 hidden lg:block">
+            <div className="menu-container lg:col-span-9 xl:col-span-9 col-span-10 hidden lg:block">
               <Menu direction={"row"}/>
             </div>
             <div className="menu-mobile-container lg:hidden col-span-10 flex justify-end">

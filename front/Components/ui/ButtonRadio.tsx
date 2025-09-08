@@ -8,9 +8,9 @@ type ButtonType = {
 
 export function ButtonRadio({label, isActive}: ButtonType) {
     return (
-        <div className="flex gap-3">
-            <input type="radio" readOnly name={`radio-${label}`} className="radio radio-secondary" checked={isActive}/>
-            <span className="w-max font-caveat text-[20px]">{label}</span>
+        <div className="flex gap-3 items-center">
+            <input type="radio" readOnly name={`radio-${label}`} className="radio radio-secondary bg-white" checked={isActive}/>
+            <span className="w-max font-caveat text-[20px] text-xl">{label}</span>
         </div>
       
     );
