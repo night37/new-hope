@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ButtonRadio } from "@/components/ui/ButtonRadio";
+import { ButtonRadio } from "@/Components/ui/ButtonRadio/ButtonRadio";
 import AnimalForm from "@/components/forms/AnimalForm"
 import AssociationForm  from "@/components/forms/AssociationForm"
 
@@ -29,9 +29,9 @@ export function Hero () {
 
 
   return (
-    <div className="bg-[url(/hero.png)] bg-no-repeat bg-fit  px-[290px] py-[98px] w-full flex justify-center">
-      <div className="container bg-white/50 flex flex-col py-[50px] rounded-xl">
-          <div className="radio-container flex gap-20 justify-center">
+    <div className="bg-[url(/hero.png)] bg-no-repeat bg-fit lg:px-[290px] px-[10px] py-[98px] w-full flex justify-center">
+      <div className="container bg-white/50 px-[50px] flex flex-col py-[50px] rounded-xl">
+          <div className="radio-container flex justify-center flex-wrap  gap-5 flex-col  lg:flex-row items-center">
             {radioBtns.map((radio, key) =>  {
               return(
               <div key={key} className="flex w-fit"  onClick={()=>handleRadioClick(key)}>
@@ -40,7 +40,7 @@ export function Hero () {
               )
             })}
           </div>
-          <div className="form-container container grid grid-cols-12 p-[185px] ">
+          <div className="form-container container flex grid-cols-12 flex-wrap gap-3 sm:justify-start justify-center">
             {radioBtns[0].isActive ? <AnimalForm/> : <AssociationForm/>}
           </div>
       </div>

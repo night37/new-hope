@@ -1,5 +1,5 @@
 import React, {useEffect, useState}  from 'react'
-import Select from "@/Components/ui/Select"
+import Select from "@/Components/ui/Select/Select"
 import animalFilters from '@/app/api/filters/animalFilters'
 
 
@@ -36,6 +36,8 @@ export default function AnimalForm() {
 
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) :void =>  {
 
+   
+
   setFilters(el => el.map(itemList => 
     Object.keys(itemList).reduce((acc: {[key: string]: FilterOption[]}, item) => {
       const findIndex = itemList[item].findIndex(element => element.value === event.target.value)
@@ -55,7 +57,7 @@ export default function AnimalForm() {
   return (
   <>
     {filters.length > 0 && filters.map((filter, key) => (
-        <div key={key} className="col-span-3">
+        <div key={key}>
           <Select label={Object.keys(filter)[0]} options={filter[Object.keys(filter)[0]]} onChange={onChange}/>
         </div>
       ))}

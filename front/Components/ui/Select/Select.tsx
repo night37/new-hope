@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
+import Image from "next/image"
 import "./style.scss"
 
 type SelectProps = {
@@ -31,7 +32,7 @@ export default function Select({label, options, onChange} : SelectProps) {
     }
   }, [isOpen]);
 
-  const handleOptionClick = (optionValue: string) => {
+  const handleOptionClick = (optionValue: string,) => {
     const customEvent = {
       target: {
         value: optionValue
@@ -115,7 +116,6 @@ export default function Select({label, options, onChange} : SelectProps) {
   return (
     <div className="font-caveat w-full flex gap-2 flex-col">
       <p className='text-large'>{label}</p>
-
       <div ref={dropdownRef} className="relative">
         <div 
           onClick={() => setIsOpen(!isOpen)}
@@ -129,6 +129,7 @@ export default function Select({label, options, onChange} : SelectProps) {
 
         >
           <span>{getDisplayText()}</span>
+          <Image src="/patte.svg" width={16} height={16} alt=""/>
         </div>
 
         {isOpen && (
@@ -163,6 +164,8 @@ export default function Select({label, options, onChange} : SelectProps) {
                         focusedIndex === key ? "bg-base-200" : ""
                       }`}
                       role="option"
+                      aria-selected
+
                     >
                       {option}
                     </div>
@@ -171,12 +174,18 @@ export default function Select({label, options, onChange} : SelectProps) {
           </div>
         )}
       </div>
-
       <div className="filters-list flex gap-2 flex-wrap">
         {Array.isArray(options) && typeof options[0] === "object" && 
           (options as { name: string; value: string; isSelected: boolean }[]).map((option, key) => {
             if(option.isSelected) {
-              return <div key={key} className="badge bg-secondary border-secondary text-md">{option.value}</div>
+              return <div onClick={(e)=> handleOptionClick(option.value)} key={key} className="badge bg-secondary border-secondary text-lg w-fit d-flex items-center justify-evenly h-fit">
+                <p>{option.value}  </p>
+                <span className='w-[16px] d-flex  items-center mt-[2px]'>
+                  <svg  className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" data-slot="icon" aria-hidden="true">
+                    <path d="M6 18 18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                </span>
+              </div>
             }
             return null;
           })
