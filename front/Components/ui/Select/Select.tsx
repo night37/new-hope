@@ -4,7 +4,7 @@ import "./style.scss"
 
 type SelectProps = {
   label : string,
-  options : [{ name: string, value: string, isSelected : boolean}] | string[],
+  options : { name: string, value: string, isSelected : boolean}[],
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -70,8 +70,7 @@ export default function Select({label, options, onChange} : SelectProps) {
             const option = (options as { name: string; value: string; isSelected: boolean }[])[focusedIndex];
             handleOptionClick(option.value);
           } else {
-            const option = (options as string[])[focusedIndex];
-            handleOptionClick(option);
+            // This branch is not needed since options are always objects
           }
         }
         break;
@@ -138,38 +137,21 @@ export default function Select({label, options, onChange} : SelectProps) {
             role="listbox"
           >
             {options?.length > 0 ? (
-              Array.isArray(options) && typeof options[0] === "object"
-                ? (options as { name: string; value: string; isSelected: boolean }[]).map((option, key) => (
-                    <div
-                      key={option.name}
-                      data-key={key}
-                      onClick={() => handleOptionClick(option.value)}
-                      onMouseEnter={() => setFocusedIndex(key)}
-                      className={`p-2 hover:bg-base-200 cursor-pointer text-large select-item ${
-                        option?.isSelected ? "isSelected" : ""
-                      } ${focusedIndex === key ? "bg-base-200" : ""}`}
-                      role="option"
-                      aria-selected={option.isSelected}
-                    >
-                      {option.value}
-                    </div>
-                  ))
-                : (options as string[]).map((option, key) => (
-                    <div
-                      key={option}
-                      data-key={key}
-                      onClick={() => handleOptionClick(option)}
-                      onMouseEnter={() => setFocusedIndex(key)}
-                      className={`p-2 hover:bg-base-200 cursor-pointer text-large ${
-                        focusedIndex === key ? "bg-base-200" : ""
-                      }`}
-                      role="option"
-                      aria-selected
-
-                    >
-                      {option}
-                    </div>
-                  ))
+              (options as { name: string; value: string; isSelected: boolean }[]).map((option, key) => (
+                <div
+                  key={option.name}
+                  data-key={key}
+                  onClick={() => handleOptionClick(option.value)}
+                  onMouseEnter={() => setFocusedIndex(key)}
+                  className={`p-2 hover:bg-base-200 cursor-pointer text-large select-item ${
+                    option?.isSelected ? "isSelected" : ""
+                  } ${focusedIndex === key ? "bg-base-200" : ""}`}
+                  role="option"
+                  aria-selected={option.isSelected}
+                >
+                  {option.value}
+                </div>
+              ))
             ) : <div className="p-2 text-gray-500">Aucun valeur dans ce filtre</div>}
           </div>
         )}
@@ -178,7 +160,7 @@ export default function Select({label, options, onChange} : SelectProps) {
         {Array.isArray(options) && typeof options[0] === "object" && 
           (options as { name: string; value: string; isSelected: boolean }[]).map((option, key) => {
             if(option.isSelected) {
-              return <div onClick={(e)=> handleOptionClick(option.value)} key={key} className="badge bg-secondary border-secondary text-lg w-fit d-flex items-center justify-evenly h-fit">
+              return <div onClick={()=> handleOptionClick(option.value)} key={key} className="badge bg-secondary border-secondary text-lg w-fit d-flex items-center justify-evenly h-fit">
                 <p>{option.value}  </p>
                 <span className='w-[16px] d-flex  items-center mt-[2px]'>
                   <svg  className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" data-slot="icon" aria-hidden="true">
