@@ -17,7 +17,7 @@ use App\DTO\Request\Animal\AnimalFilterDTO;
 #[Route('/animal', name: 'animal_index')]
 final class AnimalController extends AbstractController
 {
-    #[Route('/api/getAnimalsList',name: 'get_animals_list', methods: ['GET'])]
+    #[Route('/api/animal/getAnimalsList',name: 'get_animals_list', methods: ['GET'], priority:10)]
     public function index(AnimalRepository $animalRepository): Response
     {
       
