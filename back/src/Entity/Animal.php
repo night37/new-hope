@@ -23,12 +23,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
     operations: [
+        new Get(),
+        new GetCollection(),
         new Get(
             name: 'api_animal_filters', 
-            uriTemplate: '/animal/filters',
-            controller: 'App\Controller\AnimalController::filters'
-            
-
+            uriTemplate: '/backoffice/animal/filters',
+            controller: 'App\Controller\AnimalController::filters'     
+        ),
+        new Get(
+            name: 'api_animals_list', 
+            uriTemplate: '/backoffice/animal/get_animals_list',
+            controller: 'App\Controller\AnimalController::index'     
         )
 
     ]
