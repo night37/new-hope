@@ -56,11 +56,11 @@ export default function AnimalForm() {
   }
   return (
   <>
-    {filters.length > 0 && filters.map((filter, key) => (
+    {filters.length > 0 ? filters.map((filter, key) => (
         <div key={key}>
           <Select label={Object.keys(filter)[0]} options={filter[Object.keys(filter)[0]]} onChange={onChange}/>
         </div>
-      ))}
+      )) : <span className='font-caveat text-xl flex justify-center w-full'><p className='border p-4 border-black'>Une erreur serveur est survenue </p></span>}
   </>
     
   )
