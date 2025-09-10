@@ -1,23 +1,20 @@
-@import "tailwindcss";
-@plugin "daisyui";
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-primary: #CEEBE9;
-  --color-secondary: #73C9C2;
-  --color-third: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-caveat: 'Caveat', cursive;
+  --font-handlee: 'Handlee', cursive;
 }
 
 .font-caveat {
-  font-family: var(--font-caveat), cursive;
+  font-family: var(--font-caveat);
 }
 
 .font-handlee {
-  font-family: var(--font-handlee), cursive;
+  font-family: var(--font-handlee);
 }
 
 .text-small {
@@ -27,7 +24,6 @@
 .text-base {
   font-size: 16px;
 }
-
 
 .text-large {
   font-size: 20px;

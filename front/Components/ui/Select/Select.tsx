@@ -120,7 +120,7 @@ export default function Select({label, options, onChange} : SelectProps) {
           onClick={() => setIsOpen(!isOpen)}
           onKeyDown={handleKeyDown}
           tabIndex={0} 
-          className="select bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm border-solid text-large rounded-xl border-primary flex justify-between text-large cursor-pointer"
+          className="select bg-white rounded-box z-1 w-52 p-2 shadow-sm border-solid text-large rounded-xl border-primary flex justify-between text-large cursor-pointer"
           role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
@@ -133,7 +133,7 @@ export default function Select({label, options, onChange} : SelectProps) {
 
         {isOpen && (
           <div 
-            className="absolute top-full left-0 right-0 bg-base-100 border border-primary rounded-xl shadow-lg z-50 max-h-60 overflow-y-auto mt-1"
+            className="absolute top-full left-0 right-0 bg-white border border-primary rounded-xl shadow-lg z-50 max-h-60 overflow-y-auto mt-1"
             role="listbox"
           >
             {options?.length > 0 ? (
@@ -143,9 +143,9 @@ export default function Select({label, options, onChange} : SelectProps) {
                   data-key={key}
                   onClick={() => handleOptionClick(option.value)}
                   onMouseEnter={() => setFocusedIndex(key)}
-                  className={`p-2 hover:bg-base-200 cursor-pointer text-large select-item ${
+                  className={`p-2 hover:bg-slate-200 cursor-pointer text-large select-item ${
                     option?.isSelected ? "isSelected" : ""
-                  } ${focusedIndex === key ? "bg-base-200" : ""}`}
+                  } ${focusedIndex === key ? "bg-slate-50" : ""}`}
                   role="option"
                   aria-selected={option.isSelected}
                 >
@@ -156,13 +156,13 @@ export default function Select({label, options, onChange} : SelectProps) {
           </div>
         )}
       </div>
-      <div className="filters-list flex gap-2 flex-wrap">
+      <div className="filters-list flex gap-2 flex-wrap w-52">
         {Array.isArray(options) && typeof options[0] === "object" && 
           (options as { name: string; value: string; isSelected: boolean }[]).map((option, key) => {
             if(option.isSelected) {
-              return <div onClick={()=> handleOptionClick(option.value)} key={key} className="badge bg-secondary border-secondary text-lg w-fit d-flex items-center justify-evenly h-fit">
+              return <div onClick={()=> handleOptionClick(option.value)} key={key} className="rounded-lg p-1 gap-2 bg-secondary border-secondary text-lg w-fit flex items-center justify-evenly h-fit">
                 <p>{option.value}  </p>
-                <span className='w-[16px] d-flex  items-center mt-[2px]'>
+                <span className='w-[16px] flex  items-center mt-[2px]'>
                   <svg  className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" data-slot="icon" aria-hidden="true">
                     <path d="M6 18 18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
