@@ -145,7 +145,7 @@ export default function Select({label, options, onChange} : SelectProps) {
                   onMouseEnter={() => setFocusedIndex(key)}
                   className={`p-2 hover:bg-slate-200 cursor-pointer text-large select-item ${
                     option?.isSelected ? "isSelected" : ""
-                  } ${focusedIndex === key ? "bg-slate-50" : ""}`}
+                  } ${focusedIndex === key ? "bg-slate-200" : ""}`}
                   role="option"
                   aria-selected={option.isSelected}
                 >
