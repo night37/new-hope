@@ -22,7 +22,7 @@ final class AnimalController extends AbstractController
     {
       
         return $this->json([
-                'message' => 'j\'toute la liste des animaux',
+                'message' => 'display all animals',
                 'timestamp' => time(),
                 'animals' => $animalRepository->findAll(),
             ]);
@@ -88,16 +88,27 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('filters', name: 'api_animal_filters', methods: ['GET'])]
-    public function filters(): Response
+    public function filtersList(): Response
     {
         $animalFilterDTO = new AnimalFilterDTO();
-        // dd($animalFilterDTO);
 
         
         return $this->json($animalFilterDTO->enums);
 
     }
-    
+
+    #[Route('filtersResults', name:'api_animal_filters_results', methods:['GET'])]
+    public function filtersResults(Request $request, AnimalRepository $animalRepository): Response
+    {   
+            $data = $request->query->all() ;
+
+           return $this->json([
+                'message' => 'display filters animals result',
+                'timestamp' => time(),
+                'animals' => $animalRepository-> findByFilters($data),
+            ]);
+       
+    }
     
     
 }

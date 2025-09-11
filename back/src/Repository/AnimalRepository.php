@@ -41,7 +41,6 @@ class AnimalRepository extends ServiceEntityRepository
                 'animal.id',
                 'animal.highlight',
                 'animal.createdAt',
-                'animal.updatedAt',
                 'animal.size',
                 'animal.color',
                 'animal.affinity',
@@ -52,6 +51,53 @@ class AnimalRepository extends ServiceEntityRepository
                 'animal.images',
                 'animal.description',
             ];
+        }
+        public function findByFilters($data): array 
+        {
+            $qb = $this->createQueryBuilder('animal')
+                ->orderBy('animal.id', 'ASC')
+                ->where('animal.isActive = true')
+                ->andWhere('animal.isVisible = true');
+
+            $allowedFields = [
+                'name', 
+                'gender', 
+                'age', 
+                'out_department', 
+                'highlight', 
+                'size', 
+                'color', 
+                'affinity', 
+                'adoption_status', 
+                'breed'
+            ];
+
+            foreach ($data as $key => $value) {
+                if (!empty($value) && in_array($key, $allowedFields)) {
+                    switch ($key) {
+                        case 'name':
+                            $qb->andWhere('animal.name LIKE :' . $key)
+                            ->setParameter($key, '%' . $value . '%');
+                            break;
+                            
+                        case 'age':
+                            if (is_numeric($value)) {
+                                $qb->andWhere('animal.age = :' . $key)
+                                ->setParameter($key, (int)$value);
+                            }
+                            break;
+                            
+                        default:
+                            $qb->andWhere('animal.' . $key . ' = :' . $key)
+                            ->setParameter($key, $value);
+                            break;
+                    }
+                }
+            }
+
+            return $qb->select($this->fieldsList())
+                ->getQuery()
+                ->getResult();
         }
 
 //    public function findByExampleField($value): array

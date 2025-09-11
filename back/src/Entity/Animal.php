@@ -28,12 +28,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Get(
             name: 'api_animal_filters', 
             uriTemplate: '/backoffice/animal/filters',
-            controller: 'App\Controller\AnimalController::filters'     
+            controller: 'App\Controller\AnimalController::filtersList'     
         ),
         new Get(
             name: 'api_animals_list', 
             uriTemplate: '/backoffice/animal/get_animals_list',
             controller: 'App\Controller\AnimalController::index'     
+        ),
+        new Get(
+            name: 'api_animal_filters_results', 
+            uriTemplate: '/backoffice/animal/filtersResults',
+            controller: 'App\Controller\AnimalController::filtersResults'     
         )
 
     ]
