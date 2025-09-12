@@ -17,20 +17,43 @@ final class AnimalFilterDTO
     public function __construct()
     {
         $this->enums = [
-            "status d'adoption" => $this->getEnumData(AdoptionStatus::class),
-            'affinité'          => $this->getEnumData(Affinity::class),
-            'couleurs'          => $this->getEnumData(Color::class),
-            'races'             => $this->getEnumData(Breed::class),
-            'genres'            => $this->getEnumData(Gender::class),
-            'tailles'           => $this->getEnumData(Size::class),
-            'types'             => $this->getEnumData(Type::class),
+            'status d\'adoption' => [
+                'field_name' => 'AdoptionStatus',
+                'data' => $this->getEnumData(AdoptionStatus::class),
+            ], 
+            'affinité' =>  [
+                'field_name' => 'Affinity',
+                'data' =>$this->getEnumData(Affinity::class)
+            ],
+            'couleurs' =>  [
+                'field_name' => 'Color',
+                'data' =>$this->getEnumData(Color::class)
+            ],
+            'races' =>  [
+                'field_name' => 'Breed',
+                'data' =>$this->getEnumData(Breed::class)
+            ],
+            'genres' =>  [
+                'field_name' => 'Gender',
+                'data' =>$this->getEnumData(Gender::class)
+            ],
+            'tailles' =>  [
+                'field_name' => 'Size',
+                'data' =>$this->getEnumData(Size::class)
+            ],
+            'types' =>  [
+                'field_name' => 'Type',
+                'data' =>$this->getEnumData(Type::class)
+            ],
         ];
     }
 
     private function getEnumData(string $enumClass): array
     {
+    
         return array_map(function ($case) {
             $data = [
+
                 'name'  => $case->name,
                 'value' => $case->value ?? $case->name,
             ];
