@@ -3,7 +3,7 @@ import Link from "next/link"
 
 
 
-type FooterProps = {
+interface FooterProps  {
   font: { className: string }
 };
 export const Footer = ({font}: FooterProps) => {

@@ -4,7 +4,7 @@ import { animalFilters } from '@/app/api/filters/animalFilters'
 import { filtersResults }from '@/app/api/filters/animalFilters'
 
 
-type FilterOption = {
+interface FilterOption  {
   isSelected: boolean;
   name: string;
   value: string;
@@ -67,10 +67,10 @@ export default function AnimalForm() {
           }
 
         })
-        console.log(filterlist);
+       
       })
     })
-
+    filtersResults(filterlist)
   }
 
   return (

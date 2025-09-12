@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react'
 import Image from "next/image"
 import "./style.scss"
 
-type SelectProps = {
+interface SelectProps  {
   label : string,
   options : { name: string, value: string, isSelected : boolean}[],
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
