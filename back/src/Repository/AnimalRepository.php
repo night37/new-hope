@@ -73,28 +73,42 @@ class AnimalRepository extends ServiceEntityRepository
                 foreach ($data as $key => $value) {
                     if (!empty($value) && in_array($key, $allowedFields)) {
                         switch ($key) {
-                        case 'affinity':
-                        case 'breed':
-                            $values = is_array($value) ? $value : explode(',', $value);
-                            $values = array_filter(array_map('trim', $values));
-                            
-                            if (count($values) > 1) {
-                                $conditions = [];
-                                foreach ($values as $index => $val) {
-                                    $paramName = $key . '_' . $index;
-                                    $conditions[] = 'animal.' . $key . ' LIKE :' . $paramName;
-                                    $qb->setParameter($paramName, '%"' . $val . '"%');
+                            case 'affinity':
+                            case 'breed':
+                                // Champs JSON
+                                $values = is_array($value) ? $value : [$value];
+                                $values = array_filter(array_map('trim', $values));
+
+                                if (count($values) > 1) {
+                                    $conditions = [];
+                                    foreach ($values as $index => $val) {
+                                        $paramName = $key . '_' . $index;
+                                        $conditions[] = 'animal.' . $key . ' LIKE :' . $paramName;
+                                        $qb->setParameter($paramName, '%"' . $val . '"%');
+                                    }
+                                    $qb->andWhere('(' . implode(' OR ', $conditions) . ')');
+                                } else {
+                                    $qb->andWhere('animal.' . $key . ' LIKE :' . $key);
+                                    $qb->setParameter($key, '%"' . $values[0] . '"%');
                                 }
-                                $qb->andWhere('(' . implode(' OR ', $conditions) . ')');
-                            } else {
-                                $qb->andWhere('animal.' . $key . ' LIKE :' . $key)
-                                ->setParameter($key, '%"' . $values[0] . '"%');
-                            }
-                            break;
+                                break;
 
                             default:
-                                $qb->andWhere('animal.' . $key . ' = :' . $key)
-                                ->setParameter($key, $value);
+                                // Tous les autres champs STRING (color, size, gender, etc.)
+                                if (is_string($value) && strpos($value, ',') !== false) {
+                                    $values = array_filter(array_map('trim', explode(',', $value)));
+                                    
+                                    $conditions = [];
+                                    foreach ($values as $index => $val) {
+                                        $paramName = $key . '_' . $index;
+                                        $conditions[] = 'animal.' . $key . ' = :' . $paramName;
+                                        $qb->setParameter($paramName, $val);
+                                    }
+                                    $qb->andWhere('(' . implode(' OR ', $conditions) . ')');
+                                } else {
+                                    $qb->andWhere('animal.' . $key . ' = :' . $key);
+                                    $qb->setParameter($key, $value);
+                                }
                                 break;
                         }
                     }

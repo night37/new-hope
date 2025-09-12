@@ -4,6 +4,7 @@ interface filter  {
   value: string,
   isSelected: boolean,
 }
+
 type Filters = filter[]
 
 
@@ -14,17 +15,43 @@ export async function animalFilters() {
 }
 
 export async function filtersResults(filters :Filters) {
+
+  const filterList :Filters = [];
   if(filters.length > 0) {
     let qb :string = ""
 
+
     filters.forEach((filter, key) => {
-      console.log(filter);
-      qb+= `${filter.fieldName.toLowerCase()}=${filter.value.toLowerCase()}${key < filters.length-1 ? "&" : ""}`
+      const findFilterIndex = filterList.findIndex(el => el?.fieldName === filter.fieldName)
+      const fieldNameToLower = filter.fieldName.toLowerCase()
+   
+
+      
+      if( fieldNameToLower !== "breed" && fieldNameToLower !== "affinity"){
+        if(findFilterIndex == -1 ){
+          filterList.push(filter)
+        }else {
+          if(!filterList[findFilterIndex].value.includes(filter.value)){
+           
+            filterList[findFilterIndex].value +=`,${filter.value}`
+          }
+        }
+      }else{
+        qb+= `${fieldNameToLower}[]=${filter.value.toLowerCase()}&`
+
+      }
     });
+
+    filterList.forEach((el,key) => {
+      qb+= `${el.fieldName.toLowerCase()}=${el.value}${filterList.length -1 === key ? "&" : ""}`
+      
+    });
+    if(qb[qb.length-1] === "&"){
+      qb = qb.slice(0,-1)
+    }
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
     const data = await response.json();
-    console.log(data);
-    // return data;
+    return data;
   }
   
     
