@@ -17,31 +17,27 @@ final class AnimalFilterDTO
     public function __construct()
     {
         $this->enums = [
-            'status d\'adoption' => [
-                'field_name' => 'AdoptionStatus',
-                'data' => $this->getEnumData(AdoptionStatus::class),
-            ], 
             'affinité' =>  [
                 'field_name' => 'Affinity',
                 'data' =>$this->getEnumData(Affinity::class)
             ],
-            'couleurs' =>  [
+            'couleur' =>  [
                 'field_name' => 'Color',
                 'data' =>$this->getEnumData(Color::class)
             ],
-            'races' =>  [
+            'race' =>  [
                 'field_name' => 'Breed',
                 'data' =>$this->getEnumData(Breed::class)
             ],
-            'genres' =>  [
+            'genre' =>  [
                 'field_name' => 'Gender',
                 'data' =>$this->getEnumData(Gender::class)
             ],
-            'tailles' =>  [
+            'taille' =>  [
                 'field_name' => 'Size',
                 'data' =>$this->getEnumData(Size::class)
             ],
-            'types' =>  [
+            'type' =>  [
                 'field_name' => 'Type',
                 'data' =>$this->getEnumData(Type::class)
             ],

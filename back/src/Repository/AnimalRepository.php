@@ -60,9 +60,7 @@ class AnimalRepository extends ServiceEntityRepository
                 ->andWhere('animal.isVisible = true');
 
             $allowedFields = [
-                'name', 
                 'gender', 
-                'age', 
                 'out_department', 
                 'highlight', 
                 'size', 
@@ -72,28 +70,35 @@ class AnimalRepository extends ServiceEntityRepository
                 'breed'
             ];
 
-            foreach ($data as $key => $value) {
-                if (!empty($value) && in_array($key, $allowedFields)) {
-                    switch ($key) {
-                        case 'name':
-                            $qb->andWhere('animal.name LIKE :' . $key)
-                            ->setParameter($key, '%' . $value . '%');
-                            break;
+                foreach ($data as $key => $value) {
+                    if (!empty($value) && in_array($key, $allowedFields)) {
+                        switch ($key) {
+                        case 'affinity':
+                        case 'breed':
+                            $values = is_array($value) ? $value : explode(',', $value);
+                            $values = array_filter(array_map('trim', $values));
                             
-                        case 'age':
-                            if (is_numeric($value)) {
-                                $qb->andWhere('animal.age = :' . $key)
-                                ->setParameter($key, (int)$value);
+                            if (count($values) > 1) {
+                                $conditions = [];
+                                foreach ($values as $index => $val) {
+                                    $paramName = $key . '_' . $index;
+                                    $conditions[] = 'animal.' . $key . ' LIKE :' . $paramName;
+                                    $qb->setParameter($paramName, '%"' . $val . '"%');
+                                }
+                                $qb->andWhere('(' . implode(' OR ', $conditions) . ')');
+                            } else {
+                                $qb->andWhere('animal.' . $key . ' LIKE :' . $key)
+                                ->setParameter($key, '%"' . $values[0] . '"%');
                             }
                             break;
-                            
-                        default:
-                            $qb->andWhere('animal.' . $key . ' = :' . $key)
-                            ->setParameter($key, $value);
-                            break;
+
+                            default:
+                                $qb->andWhere('animal.' . $key . ' = :' . $key)
+                                ->setParameter($key, $value);
+                                break;
+                        }
                     }
                 }
-            }
 
             return $qb->select($this->fieldsList())
                 ->getQuery()
