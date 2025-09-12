@@ -8,10 +8,11 @@ interface FilterOption  {
   isSelected: boolean;
   name: string;
   value: string;
+  fieldName: string
 };
 
-type Filter = {
-  [key: string]: FilterOption[];
+interface Filter  {
+    [key: string]: FilterOption[];
 }
 
 
@@ -23,11 +24,11 @@ export default function AnimalForm() {
   useEffect(() => {
     const arrayFilters: Filter[] = []
     const fetchData = async () => {
-      const data = await animalFilters();
-      if(data) {
-        for(const i in data) {
-          const addIselectedToArray = data[i].map((el: {name:string, value: string}) => {
-            return {isSelected : false ,  name: el.name, value: el.value}})
+      const filtersList = await animalFilters();
+      if(filtersList) {
+        for(const i in filtersList) {
+          const addIselectedToArray = filtersList[i].data.map((el: Filter) => {
+            return {fieldName:filtersList[i].field_name, isSelected : false ,  name: el.name, value: el.value}})
           arrayFilters.push({[i]: addIselectedToArray });
         }       
       }
@@ -35,7 +36,6 @@ export default function AnimalForm() {
     };
     fetchData();
   }, []);
-
 
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) :void =>  {
     setFilters(el => el.map(itemList => 
@@ -57,19 +57,19 @@ export default function AnimalForm() {
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const filterlist: Array <{ filter: string, value: string }>  = []
+    const filterlist: Array <FilterOption>  = []
 
     filters.forEach((filter) => {
       Object.keys(filter).forEach((el) => {
         filter[el].map((value)=> {
           if(value.isSelected) {
-            filterlist.push({filter: el, value: value.value})
+            filterlist.push(value)
           }
-
         })
        
       })
     })
+    console.log(filterlist);
     filtersResults(filterlist)
   }
 
