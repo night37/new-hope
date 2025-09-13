@@ -12,10 +12,10 @@ export const Footer = ({font}: FooterProps) => {
             <div className={`container grid grid-cols-12 py-[16.5px]  mx-auto items-center gap-4 ${font.className}` }>
                 <div className="lg:col-span-1 col-span-12 mx-auto w-full">
                     <Image
-                        src="/logo.svg"
+                        src="img/logo.svg"
                         width={80}
                         height={70}
-                        alt="Picture of the author"
+                        alt="Logo du site New Hope"
                     />
                 </div>
                 <div className="flex lg:col-span-10 col-span-12 lg:flex-row flex-col lg:gap-12">

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect} from "react"
 import Image from "next/image"
 import "./style.scss"
 
@@ -21,8 +21,8 @@ export default function Select({label, options, onChange} : SelectProps) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Reset focused index when opening/closing
@@ -37,7 +37,7 @@ export default function Select({label, options, onChange} : SelectProps) {
       target: {
         value: optionValue
       }
-    } as Pick<React.ChangeEvent<HTMLSelectElement>, 'target'>;
+    } as Pick<React.ChangeEvent<HTMLSelectElement>, "target">;
 
     onChange(customEvent as React.ChangeEvent<HTMLSelectElement>);
   };
@@ -59,13 +59,13 @@ export default function Select({label, options, onChange} : SelectProps) {
     if (!Array.isArray(options) || options.length === 0) return;
 
     switch (e.key) {
-      case 'Enter':
-      case ' ': // Space
+      case "Enter":
+      case " ": // Space
         e.preventDefault();
         if (!isOpen) {
           setIsOpen(true);
         } else if (focusedIndex >= 0) {
-          // Sélectionner l'option focusée
+          // Sélectionner l"option focusée
           if (typeof options[0] === "object") {
             const option = (options as { name: string; value: string; isSelected: boolean }[])[focusedIndex];
             handleOptionClick(option.value);
@@ -75,12 +75,12 @@ export default function Select({label, options, onChange} : SelectProps) {
         }
         break;
 
-      case 'Escape':
+      case "Escape":
         setIsOpen(false);
         setFocusedIndex(-1);
         break;
 
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
         if (!isOpen) {
           setIsOpen(true);
@@ -92,7 +92,7 @@ export default function Select({label, options, onChange} : SelectProps) {
         }
         break;
 
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
         if (isOpen) {
           setFocusedIndex(prev => 
@@ -101,7 +101,7 @@ export default function Select({label, options, onChange} : SelectProps) {
         }
         break;
 
-      case 'Tab':
+      case "Tab":
         if (isOpen) {
           setIsOpen(false);
         }
@@ -114,7 +114,7 @@ export default function Select({label, options, onChange} : SelectProps) {
 
   return (
     <div className="font-caveat w-full flex gap-2 flex-col">
-      <p className='text-large'>{label}</p>
+      <p className="text-large">{label}</p>
       <div ref={dropdownRef} className="relative">
         <div 
           onClick={() => setIsOpen(!isOpen)}
@@ -128,7 +128,7 @@ export default function Select({label, options, onChange} : SelectProps) {
 
         >
           <span>{getDisplayText()}</span>
-          <Image src="/patte.svg" width={16} height={16} alt=""/>
+          <Image src="/assets/icons/patte.svg" width={16} height={16} alt=""/>
         </div>
 
         {isOpen && (
@@ -162,7 +162,7 @@ export default function Select({label, options, onChange} : SelectProps) {
             if(option.isSelected) {
               return <div onClick={()=> handleOptionClick(option.value)} key={key} className="rounded-lg p-1 gap-2 bg-secondary border-secondary text-lg w-fit flex items-center justify-evenly h-fit">
                 <p>{option.value}  </p>
-                <span className='w-[16px] flex  items-center mt-[2px]'>
+                <span className="w-[16px] flex  items-center mt-[2px]">
                   <svg  className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" data-slot="icon" aria-hidden="true">
                     <path d="M6 18 18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>

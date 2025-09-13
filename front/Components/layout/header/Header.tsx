@@ -30,7 +30,7 @@ export function Header () {
             <div className="col-span-2 lg:col-span-3">
               <Link href="/" className="z-10">
                   <Image
-                    src="/logo.svg"
+                    src="/img/logo.svg"
                     width={80}
                     height={70}
                     alt="Picture of the author"

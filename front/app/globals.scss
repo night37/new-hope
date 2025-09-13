@@ -5,8 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-caveat: 'Caveat', cursive;
-  --font-handlee: 'Handlee', cursive;
+  --font-caveat: "Caveat", cursive;
+  --font-handlee: "Handlee", cursive;
 }
 
 .font-caveat {
@@ -35,4 +35,12 @@
 
 .text-2xl {
   font-size: 32px;
+}
+
+h2 {
+  font-size: 38px;
+}
+
+p {
+  font-size: 20px;
 }

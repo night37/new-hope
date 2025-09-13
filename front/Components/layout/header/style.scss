@@ -3,7 +3,7 @@ ul {
         position: relative;
         &:hover, &:focus{
             &::before{
-                content: url("/patte.svg");
+                content: url("/assets/icons/patte.svg");
                 position: absolute;
                 left: -20px;
             }

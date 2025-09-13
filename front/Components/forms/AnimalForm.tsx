@@ -1,7 +1,7 @@
-import React, {useEffect, useState}  from 'react'
+import React, {useEffect, useState}  from "react"
 import Select from "@/Components/ui/Select/Select"
-import { animalFilters } from '@/app/api/filters/animalFilters'
-import { filtersResults }from '@/app/api/filters/animalFilters'
+import { animalFilters, filtersResults } from "@/app/api/filters/animalFilters"
+import { Button } from "@/Components/ui/Button/Button"
 
 
 interface FilterOption  {
@@ -62,7 +62,7 @@ export default function AnimalForm() {
       Object.keys(filter).forEach((el) => {
         filter[el].map((value)=> {
           if(value.isSelected) {
-            // je spreed car sinon il alter l object original
+            // je spreed car sinon il alter l objet original
               filterlist.push({ ...value });
           }
         })
@@ -78,13 +78,9 @@ export default function AnimalForm() {
         <div key={key}>
           <Select label={Object.keys(filter)[0]} options={filter[Object.keys(filter)[0]]} onChange={onChange}/>
         </div>
-      )) : <span className='font-caveat text-xl flex justify-center w-full'><p className='border p-4 border-black'>Une erreur serveur est survenue </p></span>}
-        <div className='w-full flex justify-center  '>
-          <button className='btn font-caveat rounded-xl py-[11px] px-[20px] bg-secondary' type="submit">
-            <p className='text-2xl'>
-              Trouver votre nouveau compagnon
-            </p>
-          </button>
+      )) : <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
+        <div className="w-full flex justify-center  ">
+          <Button label={"Trouver votre nouveau compagnon"}/>
         </div>
   </form>
     
