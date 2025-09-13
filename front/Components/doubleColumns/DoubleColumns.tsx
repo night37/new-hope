@@ -17,12 +17,35 @@ interface DoubleColumnsProps {
 }
 
 const DoubleColumns = ({columns}: DoubleColumnsProps) => {
+
+    const displayInMobileDevice = (columns: ColumnData[]): React.ReactNode => {
+
+        const reorderColums :ColumnData[] = []
+        columns.forEach((column) => { 
+            
+            column.picture ? reorderColums.unshift(column) : reorderColums.push(column)
+        })
+        return (
+            reorderColums.map((column, index) => {
+                return <Column key={index} {...column} />
+            })
+        )
+    }
+
     return (
-        <div className="double-columns-container flex">
-            {columns.map((column, index) => (
-                <Column key={index} {...column} />
-            ))}
+        <>
+        <div className="double-columns-container lg:flex hidden">
+            {
+                columns.map((column, index) => {
+                    return <Column key={index} {...column} />
+                })
+            }
         </div>
+        <div className="double-columns-container flex-col lg:hidden">
+            {displayInMobileDevice(columns)}
+        </div>
+        </>
+
     );
 };
 

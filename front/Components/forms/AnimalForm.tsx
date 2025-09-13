@@ -56,6 +56,7 @@ export default function AnimalForm() {
   }
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("coucou");
     e.preventDefault();
     const filterlist: Array <FilterOption>  = []
     filters.forEach((filter) => {
@@ -73,14 +74,14 @@ export default function AnimalForm() {
   }
 
   return (
-  <form className="w-full flex flex-wrap gap-5"  onSubmit={(e)=> {submitForm(e)}}>
+  <form className="w-full flex flex-wrap gap-5 justify-center lg:justify-start"  onSubmit={(e)=> {submitForm(e)}}>
     {filters.length > 0 ? filters.map((filter, key) => (
         <div key={key}>
           <Select label={Object.keys(filter)[0]} options={filter[Object.keys(filter)[0]]} onChange={onChange}/>
         </div>
       )) : <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
         <div className="w-full flex justify-center  ">
-          <Button label={"Trouver votre nouveau compagnon"}/>
+          <Button label={"Trouver votre nouveau compagnon"} type={"submit"}/>
         </div>
   </form>
     
