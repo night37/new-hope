@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import daisyui from 'daisyui';
+
+const config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -21,15 +23,14 @@ module.exports = {
         '2xl': '32px',
       },
       colors: {
-        primary: '#CEEBE9',
-        secondary: '#73C9C2', 
-        third: '#171717',
+        "custom-primary": '#CEEBE9',
+        "custom-secondary": '#73C9C2', 
+        "custom-third": '#171717',
       }
     },
   },
-  plugins: [
-    require('daisyui')
-  ],
+  plugins: [daisyui],
+
   daisyui: {
     themes: [
       {
@@ -47,3 +48,5 @@ module.exports = {
     utils: true,
   },
 }
+
+export default config;

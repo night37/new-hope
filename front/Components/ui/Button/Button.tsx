@@ -8,7 +8,7 @@ interface ButtonInterface {
 }
 
 export const Button = ( {label, onClick, type="button" } : ButtonInterface ) => (
-    <button className="btn font-caveat rounded-xl py-[11px] px-[20px] bg-secondary hover:bg-primary focus:bg-primary active:bg-secondary" type= {type} onClick={onClick} onKeyUp={onClick}>
+    <button className="font-caveat border-custom-secondary rounded-xl px-[20px] bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary" type= {type} onClick={onClick} onKeyUp={onClick}>
         <p className="xl:text-2xl">
             {label}
         </p>

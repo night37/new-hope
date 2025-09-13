@@ -25,7 +25,7 @@ export function Header () {
     }
   }, [isOpen])
     return(
-        <header className={`font-caveat bg-secondary w-full`}>
+        <header className={`font-caveat bg-custom-secondary w-full`}>
           <div className={`font-caveat text-l container mx-auto py-[16.5px] grid items-center grid-cols-12`}> 
             <div className="col-span-2 lg:col-span-3">
               <Link href="/" className="z-10">
@@ -46,7 +46,7 @@ export function Header () {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
               </button>
-              <div className={`transition delay-150 duration-300 ease-in-out absolute left-0 ${isOpen ? "left-0 w-full" : " w-0 hidden left-full"} right-0 top-0 bottom-0  bg-secondary flex-col`}>
+              <div className={`transition delay-150 duration-300 ease-in-out absolute left-0 ${isOpen ? "left-0 w-full" : " w-0 hidden left-full"} right-0 top-0 bottom-0  bg-custom-secondary flex-col`}>
                 <Menu direction={"col"}/>
               </div>
             </div>
