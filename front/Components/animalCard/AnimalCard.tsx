@@ -38,7 +38,7 @@ export const AnimalCard = ({image, animal, path} : AnimalCardProps) => {
                     <span className="text-base font-handlee">{animal.race}</span>
                     <span className="text-base font-handlee">{animal.sexe}</span>
                 </div>
-                <div className="font-handlee">{animal.associationName}</div>
+                <div className="font-handlee font-bold">{animal.associationName}</div>
                 <div className="w-4/4"><Button onClick={onClick} label="faire connaissance" type="button" fontsize={"text-xl"}/></div>
 
             </div>            

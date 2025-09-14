@@ -19,7 +19,8 @@ interface CarouselProps {
 }
 
 
-function Carousel<T>({ items}: CarouselProps) {
+function Carousel({ items}: CarouselProps) {
+    console.log(items);
     return (
         <>
         <Swiper
@@ -41,7 +42,7 @@ function Carousel<T>({ items}: CarouselProps) {
                             name: item.name,
                             race: item.breed,
                             sexe: item.gender,
-                            // associationName: item.associationName
+                            associationName: item.structure.name
                         }}
                         path={`/animals/${item.name}`}
                     />              
