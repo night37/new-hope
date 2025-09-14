@@ -20,19 +20,15 @@ interface CarouselProps {
 
 
 function Carousel<T>({ items}: CarouselProps) {
-    console.log(items);
     return (
         <>
         <Swiper
             navigation={true}
-            modules={[Navigation]}
+            modules={[Navigation]}   
             className="animal-swiper"
             slidesPerView={4}
             spaceBetween={30}
             centeredSlides={false}
-            pagination={{
-                clickable: true,
-            }}
         >
             {items.map((item, key) => (
                 <SwiperSlide key={key}>

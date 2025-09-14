@@ -119,7 +119,7 @@ final class AnimalController extends AbstractController
             'message' => 'display filters animals result',
             'timestamp' => time(),
             'animals' => array_merge($dogsList, $catsList),
-        ]);
+        ], 200, [], ['groups' => 'animal:read']);
 
     }
 

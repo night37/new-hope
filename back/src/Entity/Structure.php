@@ -38,6 +38,7 @@ class Structure
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['animal:read'])] 
     private ?int $id = null;
 
     #[Groups(['animal:read'])]

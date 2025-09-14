@@ -102,7 +102,7 @@ class Animal
     #[ORM\Column]
     private ?int $age = null;
 
-    #[Groups(['animal:read'])]
+    #[Groups(['animal:read'])] 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure = null;

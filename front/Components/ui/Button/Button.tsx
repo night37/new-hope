@@ -8,11 +8,21 @@ interface ButtonInterface {
    
 }
 
-export const Button = ( {label, onClick, type="button", fontsize="text-2xl" } : ButtonInterface ) => (
-    <button className="font-caveat border-custom-secondary rounded-3xl px-[20px] bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary" type= {type} onClick={onClick} onKeyUp={onClick}>
+export const Button = ( {label, onClick, type="button", fontsize="text-2xl" } : ButtonInterface ) => {
+    
+    const handleClick = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            onClick && onClick(event);
+        }
+    }
+    return (
+    <button className="font-caveat border-custom-secondary rounded-3xl px-[20px] bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary" type= {type} onClick={onClick} onKeyUp={handleClick}>
         <p className={`${fontsize}`}>
             {label}
         </p>
     </button>       
-    );
+    )
+}
+    
+    
 

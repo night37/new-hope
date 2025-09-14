@@ -23,7 +23,7 @@ class AnimalRepository extends ServiceEntityRepository
         {
             return $this->createQueryBuilder('animal')
                 ->orderBy('animal.id', 'ASC')
-                ->Where('animal.isActive = true')
+                ->where('animal.isActive = true')
                 ->andWhere('animal.isVisible = true')
                 ->select($this->fieldsList())
                 ->getQuery()
@@ -31,15 +31,20 @@ class AnimalRepository extends ServiceEntityRepository
         }
 
         public function getRandomLastAnimals($type) :array {
+            $oneMonthAgo = new \DateTime('-1 month');
+
+
             return $this->createQueryBuilder('animal')
-                ->Where('animal.isActive = true')
-                ->andWhere('animal.isVisible = true')
-                ->orderBy('animal.createdAt', 'DESC')
-                ->andWhere('animal.type = :type')
-                ->setParameter('type', $type)
-                ->setMaxResults(6)
-                ->getQuery()
-                ->getResult();
+                    ->where('animal.isActive = true')
+                    ->andWhere('animal.isVisible = true')
+                    ->andWhere('animal.type = :type')
+                    ->andWhere('animal.createdAt >= :oneMonthAgo') 
+                    ->setParameter('type', $type)
+                    ->setParameter('oneMonthAgo', $oneMonthAgo)
+                    ->orderBy('animal.createdAt', 'DESC')
+                    ->setMaxResults(6)
+                    ->getQuery()
+                    ->getResult();
         }
 
         private function fieldsList(): array
@@ -105,7 +110,6 @@ class AnimalRepository extends ServiceEntityRepository
                                 break;
 
                             default:
-                                // Tous les autres champs STRING (color, size, gender, etc.)
                                 if (is_string($value) && strpos($value, ',') !== false) {
                                     $values = array_filter(array_map('trim', explode(',', $value)));
                                     
