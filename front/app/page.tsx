@@ -1,5 +1,6 @@
 import { Hero } from "../Components/layout/hero/Hero"
 import DoubleColumns from "@/Components/doubleColumns/DoubleColumns";
+import HighLightAnimals from "@/Components/HighLightAnimals/HighLightAnimals";
 
 export default function Home() {
   return (
@@ -46,6 +47,9 @@ export default function Home() {
                 }
               ]}
             />
+          </div>
+          <div className="highLight-animal-container flex flex-col gap-[40px]">
+            <HighLightAnimals/>
           </div>
         </div>
       </main>

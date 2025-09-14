@@ -1,17 +1,29 @@
-interface filter  {
+interface Filter  {
   fieldName: string, 
   name: string,
   value: string,
   isSelected: boolean,
 }
 
-type Filters = filter[]
+type Filters = Filter[]
 
 
 export async function animalFilters() {
+  try {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filters`);
-  const data = await response.json();
-  return data;
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data;
+    
+  } catch (err) {
+    console.error('Erreur lors du chargement des filtres:', err);
+    throw err;
+  }
+
 }
 
 export async function filtersResults(filters :Filters) {
@@ -49,12 +61,39 @@ export async function filtersResults(filters :Filters) {
     if(qb[qb.length-1] === "&"){
       qb = qb.slice(0,-1)
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return data;
+    
+    } catch (err) {
+      console.error('Erreur lors du chargement des resultats:', err);
+      throw err;
+    }
+  }   
+}
+
+
+export async function getLastAnimalsList() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/getRandomLastAnimals`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
     const data = await response.json();
     return data;
-  }
-  
     
+  } catch (err) {
+    console.error('Erreur lors du chargement des animaux:', err);
+    throw err;
+  }
 }
 
 
