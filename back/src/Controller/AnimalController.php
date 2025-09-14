@@ -88,7 +88,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('filters', name: 'api_animal_filters', methods: ['GET'])]
-    public function filtersList(): Response
+    public function getFiltersList(): Response
     {
         $animalFilterDTO = new AnimalFilterDTO();
 
@@ -98,7 +98,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('filtersResults', name:'api_animal_filters_results', methods:['GET'])]
-    public function filtersResults(Request $request, AnimalRepository $animalRepository): Response
+    public function getFiltersResults(Request $request, AnimalRepository $animalRepository): Response
     {   
         $data = $request->query->all() ;
 
@@ -110,5 +110,18 @@ final class AnimalController extends AbstractController
        
     }
     
+    #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods:['GET'])]
+    public function getRandomLastAnimals(Request $request,  AnimalRepository $animalRepository): Response {
+        $dogsList = $animalRepository-> getRandomLastAnimals("chien");
+        $catsList = $animalRepository-> getRandomLastAnimals("chat");
+        
+        return $this->json([
+            'message' => 'display filters animals result',
+            'timestamp' => time(),
+            'animals' => array_merge($dogsList, $catsList),
+        ]);
+
+    }
+
     
 }

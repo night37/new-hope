@@ -24,11 +24,22 @@ class AnimalRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('animal')
                 ->orderBy('animal.id', 'ASC')
                 ->Where('animal.isActive = true')
-                ->Where('animal.isVisible = true')
+                ->andWhere('animal.isVisible = true')
                 ->select($this->fieldsList())
                 ->getQuery()
-                ->getResult()
-            ;
+                ->getResult();
+        }
+
+        public function getRandomLastAnimals($type) :array {
+            return $this->createQueryBuilder('animal')
+                ->Where('animal.isActive = true')
+                ->andWhere('animal.isVisible = true')
+                ->orderBy('animal.createdAt', 'DESC')
+                ->andWhere('animal.type = :type')
+                ->setParameter('type', $type)
+                ->setMaxResults(6)
+                ->getQuery()
+                ->getResult();
         }
 
         private function fieldsList(): array

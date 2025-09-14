@@ -16,6 +16,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\OpenApi\Model\Operation;
 
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
@@ -23,22 +24,44 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
     operations: [
-        new Get(),
-        new GetCollection(),
         new Get(
             name: 'api_animal_filters', 
             uriTemplate: '/backoffice/animal/filters',
-            controller: 'App\Controller\AnimalController::filtersList'     
+            controller: 'App\Controller\AnimalController::getFiltersList',
+            openapi: new Operation(
+                summary: 'Filtres pour animaux',
+                description: 'Récupère la liste complète des filtres disponibles pour les animaux'
+            )
         ),
         new Get(
             name: 'api_animals_list', 
             uriTemplate: '/backoffice/animal/get_animals_list',
-            controller: 'App\Controller\AnimalController::index'     
+            controller: 'App\Controller\AnimalController::index',
+            description: 'Get the list of animals',
+            openapi: new Operation(
+                summary: 'Liste des animaux',
+                description: 'Récupère la liste complète des animaux'
+            )
         ),
         new Get(
             name: 'api_animal_filters_results', 
             uriTemplate: '/backoffice/animal/filtersResults',
-            controller: 'App\Controller\AnimalController::filtersResults'     
+            controller: 'App\Controller\AnimalController::getFiltersResults',
+            description: 'Get the list of animal filters results',
+            openapi: new Operation(
+                summary: 'Liste des résultats de filtres d\'animaux',
+                description: 'Récupère la liste complète des résultats de filtres d\'animaux'
+            )
+        ),
+        new Get(
+            name: 'api_get_random_last_animals', 
+            uriTemplate: '/backoffice/animal/getRandomLastAnimals',
+            controller: 'App\Controller\AnimalController::getRandomLastAnimals',
+            description: 'Get a random list of the last animals',
+            openapi: new Operation(
+                summary: 'Liste aléatoire des derniers animaux',
+                description: 'Récupère une liste aléatoire des derniers animaux'
+            )
         )
 
     ]
