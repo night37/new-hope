@@ -33,7 +33,7 @@ export async function filtersResults(filters :Filters) {
     let qb :string = ""
 
 
-    filters.forEach((filter, key) => {
+    filters.forEach((filter) => {
       const findFilterIndex = filterList.findIndex(el => el?.fieldName === filter.fieldName)
       const fieldNameToLower = filter.fieldName.toLowerCase()
    

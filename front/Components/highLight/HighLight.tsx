@@ -10,7 +10,6 @@ interface HighLightProps {
 }
 
 function HightLight({introduction, animals}: HighLightProps) {
-    console.log(animals);
     return (
         <div className="highLight-container">            
             <h2 className="highLight-title font-caveat">

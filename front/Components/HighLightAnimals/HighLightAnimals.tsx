@@ -49,7 +49,7 @@ fetchData();
           />
           <HighLight 
            introduction= {{
-             title:"Nos chat mis en avant",
+             title:"Nos chats mis en avant",
              content:"Ces chats attendent avec impatience une famille qui saura leur offrir douceur et sécurité. Chacun d’eux a beaucoup d’amour à donner et ne demande qu’à partager des moments de tendresse. Offrez-leur un foyer, et ils deviendront vos plus fidèles compagnons à quatre pattes !"
 
            }}

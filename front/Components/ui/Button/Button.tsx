@@ -11,8 +11,8 @@ interface ButtonInterface {
 export const Button = ( {label, onClick, type="button", fontsize="text-2xl" } : ButtonInterface ) => {
     
     const handleClick = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            onClick && onClick(event);
+        if ((event.key === 'Enter' || event.key === ' ') && onClick ) {
+            onClick(event);
         }
     }
     return (

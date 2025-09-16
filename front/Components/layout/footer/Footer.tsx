@@ -12,7 +12,7 @@ export const Footer = ({font}: FooterProps) => {
             <div className={`container grid grid-cols-12 py-[16.5px]  mx-auto items-center gap-4 ${font.className}` }>
                 <div className="lg:col-span-1 col-span-12 mx-auto w-full flex justify-center lg:justify-start">
                     <Image
-                        src="img/logo.svg"
+                        src="/img/logo.svg"
                         width={80}
                         height={70}
                         alt="Logo du site New Hope"

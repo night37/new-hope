@@ -1,4 +1,5 @@
 import React, {useRef} from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { SwiperRef } from 'swiper/react';
 import { AnimalCard } from "@/Components/animalCard/AnimalCard"
@@ -33,7 +34,7 @@ function Carousel({ items}: CarouselProps) {
         <Swiper
             modules={[Navigation]}   
             ref={swiperRef}
-            className="animal-swiper"
+            className="animal-swiper relative"
             slidesPerView={4}
             spaceBetween={30}
             centeredSlides={false}
@@ -76,24 +77,25 @@ function Carousel({ items}: CarouselProps) {
                             sexe: item.gender,
                             associationName: item.structure.name
                         }}
-                        path={`/animals/${item.name}`}
+                        path={`/animal/${item.name}`}
                     />              
                 </SwiperSlide>
             ))}
         </Swiper>
         <button 
-            className="custom-prev-btn"
+            className="custom-prev-btn bg-custom-secondary w-[40] h-[40] absolute left-2 top-2/4 rounded-full flex items-center justify-center z-10 hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
             onClick={() => swiperRef.current?.swiper.slidePrev()}
         >
-            &#8249;
+            <Image src="/assets/icons/leftArrow.svg" alt="" width={10} height={10} className='relative right-[2px]'/>
         </button>
       
 
         <button 
-            className="custom-next-btn"
+            className="custom-next-btn bg-custom-secondary w-[40] h-[40] absolute right-2 z-10 top-2/4 rounded-full flex items-center justify-center hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
             onClick={() => swiperRef.current?.swiper.slideNext()}
         >
-            test
+            <Image src="/assets/icons/rightArrow.svg" alt="" width={10} height={10} className='relative right-[-2px]'/>
+
         </button>
         
         </>
