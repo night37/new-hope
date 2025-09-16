@@ -62,6 +62,15 @@ use ApiPlatform\OpenApi\Model\Operation;
                 summary: 'Liste aléatoire des derniers animaux',
                 description: 'Récupère une liste aléatoire des derniers animaux'
             )
+            ),
+        new Get(
+            name: 'api_find_by_id', 
+            uriTemplate: '/backoffice/animal/findById',
+            controller: 'App\Controller\AnimalController::findById',
+            description: 'find animal by id',
+            openapi: new Operation(
+                summary: 'trouver un animal avec son id',
+            )
         )
 
     ]

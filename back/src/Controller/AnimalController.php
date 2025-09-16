@@ -105,7 +105,7 @@ final class AnimalController extends AbstractController
         return $this->json([
             'message' => 'display filters animals result',
             'timestamp' => time(),
-            'animals' => $animalRepository-> findByFilters($data),
+            'animals' => $animalRepository->findByFilters($data),
         ]);
        
     }
@@ -120,6 +120,18 @@ final class AnimalController extends AbstractController
             'timestamp' => time(),
             'animals' => array_merge($dogsList, $catsList),
         ], 200, [], ['groups' => 'animal:read']);
+
+    }
+
+    #[Route('findById', name:'api_find_by_id', methods:['GET'])]
+    public function findById (Request $request, AnimalRepository $animalRepository): Response {
+
+        $data = $request->query->all();
+        return $this->json([
+            'message' => 'display find result for id',
+            'timestamp' => time(),
+            'animal' => $animalRepository->findById($data["id"]),
+        ]);
 
     }
 

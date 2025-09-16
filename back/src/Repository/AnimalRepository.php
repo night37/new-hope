@@ -134,6 +134,14 @@ class AnimalRepository extends ServiceEntityRepository
                 ->getResult();
         }
 
+    public function findById($id): array {
+        return  $this->createQueryBuilder('animal') 
+            ->where("animal.id = :id")
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+
+    }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('a')
