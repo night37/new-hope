@@ -35,16 +35,19 @@ class AnimalRepository extends ServiceEntityRepository
 
 
             return $this->createQueryBuilder('animal')
-                    ->where('animal.isActive = true')
-                    ->andWhere('animal.isVisible = true')
-                    ->andWhere('animal.type = :type')
-                    ->andWhere('animal.createdAt >= :oneMonthAgo') 
-                    ->setParameter('type', $type)
-                    ->setParameter('oneMonthAgo', $oneMonthAgo)
-                    ->orderBy('animal.createdAt', 'DESC')
-                    ->setMaxResults(6)
-                    ->getQuery()
-                    ->getResult();
+                ->select('animal.id, animal.name, structure.name as structureName, animal.thumbnail, animal.breed')
+                ->innerJoin('animal.structure', 'structure')
+                ->where('animal.isActive = true')
+                ->andWhere('animal.isVisible = true')
+                ->andWhere('animal.type = :type')
+                ->andWhere('animal.createdAt >= :oneMonthAgo') 
+                ->setParameter('type', $type)
+                ->setParameter('oneMonthAgo', $oneMonthAgo)
+                ->orderBy('animal.createdAt', 'DESC')
+                ->setMaxResults(6)
+                ->getQuery()
+                ->getResult();
+    
         }
 
         private function fieldsList(): array
@@ -142,25 +145,4 @@ class AnimalRepository extends ServiceEntityRepository
             ->getResult();
 
     }
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Animal
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

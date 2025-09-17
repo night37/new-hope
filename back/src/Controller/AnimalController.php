@@ -127,6 +127,10 @@ final class AnimalController extends AbstractController
     public function findById (Request $request, AnimalRepository $animalRepository): Response {
 
         $data = $request->query->all();
+
+
+
+
         return $this->json([
             'message' => 'display find result for id',
             'timestamp' => time(),
