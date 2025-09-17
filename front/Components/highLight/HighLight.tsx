@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from "@/Components/AnimalCarousel/AnimalCarousel";
+import Slider from "@/Components/AnimalSlider/AnimalSlider";
 
 interface HighLightProps {
     introduction: {
@@ -17,7 +17,7 @@ function HightLight({introduction, animals}: HighLightProps) {
                 <p className="font-handlee">{introduction.content}</p>
             </h2>
 
-            {animals.length > 0 && <Carousel items={animals}/>}
+            {animals.length > 0 && <Slider items={animals}/>}
         </div>
     );
 }

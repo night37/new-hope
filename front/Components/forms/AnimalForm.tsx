@@ -1,6 +1,6 @@
 import React, {useEffect, useState}  from "react"
 import Select from "@/Components/ui/Select/Select"
-import { animalFilters, filtersResults } from "@/app/api/filters/animals"
+import { animalFilters, filtersResults } from "@/api/filters/animals"
 import { Button } from "@/Components/ui/Button/Button"
 
 

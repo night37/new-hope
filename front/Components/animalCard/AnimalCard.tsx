@@ -2,6 +2,8 @@ import * as React from "react";
 import Image from "next/image";
 import { Button } from "../ui/Button/Button";
 import { useRouter } from 'next/navigation'
+import { create } from 'zustand'
+
 
 interface AnimalCardProps {
     image: {
@@ -9,6 +11,7 @@ interface AnimalCardProps {
         alt: string
     },
     animal:{
+        id: number,
         name: string,
         race: string,
         sexe: string,
@@ -25,8 +28,10 @@ export const AnimalCard = ({image, animal, path} : AnimalCardProps) => {
 
 
     const onClick = () => {
+        sessionStorage.setItem('animal-id', animal.id.toString())
         router.push(path)
-    }    
+    }   
+
     return (
         <article className="container flex flex-col bg-white shadow-card">
             <div className="image-container">

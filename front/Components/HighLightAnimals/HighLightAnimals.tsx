@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from 'react';
-import {getLastAnimalsList} from "@/app/api/filters/animals"
+import {getLastAnimalsList} from "@/api/filters/animals"
 import  HighLight  from "@/Components/highLight/HighLight"
 
 

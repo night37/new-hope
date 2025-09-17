@@ -10,25 +10,22 @@ import 'swiper/css/navigation';
 import './style.scss';
 
 interface AnimalItem {
+    id: number,
     thumbnail: string;
     name: string
     breed: string,
     gender: string,   
-    structure: {
-        id: string,
-        name: string
-    }
+    structureName: string,
 }
 
-interface CarouselProps {
+interface SliderProps {
     items: AnimalItem[];
 }
 
 
-function Carousel({ items}: CarouselProps) {
+function Slider({ items}: SliderProps) {
     const swiperRef = useRef<SwiperRef | null>(null);
 
-    console.log(items);
     return (
         <>
         <Swiper
@@ -59,9 +56,7 @@ function Carousel({ items}: CarouselProps) {
                         slidesPerView: 4,
                         spaceBetween: 40
                     }
-
             }}
-
 
         >
             {items.map((item, key) => (
@@ -72,10 +67,11 @@ function Carousel({ items}: CarouselProps) {
                             alt: `photo de ${item.name}`
                         }}
                         animal={{
+                            id : item.id,
                             name: item.name,
                             race: item.breed,
                             sexe: item.gender,
-                            associationName: item.structure.name
+                            associationName: item.structureName
                         }}
                         path={`/animal/${item.name}`}
                     />              
@@ -103,4 +99,4 @@ function Carousel({ items}: CarouselProps) {
     );
 }
 
-export default Carousel;
+export default Slider;
