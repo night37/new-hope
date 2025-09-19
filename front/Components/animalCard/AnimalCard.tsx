@@ -25,8 +25,7 @@ interface AnimalCardProps {
 
 export const AnimalCard = ({image, animal, path} : AnimalCardProps) => {
     const router = useRouter()
-    const updateId  = useAnimalStore((state) => state.updateId(state))
-    
+    const updateId = useAnimalStore((state) => state.updateId)
     
     
     const onClick = () => {

@@ -103,7 +103,7 @@ export async function getLastAnimalsList() {
 export async function findById(id: number) {
   if(typeof(id) === "number" && id){
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/${id}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/findById?id=${id}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
