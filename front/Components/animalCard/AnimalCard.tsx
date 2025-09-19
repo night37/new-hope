@@ -2,7 +2,7 @@ import * as React from "react";
 import Image from "next/image";
 import { Button } from "../ui/Button/Button";
 import { useRouter } from 'next/navigation'
-import { create } from 'zustand'
+import { useAnimalStore } from '@/store/animalStore';
 
 
 interface AnimalCardProps {
@@ -25,10 +25,12 @@ interface AnimalCardProps {
 
 export const AnimalCard = ({image, animal, path} : AnimalCardProps) => {
     const router = useRouter()
-
-
+    const updateId  = useAnimalStore((state) => state.updateId(state))
+    
+    
+    
     const onClick = () => {
-        sessionStorage.setItem('animal-id', animal.id.toString())
+        updateId (animal.id)
         router.push(path)
     }   
 
