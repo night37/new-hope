@@ -37,7 +37,7 @@ export default function AnimalDetails() {
     const fetchData = async () => {
       try {
         const result = await findById(2)
-        setAnimal(result.animal[0])
+        setAnimal(result.animal[id])
 
       }
       catch (err) {
