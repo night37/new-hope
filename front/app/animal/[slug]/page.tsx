@@ -28,42 +28,38 @@ interface AnimalDetailsProps {
   structureEmail: string;
 }
 
-export default function AnimalDetails () {
+export default function AnimalDetails() {
 
-  const [animal, setAnimal] = useState <AnimalDetailsProps | null >(null)
-  const [error, setError] = useState <boolean | null> (null)
-  const [loading, setLoading] = useState <boolean> (true)
+  const [animal, setAnimal] = useState<AnimalDetailsProps | null>(null)
   const id = useAnimalStore((state) => state.id)
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      try{
-        const result = await findById(3)
+      try {
+        const result = await findById(2)
         setAnimal(result.animal[0])
-        
+
       }
-      catch(err){
-      console.error("erreur lors de la récupération des data de l'animal", err)
-      setError(true)
+      catch (err) {
+        console.error("erreur lors de la récupération des data de l'animal", err)
       }
     }
-      fetchData()
-      setLoading(false)
+    fetchData()
 
-  },[id])
-  
+  }, [id])
+
   return (
     <>
-    {
-    animal ? 
-      <div>
-        <Header name={animal.name}/>
-        <Content animal={animal}/>
+      {
+        animal ?
+          <div>
+            <Header name={animal.name} />
+            <Content animal={animal} />
 
-      </div>
-      :
-      <div>test</div>
-    }
+          </div>
+          :
+          <div>test</div>
+      }
     </>
   );
 }

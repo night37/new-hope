@@ -6,20 +6,36 @@ interface HighLightProps {
         title: string,
         content: string,
     }
-    animals: object[]
+    animals: Animal[],
+    error: string,
+    loading: boolean
 }
 
-function HightLight({introduction, animals}: HighLightProps) {
+
+interface Animal {
+    id: number,
+    name: string
+    thumbnail: string;
+    breed: string[],
+    gender: string,
+    structureName: string,
+    type: string
+}
+
+function HighLight({ introduction, animals, error, loading }: HighLightProps) {
     return (
-        <div className="highLight-container">            
+        <div className="highLight-container">
             <h2 className="highLight-title font-caveat">
                 {introduction.title}
                 <p className="font-handlee">{introduction.content}</p>
             </h2>
 
-            {animals.length > 0 && <Slider items={animals}/>}
+            {animals.length > 0 && error != "" ?
+                <Slider items={animals} /> : loading
+                    ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary p-4 my-10"></span></div>
+                    : <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 my-10 border-black">Une erreur serveur est survenue </p></span>}
         </div>
     );
 }
 
-export default HightLight;
+export default HighLight;

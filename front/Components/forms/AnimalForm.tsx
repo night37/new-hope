@@ -105,7 +105,7 @@ export default function AnimalForm() {
     {loading ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary"></span></div>: 
       error && <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
         <div className="w-full flex justify-center">
-          <Button label={"Trouver votre nouveau compagnon"} type={"submit"}/>
+          <Button label={"Trouver votre nouveau compagnon"} type={"submit"} onClick={() => {}}/>
         </div>
   </form>
     

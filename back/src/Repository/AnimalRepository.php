@@ -35,7 +35,7 @@ class AnimalRepository extends ServiceEntityRepository
 
 
             return $this->createQueryBuilder('animal')
-                ->select('animal.id, animal.name, structure.name as structureName, animal.thumbnail, animal.breed')
+                ->select('animal.id,animal.name, structure.name as structureName, animal.thumbnail, animal.breed, animal.type')
                 ->innerJoin('animal.structure', 'structure')
                 ->where('animal.isActive = true')
                 ->andWhere('animal.isVisible = true')

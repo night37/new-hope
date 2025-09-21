@@ -10,10 +10,10 @@ interface AnimalCardProps {
         src: string,
         alt: string
     },
-    animal:{
+    animal: {
         id: number,
         name: string,
-        race: string,
+        breed: string[],
         sexe: string,
         associationName?: string
 
@@ -23,31 +23,31 @@ interface AnimalCardProps {
 
 
 
-export const AnimalCard = ({image, animal, path} : AnimalCardProps) => {
+export const AnimalCard = ({ image, animal, path }: AnimalCardProps) => {
     const router = useRouter()
     const updateId = useAnimalStore((state) => state.updateId)
-    
-    
+
+
     const onClick = () => {
-        updateId (animal.id)
+        updateId(animal.id)
         router.push(path)
-    }   
+    }
 
     return (
         <article className="container flex flex-col bg-white shadow-card">
             <div className="image-container">
-                <Image className="object-cover" src={"/img/placeholder.svg"} alt={image.alt} height={210} width={263}/>
+                <Image className="object-cover" src={"/img/placeholder.svg"} alt={image.alt} height={210} width={263} />
             </div>
             <div className="details-container px-[23px] py-[16px]">
                 <h3 className="title-container font-caveat text-large "> {animal.name}</h3>
                 <div className="animal-detail-container">
-                    <span className="text-base font-handlee">{animal.race}</span>
+                    <span className="text-base font-handlee">{animal.breed.join(', ')}</span>
                     <span className="text-base font-handlee">{animal.sexe}</span>
                 </div>
                 <div className="font-handlee font-bold">{animal.associationName}</div>
-                <div className="w-4/4"><Button onClick={onClick} label="faire connaissance" type="button" fontsize={"text-xl"}/></div>
+                <div className="w-4/4"><Button onClick={onClick} label="faire connaissance" type="button" fontsize={"text-xl"} /></div>
 
-            </div>            
+            </div>
         </article>
     );
 };

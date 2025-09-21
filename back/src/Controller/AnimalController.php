@@ -114,6 +114,7 @@ final class AnimalController extends AbstractController
     public function getRandomLastAnimals(Request $request,  AnimalRepository $animalRepository): Response {
         $dogsList = $animalRepository-> getRandomLastAnimals("chien");
         $catsList = $animalRepository-> getRandomLastAnimals("chat");
+
         
         return $this->json([
             'message' => 'display filters animals result',

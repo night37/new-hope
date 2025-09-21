@@ -1,0 +1,16 @@
+.identity-container,
+.particularity-container,
+.description-container {
+
+  @media screen and (max-width: 1024px) {
+    &::after {
+      content: '';
+      border-bottom: 3px solid #CEEBE9;
+      width: 25vw;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+  }
+}
