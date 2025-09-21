@@ -36,8 +36,8 @@ export default function AnimalDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await findById(2)
-        setAnimal(result.animal[id])
+        const result = await findById(id)
+        setAnimal(result.animal[0])
 
       }
       catch (err) {
@@ -47,6 +47,7 @@ export default function AnimalDetails() {
     fetchData()
 
   }, [id])
+
 
   return (
     <>
