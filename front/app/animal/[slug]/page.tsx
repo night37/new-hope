@@ -3,36 +3,67 @@
 import React, { useEffect, useState } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
 import { findById } from "@/api/filters/animals"
-
-export interface AnimalDetailsProps {
+import Header from "./Header"
+import Content from "./Content/Content"
+interface AnimalDetailsProps {
+  id: number;
+  name: string;
+  gender: 'male' | 'female';
+  age: number;
+  out_department: boolean;
+  size: 'petit' | 'moyen' | 'grand';
+  color: string;
+  affinity: ('enfants' | 'seniors' | 'autres_animaux')[];
+  adoption_status: 'adopté' | 'en attente' | 'réservé';
+  breed: string[];
+  type: 'chat' | 'chien';
+  thumbnail: string;
+  images: string[];
+  description: string;
+  structureName: string;
+  structureStreet: string;
+  structureZipCode: number;
+  structureCity: string;
+  structurePhone: string;
+  structureEmail: string;
 }
 
-export default function AnimalDetails (props: AnimalDetailsProps) {
+export default function AnimalDetails () {
 
+  const [animal, setAnimal] = useState <AnimalDetailsProps | null >(null)
+  const [error, setError] = useState <boolean | null> (null)
+  const [loading, setLoading] = useState <boolean> (true)
   const id = useAnimalStore((state) => state.id)
-  const [animal, setAnimal] = useState(null)
-
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const result = await findById(4)
+        const result = await findById(3)
+        setAnimal(result.animal[0])
         
-        console.log(result);
       }
       catch(err){
-      console.error("erreur lors de la récupération de l'animal", err)
+      console.error("erreur lors de la récupération des data de l'animal", err)
+      setError(true)
       }
     }
       fetchData()
+      setLoading(false)
 
-  })
+  },[id])
   
-
   return (
-    <div className="title-container">
+    <>
+    {
+    animal ? 
+      <div>
+        <Header name={animal.name}/>
+        <Content animal={animal}/>
 
-      
-    </div>
+      </div>
+      :
+      <div>test</div>
+    }
+    </>
   );
 }

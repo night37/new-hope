@@ -128,14 +128,11 @@ final class AnimalController extends AbstractController
 
         $data = $request->query->all();
 
-
-
-
         return $this->json([
             'message' => 'display find result for id',
             'timestamp' => time(),
             'animal' => $animalRepository->findById($data["id"]),
-        ]);
+        ], 200, [], ['groups' => 'animal:read']);
 
     }
 

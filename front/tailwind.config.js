@@ -26,6 +26,8 @@ const config = {
         "custom-primary": '#CEEBE9',
         "custom-secondary": '#73C9C2', 
         "custom-third": '#171717',
+        "font-green": '#047169',
+
       },
       boxShadow: {
         'card': '0 4px 4px 0 rgba(0, 0, 0, 0.25), -5px 7px 4px 0 rgba(0, 0, 0, 0.25)',

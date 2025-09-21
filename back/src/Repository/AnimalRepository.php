@@ -139,6 +139,29 @@ class AnimalRepository extends ServiceEntityRepository
 
     public function findById($id): array {
         return  $this->createQueryBuilder('animal') 
+            ->select(
+                'animal.id, 
+                animal.name, 
+                animal.gender, 
+                animal.age, 
+                animal.out_department, 
+                animal.size, 
+                animal.color,
+                animal.affinity, 
+                animal.adoption_status,
+                animal.breed,
+                animal.type, 
+                animal.thumbnail,
+                animal.images,
+                animal.description,
+                structure.name as structureName, 
+                structure.street as structureStreet,
+                structure.zip_code as structureZipCode,
+                structure.city as structureCity,
+                structure.phone as structurePhone,
+                structure.email as structureEmail'
+                )
+            ->innerJoin('animal.structure', 'structure')
             ->where("animal.id = :id")
             ->setParameter('id', $id)
             ->getQuery()
