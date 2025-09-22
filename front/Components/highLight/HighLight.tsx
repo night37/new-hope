@@ -24,7 +24,7 @@ interface Animal {
 
 function HighLight({ introduction, animals, error, loading }: HighLightProps) {
     return (
-        <div className="highLight-container">
+        <div className="highLight-container px-3 lg:px-0">
             <h2 className="highLight-title font-caveat">
                 {introduction.title}
                 <p className="font-handlee">{introduction.content}</p>

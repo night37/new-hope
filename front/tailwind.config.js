@@ -17,14 +17,14 @@ const config = {
       },
       fontSize: {
         'small': '14px',
-        'base': '16px', 
+        'base': '16px',
         'large': '20px',
         'xl': '24px',
         '2xl': '32px',
       },
       colors: {
         "custom-primary": '#CEEBE9',
-        "custom-secondary": '#73C9C2', 
+        "custom-secondary": '#73C9C2',
         "custom-third": '#171717',
         "font-green": '#047169',
 
@@ -41,7 +41,7 @@ const config = {
       {
         light: {
           "primary": "#CEEBE9",
-          "secondary": "#73C9C2", 
+          "secondary": "#73C9C2",
           "accent": "#171717",
           "neutral": "#171717",
           "base-100": "#ffffff",
@@ -51,6 +51,7 @@ const config = {
     base: true,
     styled: true,
     utils: true,
+    darkMod: "class",
   },
 }
 

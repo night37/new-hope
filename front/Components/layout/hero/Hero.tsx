@@ -3,18 +3,18 @@
 import { useState } from "react"
 import { ButtonRadio } from "@/Components/ui/ButtonRadio/ButtonRadio";
 import AnimalForm from "@/Components/forms/AnimalForm"
-import AssociationForm  from "@/Components/forms/AssociationForm"
+import AssociationForm from "@/Components/forms/AssociationForm"
 import { useAnimalStore } from "@/store/animalStore"
 
 
 
 
-export function Hero () {
+export function Hero() {
 
   const [radioBtns, setRadioBtns] = useState(
     [
-      {name: "radio1",label: "Rechercher un animal", isActive: true},
-      {name: "radio2", label:"Rechercher une association", isActive: false}
+      { name: "radio1", label: "Rechercher un animal", isActive: true },
+      { name: "radio2", label: "Rechercher une association", isActive: false }
     ]
   )
   const searchParameters = useAnimalStore((state) => state.searchParameters)
@@ -24,8 +24,8 @@ export function Hero () {
 
 
 
-  const handleRadioClick = (selectedIndex : number) => {
-    setRadioBtns(prev => 
+  const handleRadioClick = (selectedIndex: number) => {
+    setRadioBtns(prev =>
       prev.map((radio, key) => ({
         ...radio,
         isActive: key === selectedIndex
@@ -35,20 +35,20 @@ export function Hero () {
 
 
   return (
-    <div className="bg-[url(/img/Hero.png)] bg-no-repeat bg-fit  py-[98px] w-full flex justify-center">
+    <div className="lg:bg-cover bg-left bg-[url(/img/Hero.png)] bg-no-repeat bg-fit  py-[98px] w-full flex justify-center px-3 lg:px-0">
       <div className="container bg-white/50 px-[50px] flex flex-col py-[50px] rounded-xl gap-5">
-          <div className="radio-container flex justify-center flex-wrap  gap-5 flex-col lg:flex-row items-center">
-            {radioBtns.map((radio, key) =>  {
-              return(
-              <div key={key} className="flex w-fit"  onClick={()=>handleRadioClick(key)}>
+        <div className="radio-container flex justify-center flex-wrap  gap-5 flex-col lg:flex-row items-center">
+          {radioBtns.map((radio, key) => {
+            return (
+              <div key={key} className="flex w-fit" onClick={() => handleRadioClick(key)}>
                 <ButtonRadio label={radio.label} isActive={radio.isActive} />
               </div>
-              )
-            })}
-          </div>
-          <div className="form-container container flex grid-cols-12 flex-wrap gap-3">
-            {radioBtns[0].isActive ? <AnimalForm/> : <AssociationForm/>}
-          </div>
+            )
+          })}
+        </div>
+        <div className="form-container container flex grid-cols-12 flex-wrap gap-3">
+          {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
+        </div>
       </div>
     </div>
   );
