@@ -51,7 +51,7 @@ const config = {
     base: true,
     styled: true,
     utils: true,
-    darkMod: "class",
+    darkMode: "class",
   },
 }
 
