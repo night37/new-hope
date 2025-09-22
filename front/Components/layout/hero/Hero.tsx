@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ButtonRadio } from "@/Components/ui/ButtonRadio/ButtonRadio";
 import AnimalForm from "@/Components/forms/AnimalForm"
 import AssociationForm  from "@/Components/forms/AssociationForm"
+import { useAnimalStore } from "@/store/animalStore"
 
 
 
@@ -16,6 +17,11 @@ export function Hero () {
       {name: "radio2", label:"Rechercher une association", isActive: false}
     ]
   )
+  const searchParameters = useAnimalStore((state) => state.searchParameters)
+
+
+  console.log(searchParameters);
+
 
 
   const handleRadioClick = (selectedIndex : number) => {
@@ -44,7 +50,6 @@ export function Hero () {
             {radioBtns[0].isActive ? <AnimalForm/> : <AssociationForm/>}
           </div>
       </div>
-      
     </div>
   );
 }

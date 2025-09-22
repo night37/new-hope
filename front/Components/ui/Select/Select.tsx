@@ -54,7 +54,6 @@ export default function Select({label, options, onChange} : SelectProps) {
     const selectedCount = getSelectedCount();
     return `${selectedCount > 0  ?  selectedCount > 1 ? selectedCount + " sélectionnés" : selectedCount + " sélectionné" : "Aucun filtre" } `;
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!Array.isArray(options) || options.length === 0) return;
 
