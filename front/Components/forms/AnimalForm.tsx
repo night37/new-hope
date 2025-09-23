@@ -22,6 +22,7 @@ export default function AnimalForm() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const setSearchParameters = useAnimalStore((state) => state.updateSearchParameters);
+  const setSearchResults = useAnimalStore((state) => state.setSearchResults);
   const searchParameters = useAnimalStore((state) => state.searchParameters);
   const router = useRouter();
   const currentPath = usePathname();
@@ -41,7 +42,6 @@ export default function AnimalForm() {
             arrayFilters.push({ [i]: addIselectedToArray });
           }
         }
-        // If on animalsSearch and have searchParameters, preselect them
         if (currentPath === "/animalsSearch" && searchParameters?.length > 0) {
           const newArray: Filter[] = [];
           arrayFilters.forEach((itemList) => {
@@ -87,7 +87,7 @@ export default function AnimalForm() {
     ));
   };
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const filterlist: Array<FilterOption> = [];
     filters.forEach((filter) => {
@@ -100,9 +100,11 @@ export default function AnimalForm() {
       });
     });
     setSearchParameters(filterlist);
-    filtersResults(filterlist);
     if (currentPath != "/animalsSearch") {
       router.push("/animalsSearch");
+    }else{
+      const result = await filtersResults(filterlist);
+      setSearchResults(result);
     }
   };
 
@@ -114,12 +116,37 @@ export default function AnimalForm() {
     ));
   }, [filters]);
 
+const resetFilters = () => {
+  
+    const resetFilterArray = filters.map(itemList => {
+      const resetItemList: { [key: string]: FilterOption[] } = {};
+
+      Object.entries(itemList).forEach(([key, options]) => {
+        resetItemList[key] = (options as FilterOption[]).map(option => ({
+          ...option,
+          isSelected: false
+        }));
+      });
+      
+      return resetItemList;
+    })
+    setFilters(resetFilterArray);
+};
+  
+  console.log(filters);
   return (
     <form className="w-full flex flex-wrap gap-5 justify-center lg:justify-start" onSubmit={(e) => { submitForm(e); }}>
-      {filters.length > 0 && renderSelect}
+      {filters.length > 0 && 
+      <div className="flex gap-8 flex-wrap justify-center lg:justify-start w-full">
+        {renderSelect}
+      </div>
+      }
       {loading ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary"></span></div> :
         error && <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center gap-4">
+        <button className="font-caveat rounded-3xl px-[5px] border-custom-primary" onClick={()=>{resetFilters()}}>
+          Réinitialiser les filtres
+        </button>
         <Button label={"Trouver votre nouveau compagnon"} type={"submit"} onClick={() => { }} />
       </div>
     </form>

@@ -5,6 +5,7 @@ import { create } from "zustand";
 export const useAnimalStore = create((set) => ({
     id : null,
     searchParameters : null,
+    searchResults: null,
     updateId(id) {
         set({id: id})
     },
@@ -14,6 +15,12 @@ export const useAnimalStore = create((set) => ({
             searchParameters: parameters
         })
         
+    },
+
+    setSearchResults(result) {
+       set({
+            searchResults: result
+        })
     }
 
 

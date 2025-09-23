@@ -20,10 +20,6 @@ export function Hero() {
   const searchParameters = useAnimalStore((state) => state.searchParameters)
 
 
-  console.log(searchParameters);
-
-
-
   const handleRadioClick = (selectedIndex: number) => {
     setRadioBtns(prev =>
       prev.map((radio, key) => ({

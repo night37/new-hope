@@ -29,10 +29,11 @@ export async function animalFilters() {
 export async function filtersResults(filters: Filters) {
 
   const filterList: Filters = [];
+  let response;
   if (filters.length > 0) {
+    
     let qb: string = ""
-
-
+    
     filters.forEach((filter) => {
       const findFilterIndex = filterList.findIndex(el => el?.fieldName === filter.fieldName)
       const fieldNameToLower = filter.fieldName.toLowerCase()
@@ -62,22 +63,25 @@ export async function filtersResults(filters: Filters) {
       qb = qb.slice(0, -1)
     }
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
+        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      return data;
+
 
     } catch (err) {
       console.error('Erreur lors du chargement des resultats:', err);
       throw err;
     }
+  }else {
+    response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults`);
+
   }
-  console.warn('le tableau filtre est vide ou est inexistant')
-  return
+    const data = await response.json();
+    return data;
+  
 
 
 }
