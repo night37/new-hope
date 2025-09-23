@@ -23,6 +23,8 @@ use ApiPlatform\OpenApi\Model\Operation;
 #[Vich\Uploadable]
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
+    denormalizationContext: ['groups' => ['animal:write']],
+
     operations: [
         new Get(
             name: 'api_animal_filters', 

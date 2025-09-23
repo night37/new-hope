@@ -101,6 +101,7 @@ final class AnimalController extends AbstractController
     public function getFiltersResults(Request $request, AnimalRepository $animalRepository): Response
     {   
         $data = $request->query->all();
+        $response = $animalRepository->findByFilters($data);
 
         return $this->json([
             'message' => 'display filters animals result',

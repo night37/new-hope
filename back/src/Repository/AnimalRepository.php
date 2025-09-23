@@ -73,12 +73,9 @@ class AnimalRepository extends ServiceEntityRepository
         }
         public function findByFilters($data): array 
         {
-            $qb = $this->createQueryBuilder('animal')
-                ->innerJoin('animal.structure', 'structure')
-                ->orderBy('animal.id', 'ASC')
-                ->where('animal.isActive = true')
-                ->andWhere('animal.isVisible = true');
-
+            $page = isset($data["page"]) ? $data["page"] : 1;
+            $pageSize = 10;
+            $firstResult = ($page - 1) * $pageSize;
             $allowedFields = [
                 'gender', 
                 'out_department', 
@@ -87,8 +84,16 @@ class AnimalRepository extends ServiceEntityRepository
                 'color', 
                 'affinity', 
                 'adoption_status', 
-                'breed'
+                'breed',
+                'type'
             ];
+
+            
+            $qb = $this->createQueryBuilder('animal')
+                ->innerJoin('animal.structure', 'structure')
+                ->orderBy('animal.id', 'ASC')
+                ->where('animal.isActive = true')
+                ->andWhere('animal.isVisible = true');
 
                 foreach ($data as $key => $value) {
                     if (!empty($value) && in_array($key, $allowedFields)) {
@@ -133,10 +138,29 @@ class AnimalRepository extends ServiceEntityRepository
                     }
                 }
 
-            return $qb->select($this->fieldsList())
+
+                $countQb = clone $qb;
+                $totalCount = $countQb->select('COUNT(animal.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+
+                $data =  $qb->select($this->fieldsList())
                 ->select('animal.id,animal.name, structure.name as structureName, animal.thumbnail, animal.breed, animal.type')
+                ->setFirstResult($firstResult)
+                ->setMaxResults($pageSize)
                 ->getQuery()
                 ->getResult();
+
+
+
+            return[
+                'data' => $data,
+                'pageSize' => $pageSize,
+                'currentPage' => $page,
+                'count' => $totalCount,
+                'totalPages' => ceil($totalCount / $pageSize)
+            ];
+ 
         }
 
     public function findById($id): array {
