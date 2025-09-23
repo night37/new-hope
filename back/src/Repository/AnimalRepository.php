@@ -31,7 +31,7 @@ class AnimalRepository extends ServiceEntityRepository
         }
 
         public function getRandomLastAnimals($type) :array {
-            $oneMonthAgo = new \DateTime('-1 month');
+            $oneMonthAgo = new \DateTime('-3 month');
 
 
             return $this->createQueryBuilder('animal')
@@ -74,6 +74,7 @@ class AnimalRepository extends ServiceEntityRepository
         public function findByFilters($data): array 
         {
             $qb = $this->createQueryBuilder('animal')
+                ->innerJoin('animal.structure', 'structure')
                 ->orderBy('animal.id', 'ASC')
                 ->where('animal.isActive = true')
                 ->andWhere('animal.isVisible = true');
@@ -133,6 +134,7 @@ class AnimalRepository extends ServiceEntityRepository
                 }
 
             return $qb->select($this->fieldsList())
+                ->select('animal.id,animal.name, structure.name as structureName, animal.thumbnail, animal.breed, animal.type')
                 ->getQuery()
                 ->getResult();
         }

@@ -100,7 +100,7 @@ final class AnimalController extends AbstractController
     #[Route('filtersResults', name:'api_animal_filters_results', methods:['GET'])]
     public function getFiltersResults(Request $request, AnimalRepository $animalRepository): Response
     {   
-        $data = $request->query->all() ;
+        $data = $request->query->all();
 
         return $this->json([
             'message' => 'display filters animals result',
