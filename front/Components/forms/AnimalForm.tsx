@@ -100,11 +100,10 @@ export default function AnimalForm() {
       });
     });
     setSearchParameters(filterlist);
+    const result = await filtersResults(filterlist, 1);
+    setSearchResults(result);
     if (currentPath != "/animalsSearch") {
       router.push("/animalsSearch");
-    }else{
-      const result = await filtersResults(filterlist, 1);
-      setSearchResults(result);
     }
   };
 
@@ -116,8 +115,8 @@ export default function AnimalForm() {
     ));
   }, [filters]);
 
-const resetFilters = () => {
-  
+  const resetFilters = () => {
+
     const resetFilterArray = filters.map(itemList => {
       const resetItemList: { [key: string]: FilterOption[] } = {};
 
@@ -127,25 +126,25 @@ const resetFilters = () => {
           isSelected: false
         }));
       });
-      
+
       return resetItemList;
     })
     setFilters(resetFilterArray);
-};
+  };
   return (
-    <form className="w-full flex flex-wrap gap-5 justify-center lg:justify-start" onSubmit={(e) => { submitForm(e); }}>
-      {filters.length > 0 && 
-      <div className="flex gap-8 flex-wrap justify-center lg:justify-start w-full">
-        {renderSelect}
-      </div>
+    <form className="w-full flex flex-wrap gap-5 justify-center lg:justify-start min-h-[300px]" onSubmit={(e) => { submitForm(e); }}>
+      {filters.length > 0 &&
+        <div className="flex gap-8 flex-wrap justify-center lg:justify-start w-full">
+          {renderSelect}
+        </div>
       }
-      {loading ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary"></span></div> :
+      {loading ? <div className="w-full flex justify-center absolute"><span className="loading loading-spinner text-custom-secondary"></span></div> :
         error && <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
-      <div className="w-full flex justify-center gap-4 flex-col lg:flex-row">
-        <button className="font-caveat rounded-3xl px-[5px] border-custom-primary" onClick={()=>{resetFilters()}}>
+      <div className="w-full flex justify-center gap-4 flex-col w-1/3 mx-auto">
+        <Button label={"Trouver votre nouveau compagnon"} type={"submit"} onClick={() => { }} />
+        <button className="font-caveat rounded-3xl px-[5px] border-custom-primary" onClick={() => { resetFilters() }}>
           Réinitialiser les filtres
         </button>
-        <Button label={"Trouver votre nouveau compagnon"} type={"submit"} onClick={() => { }} />
       </div>
     </form>
   );

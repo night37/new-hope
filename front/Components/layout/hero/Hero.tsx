@@ -30,8 +30,8 @@ export function Hero() {
 
 
   return (
-    <div className="lg:bg-cover bg-left bg-[url(/img/Hero.png)] bg-no-repeat bg-fit  py-[98px] w-full flex justify-center px-3 lg:px-0">
-      <div className="container bg-white/50 px-[50px] flex flex-col py-[50px] rounded-xl gap-5">
+    <div className="lg:bg-cover bg-left bg-[url(/img/Hero.png)]  min-h-[550px] bg-no-repeat bg-fit  py-[98px] w-full flex justify-center px-3 lg:px-0">
+      <div className="container bg-white/50 px-[50px] min-h-[550px] flex flex-col py-[50px] rounded-xl gap-5">
         <div className="radio-container flex justify-center flex-wrap  gap-5 flex-col lg:flex-row items-center">
           {radioBtns.map((radio, key) => {
             return (
@@ -41,7 +41,7 @@ export function Hero() {
             )
           })}
         </div>
-        <div className="form-container container flex grid-cols-12 flex-wrap gap-3">
+        <div className="form-container container flex grid-cols-12 flex-wrap gap-3 min-h-[360px]">
           {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
         </div>
       </div>
