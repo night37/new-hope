@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ButtonRadio } from "@/Components/ui/ButtonRadio/ButtonRadio";
+import { ButtonRadio } from "@/Components/ui/buttonRadio/ButtonRadio";
 import AnimalForm from "@/Components/forms/AnimalForm"
 import AssociationForm from "@/Components/forms/AssociationForm"
 import { useAnimalStore } from "@/store/animalStore"
@@ -17,7 +17,6 @@ export function Hero() {
       { name: "radio2", label: "Rechercher une association", isActive: false }
     ]
   )
-  const searchParameters = useAnimalStore((state) => state.searchParameters)
 
 
   const handleRadioClick = (selectedIndex: number) => {

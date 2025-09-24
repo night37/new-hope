@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from "@/Components/AnimalSlider/AnimalSlider";
+import Slider from "@/Components/animalSlider/AnimalSlider";
 
 interface HighLightProps {
     introduction: {

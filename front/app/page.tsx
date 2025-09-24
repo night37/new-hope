@@ -1,6 +1,6 @@
 import { Hero } from "../Components/layout/hero/Hero"
 import DoubleColumns from "@/Components/doubleColumns/DoubleColumns";
-import HighLightAnimals from "@/Components/HighLightAnimals/HighLightAnimals";
+import HighLightAnimals from "@/Components/highLightAnimals/HighLightAnimals";
 
 export default function Home() {
   return (

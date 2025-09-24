@@ -103,7 +103,7 @@ export default function AnimalForm() {
     if (currentPath != "/animalsSearch") {
       router.push("/animalsSearch");
     }else{
-      const result = await filtersResults(filterlist);
+      const result = await filtersResults(filterlist, 1);
       setSearchResults(result);
     }
   };
@@ -132,8 +132,6 @@ const resetFilters = () => {
     })
     setFilters(resetFilterArray);
 };
-  
-  console.log(filters);
   return (
     <form className="w-full flex flex-wrap gap-5 justify-center lg:justify-start" onSubmit={(e) => { submitForm(e); }}>
       {filters.length > 0 && 
@@ -143,7 +141,7 @@ const resetFilters = () => {
       }
       {loading ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary"></span></div> :
         error && <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
-      <div className="w-full flex justify-center gap-4">
+      <div className="w-full flex justify-center gap-4 flex-col lg:flex-row">
         <button className="font-caveat rounded-3xl px-[5px] border-custom-primary" onClick={()=>{resetFilters()}}>
           Réinitialiser les filtres
         </button>

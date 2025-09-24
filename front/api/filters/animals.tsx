@@ -26,7 +26,7 @@ export async function animalFilters() {
 
 }
 
-export async function filtersResults(filters: Filters) {
+export async function filtersResults(filters: Filters, currentPage: number = 1) {
 
   const filterList: Filters = [];
   let response;
@@ -63,7 +63,7 @@ export async function filtersResults(filters: Filters) {
       qb = qb.slice(0, -1)
     }
     try {
-        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}`);
+        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}&page=${currentPage}`);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -76,7 +76,7 @@ export async function filtersResults(filters: Filters) {
       throw err;
     }
   }else {
-    response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults`);
+    response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?page=${currentPage}`);
 
   }
     const data = await response.json();

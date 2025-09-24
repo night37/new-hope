@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react"
 import { useAnimalStore } from "@/store/animalStore"
 import { AnimalCard } from "@/Components/animalCard/AnimalCard"
+import { Pagination } from "@/Components/pagination/Pagination"
 
 interface Animal {
   id: number,
@@ -14,14 +15,14 @@ interface Animal {
 }
 
 interface AnimalsList {
-  animals: Animal[]
+  animals: { data: Animal[] }
 }
 
 
 export default function SearchResults() {
 
   const searchResults = useAnimalStore((state) => state.searchResults);
-  const [animalsList, setAnimalsList] = useState<AnimalsList>({animals: []});
+  const [animalsList, setAnimalsList] = useState<AnimalsList>({ animals: { data: [] } });
 
 
   useEffect(() => {
@@ -31,18 +32,17 @@ export default function SearchResults() {
     
   }, [searchResults])
 
-  
 
   return (
     <>
-      {animalsList.animals.length > 0 ? (
+      {animalsList.animals.data.length > 0 ? (
         <div className="container my-10 mx-auto flex flex-col gap-10 ">
           <div className="flex items-center gap-3">
             <h2 className="text-lg font-bold font-handlee">Résultats de la recherche </h2>
-            <p className="text-sm"> { animalsList.animals.length } résultats Trouvés</p>
+            <p className="text-sm"> {searchResults.animals.count} résultats Trouvés</p>
           </div>
-          <div className="result-container flex gap-[40px] flex-wrap">
-            {animalsList.animals.map((animal,key) => (
+          <div className="result-container flex gap-[40px] flex-wrap justify-center lg:justify-start">
+            {animalsList.animals.data.map((animal,key) => (
               <div className="w-[265px]" key={key}>
                 <AnimalCard 
                   key={key}
@@ -53,6 +53,11 @@ export default function SearchResults() {
               </div>
             ))}
           </div>
+          {searchResults.animals.totalPages > 1 && 
+            <Pagination 
+              totalPages={searchResults.animals.totalPages}
+            />
+          }
         </div>
       ) : (
         <div className={`container my-10 text-center font-caveat text-xl mx-auto ${searchResults ? '' : 'hidden'}`}>Aucun résultat trouvé</div>
