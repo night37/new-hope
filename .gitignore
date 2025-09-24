@@ -163,10 +163,6 @@ front/.storybook-out
 front/tmp/
 front/temp/
 
-# Components temporaires (cas spécifique)
-front/Components/ui/Select.tsx
-front/Components/ui/
-
 # ====================
 # DOCKER
 # ====================
