@@ -90,7 +90,6 @@ export default function HighLightAnimals() {
           animals={catsList}
         />
       </Suspense>
-
     </>
   );
 }
