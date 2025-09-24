@@ -1,6 +1,6 @@
 import * as React from "react";
 import Image from "next/image";
-import { Button } from "../ui/Button/Button";
+import { Button } from "@/Components/ui/button/Button";
 import { useRouter } from 'next/navigation' // App Router
 
 interface NewsCardProps {

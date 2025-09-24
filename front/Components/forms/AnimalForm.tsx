@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
-import Select from "@/Components/ui/Select/Select"
+import Select from "@/Components/ui/select/Select"
 import { animalFilters, filtersResults } from "@/api/filters/animals"
-import { Button } from "@/Components/ui/Button/Button"
+import { Button } from "@/Components/ui/button/Button"
 import { useAnimalStore } from "@/store/animalStore"
 import { useRouter, usePathname } from 'next/navigation'
 
