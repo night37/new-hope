@@ -7,8 +7,8 @@ import "./globals.scss";
 
 const caveat = Caveat({
   variable: "--font-caveat",
-  subsets:["latin"],
-  weight: ["500","700"]
+  subsets: ["latin"],
+  weight: ["500", "700"]
 
 })
 
@@ -34,10 +34,10 @@ export default function RootLayout({
     <html lang="fr" className={`${caveat.variable} ${handlee.variable}`}>
       <body
         className={`antialiased`}
-        >
-        <Header/>
+      >
+        <Header />
         {children}
-        <Footer font={caveat}/>
+        <Footer font={caveat} />
       </body>
     </html>
   );

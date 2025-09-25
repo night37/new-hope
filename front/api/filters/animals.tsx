@@ -10,7 +10,7 @@ type Filters = Filter[]
 
 export async function animalFilters() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filters`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filters`);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -31,9 +31,9 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
   const filterList: Filters = [];
   let response;
   if (filters.length > 0) {
-    
+
     let qb: string = ""
-    
+
     filters.forEach((filter) => {
       const findFilterIndex = filterList.findIndex(el => el?.fieldName === filter.fieldName)
       const fieldNameToLower = filter.fieldName.toLowerCase()
@@ -63,7 +63,7 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
       qb = qb.slice(0, -1)
     }
     try {
-        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?${qb}&page=${currentPage}`);
+      response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?${qb}&page=${currentPage}`);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -75,13 +75,13 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
       console.error('Erreur lors du chargement des resultats:', err);
       throw err;
     }
-  }else {
-    response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/filtersResults?page=${currentPage}`);
+  } else {
+    response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?page=${currentPage}`);
 
   }
-    const data = await response.json();
-    return data;
-  
+  const data = await response.json();
+  return data;
+
 
 
 }
@@ -89,7 +89,7 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
 
 export async function getLastAnimalsList() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/getRandomLastAnimals`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/getRandomLastAnimals`);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -107,7 +107,7 @@ export async function getLastAnimalsList() {
 export async function findById(id: number) {
   if (typeof (id) === "number" && id) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/animal/findById?id=${id}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/findById?id=${id}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
