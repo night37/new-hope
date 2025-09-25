@@ -4,6 +4,7 @@ import { animalFilters, filtersResults } from "@/api/filters/animals"
 import { Button } from "@/Components/ui/button/Button"
 import { useAnimalStore } from "@/store/animalStore"
 import { useRouter, usePathname } from 'next/navigation'
+import { smoothScroll } from "@/utils"
 
 
 interface FilterOption {
@@ -102,6 +103,7 @@ export default function AnimalForm() {
     setSearchParameters(filterlist);
     const result = await filtersResults(filterlist, 1);
     setSearchResults(result);
+    smoothScroll(600, 80);
     if (currentPath != "/animalsSearch") {
       router.push("/animalsSearch");
     }
@@ -140,7 +142,7 @@ export default function AnimalForm() {
       }
       {loading ? <div className="w-full flex justify-center absolute"><span className="loading loading-spinner text-custom-secondary"></span></div> :
         error && <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 border-black">Une erreur serveur est survenue </p></span>}
-      <div className="w-full flex justify-center gap-4 flex-col w-1/3 mx-auto">
+      <div className="flex justify-center gap-4 flex-col w-2/4 mx-auto">
         <Button label={"Trouver votre nouveau compagnon"} type={"submit"} onClick={() => { }} />
         <button className="font-caveat rounded-3xl px-[5px] border-custom-primary" onClick={() => { resetFilters() }}>
           Réinitialiser les filtres

@@ -8,6 +8,6 @@ enum Affinity: string
     case Adults = 'adultes';
     case Seniors = 'seniors';
     case Dogs = 'chiens';
-    case Cats = 'chat';
+    case Cats = 'chats';
     
 }

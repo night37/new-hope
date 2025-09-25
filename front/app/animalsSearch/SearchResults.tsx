@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import { useAnimalStore } from "@/store/animalStore"
 import { AnimalCard } from "@/Components/animalCard/AnimalCard"
 import { Pagination } from "@/Components/pagination/Pagination"
@@ -26,10 +26,10 @@ export default function SearchResults() {
 
 
   useEffect(() => {
-    if ( searchResults) {
-      setAnimalsList({animals: searchResults.animals});
+    if (searchResults) {
+      setAnimalsList({ animals: searchResults.animals });
     }
-    
+
   }, [searchResults])
 
 
@@ -42,20 +42,21 @@ export default function SearchResults() {
             <p className="text-sm"> {searchResults.animals.count} résultats Trouvés</p>
           </div>
           <div className="result-container flex gap-[40px] flex-wrap justify-center lg:justify-start">
-            {animalsList.animals.data.map((animal,key) => (
+            {animalsList.animals.data.map((animal, key) => (
               <div className="w-[265px]" key={key}>
-                <AnimalCard 
+                <AnimalCard
                   key={key}
-                  image={{src: animal.thumbnail, alt: animal.name}}
-                  animal={{id: animal.id, name: animal.name, breed: animal.breed ? [animal.breed] : [], sexe: animal.type, associationName: animal.structureName}}
+                  image={{ src: animal.thumbnail, alt: animal.name }}
+                  animal={{ id: animal.id, name: animal.name, breed: animal.breed ? [animal.breed] : [], sexe: animal.type, associationName: animal.structureName }}
                   path={`/animal/${animal.name}`}
                 />
               </div>
             ))}
           </div>
-          {searchResults.animals.totalPages > 1 && 
-            <Pagination 
-              totalPages={searchResults.animals.totalPages}
+          {searchResults.animals.totalPages > 1 &&
+            <Pagination
+              totalPages={Number(searchResults.animals.totalPages)}
+              currentPage={Number(searchResults.animals.currentPage)}
             />
           }
         </div>
