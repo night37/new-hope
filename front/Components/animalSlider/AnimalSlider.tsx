@@ -52,15 +52,16 @@ function Slider({ items }: SliderProps) {
                         <SwiperSlide key={key}>
                             <AnimalCard
                                 image={{
-                                    src: item.thumbnail,
+                                    src: typeof item.thumbnail === 'string' ? item.thumbnail : '/img/placeholder.svg',
                                     alt: `photo de ${item.name}`,
                                 }}
                                 animal={{
                                     id: item.id,
                                     name: item.name,
+                                    type: item.type,
                                     breed: item.breed,
-                                    sexe: item.gender,
-                                    associationName: item.structure,
+                                    gender: item.gender,
+                                    structure: item.structure,
                                 }}
                                 path={`/animal/${item.name}`}
                             />

@@ -5,7 +5,7 @@ import { Button } from '@/Components/ui/button/Button';
 import { useAnimalStore } from '@/store/animalStore';
 import { useRouter, usePathname } from 'next/navigation';
 import { smoothScroll } from '@/utils';
-import { Filter } from '@/types/filter.type';
+import { Filter, FilterOption } from '@/types/filter.type';
 
 export default function AnimalForm() {
     const [filters, setFilters] = useState<Filter[]>([]);

@@ -114,7 +114,21 @@ final class AnimalController extends AbstractController
     #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods:['GET'])]
     public function getRandomLastAnimals(Request $request,  AnimalRepository $animalRepository): Response {
         $dogsList = $animalRepository-> getRandomLastAnimals("chien");
+        foreach ($dogsList as $key => $value) {
+            $dogsList[$key]['structure'] = [
+                'name' => $value['structureName']
+            ];
+            unset($dogsList[$key]['structureName']);
+        }
+
+   
         $catsList = $animalRepository-> getRandomLastAnimals("chat");
+        foreach ($catsList as $key => $value) {
+            $catsList[$key]['structure'] = [
+                'name' => $value['structureName']
+            ];
+            unset($catsList[$key]['structureName']);
+        }
 
         
         return $this->json([
