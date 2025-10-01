@@ -5,10 +5,18 @@ import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
 import AnimalForm from '@/Components/forms/AnimalForm';
 import AssociationForm from '@/Components/forms/AssociationForm';
 
-export function Hero({filterOption}: {filterOption?: string}) {
+export function Hero({ filterOption }: { filterOption?: string }) {
     const [radioBtns, setRadioBtns] = useState([
-        { name: 'radio1', label: 'Rechercher un animal', isActive: filterOption === "association" ? false : true },
-        { name: 'radio2', label: 'Rechercher une association', isActive: filterOption === "association" ? true : false },
+        {
+            name: 'radio1',
+            label: 'Rechercher un animal',
+            isActive: filterOption === 'association' ? false : true,
+        },
+        {
+            name: 'radio2',
+            label: 'Rechercher une association',
+            isActive: filterOption === 'association' ? true : false,
+        },
     ]);
 
     const handleRadioClick = (selectedIndex: number) => {
@@ -36,7 +44,7 @@ export function Hero({filterOption}: {filterOption?: string}) {
                         );
                     })}
                 </div>
-                <div className="form-container flex items-center container flex min-h-[360px] grid-cols-12 flex-wrap gap-3">
+                <div className="form-container container flex min-h-[360px] grid-cols-12 flex-wrap items-center gap-3">
                     {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
                 </div>
             </div>

@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
 import { AnimalCard } from '@/Components/animalCard/AnimalCard';
 import { Pagination } from '@/Components/pagination/Pagination';
-import { AnimalsList } from "@/types/animalsList.type";
-
-
+import { AnimalsList } from '@/types/animalsList.type';
 
 export default function SearchResults() {
     const searchResults = useAnimalStore((state) => state.searchResults);
@@ -33,15 +31,17 @@ export default function SearchResults() {
                             <div className="w-[265px]" key={key}>
                                 <AnimalCard
                                     key={key}
-                                    image={
-                                        {
-                                            src: typeof animal.thumbnail === 'string' ? animal.thumbnail : "/img/placeholder.png",
-                                            alt: animal.name
-                                        }}
+                                    image={{
+                                        src:
+                                            typeof animal.thumbnail === 'string'
+                                                ? animal.thumbnail
+                                                : '/img/placeholder.png',
+                                        alt: animal.name,
+                                    }}
                                     animal={{
                                         id: animal.id,
                                         name: animal.name,
-                                        breed: animal.breed ? animal.breed: [],
+                                        breed: animal.breed ? animal.breed : [],
                                         type: animal.type,
                                         structure: { name: animal.structure.name },
                                     }}
