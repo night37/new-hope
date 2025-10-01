@@ -77,7 +77,7 @@ function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
                 <div className="meet-me-container flex flex-col items-center">
                     <h3 className="font-caveat text-xl text-font-green">Me rencontrer</h3>
                     <p className="text-center font-handlee text-sm">
-                        {animal.structureName} <br />
+                        {animal.structure.name} <br />
                         {animal.structureStreet} <br />
                         {animal.structureZipCode} {animal.structureCity} <br />
                         {animal.structurePhone} <br />
