@@ -32,7 +32,7 @@ export const AnimalCard = ({ image, animal, path }: AnimalCardProps) => {
                     <span className="font-handlee text-base">{animal.breed.join(', ')}</span>
                     <span className="font-handlee text-base">{animal.gender}</span>
                 </div>
-                <div className="font-handlee font-bold">{animal.structure.name}</div>
+                <div className="font-handlee font-bold">{animal.structure?.name}</div>
                 <div className="w-4/4">
                     <Button
                         onClick={onClick}

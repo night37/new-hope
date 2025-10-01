@@ -53,11 +53,11 @@ function TopContainer({ animal }: { animal: Animal }) {
                 <div className="meet-me-container flex flex-col items-center">
                     <h3 className="font-caveat text-xl text-font-green">Me rencontrer</h3>
                     <p className="text-center font-handlee text-sm">
-                        {animal.structure.name} <br />
-                        {animal.structure.street} <br />
-                        {animal.structure.zipCode} {animal.structure.city} <br />
-                        {animal.structure.phone} <br />
-                        {animal.structure.email}
+                        {animal.structure?.name} <br />
+                        {animal.structure?.street} <br />
+                        {animal.structure?.zipCode} {animal.structure?.city} <br />
+                        {animal.structure?.phone} <br />
+                        {animal.structure?.email}
                     </p>
                 </div>
                 <div className="image-container hidden lg:block">

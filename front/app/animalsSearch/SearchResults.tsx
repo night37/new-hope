@@ -43,7 +43,7 @@ export default function SearchResults() {
                                         name: animal.name,
                                         breed: animal.breed ? animal.breed : [],
                                         type: animal.type,
-                                        structure: { name: animal.structure.name },
+                                        structure: { name: animal?.structure.name },
                                     }}
                                     path={`/animal/${animal.name}`}
                                 />
