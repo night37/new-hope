@@ -1,7 +1,6 @@
 import React from 'react';
-import TopContainer from "./details/TopContainer";
-import BottomContainer from "./details/BottomContainer";
-
+import TopContainer from './details/TopContainer';
+import BottomContainer from './details/BottomContainer';
 
 interface AnimalDetailsProps {
     animal: {
@@ -25,8 +24,7 @@ interface AnimalDetailsProps {
         structureCity: string;
         structurePhone: string;
         structureEmail: string;
-
-    }
+    };
 }
 
 function Content({ animal }: AnimalDetailsProps) {

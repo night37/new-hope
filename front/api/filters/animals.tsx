@@ -1,124 +1,114 @@
 interface Filter {
-  fieldName: string,
-  name: string,
-  value: string,
-  isSelected: boolean,
+    fieldName: string;
+    name: string;
+    value: string;
+    isSelected: boolean;
 }
 
-type Filters = Filter[]
-
+type Filters = Filter[];
 
 export async function animalFilters() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filters`);
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filters`);
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error('Erreur lors du chargement des filtres:', err);
+        throw err;
     }
-
-    const data = await response.json();
-    return data;
-
-  } catch (err) {
-    console.error('Erreur lors du chargement des filtres:', err);
-    throw err;
-  }
-
 }
 
 export async function filtersResults(filters: Filters, currentPage: number = 1) {
+    const filterList: Filters = [];
+    let response;
+    if (filters.length > 0) {
+        let qb: string = '';
 
-  const filterList: Filters = [];
-  let response;
-  if (filters.length > 0) {
+        filters.forEach((filter) => {
+            const findFilterIndex = filterList.findIndex(
+                (el) => el?.fieldName === filter.fieldName
+            );
+            const fieldNameToLower = filter.fieldName.toLowerCase();
 
-    let qb: string = ""
+            if (fieldNameToLower !== 'breed' && fieldNameToLower !== 'affinity') {
+                if (findFilterIndex == -1) {
+                    filterList.push(filter);
+                } else {
+                    if (!filterList[findFilterIndex].value.includes(filter.value)) {
+                        filterList[findFilterIndex].value += `,${filter.value}`;
+                    }
+                }
+            } else {
+                qb += `${fieldNameToLower}[]=${filter.value.toLowerCase()}&`;
+            }
+        });
 
-    filters.forEach((filter) => {
-      const findFilterIndex = filterList.findIndex(el => el?.fieldName === filter.fieldName)
-      const fieldNameToLower = filter.fieldName.toLowerCase()
-
-
-
-      if (fieldNameToLower !== "breed" && fieldNameToLower !== "affinity") {
-        if (findFilterIndex == -1) {
-          filterList.push(filter)
-        } else {
-          if (!filterList[findFilterIndex].value.includes(filter.value)) {
-
-            filterList[findFilterIndex].value += `,${filter.value}`
-          }
+        filterList.forEach((el, key) => {
+            qb += `${el.fieldName.toLowerCase()}=${el.value}${filterList.length - 1 === key ? '&' : ''}`;
+        });
+        if (qb[qb.length - 1] === '&') {
+            qb = qb.slice(0, -1);
         }
-      } else {
-        qb += `${fieldNameToLower}[]=${filter.value.toLowerCase()}&`
+        try {
+            response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?${qb}&page=${currentPage}`
+            );
 
-      }
-    });
-
-    filterList.forEach((el, key) => {
-      qb += `${el.fieldName.toLowerCase()}=${el.value}${filterList.length - 1 === key ? "&" : ""}`
-
-    });
-    if (qb[qb.length - 1] === "&") {
-      qb = qb.slice(0, -1)
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (err) {
+            console.error('Erreur lors du chargement des resultats:', err);
+            throw err;
+        }
+    } else {
+        response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?page=${currentPage}`
+        );
     }
-    try {
-      response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?${qb}&page=${currentPage}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-
-
-    } catch (err) {
-      console.error('Erreur lors du chargement des resultats:', err);
-      throw err;
-    }
-  } else {
-    response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?page=${currentPage}`);
-
-  }
-  const data = await response.json();
-  return data;
-
-
-
-}
-
-
-export async function getLastAnimalsList() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/getRandomLastAnimals`);
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
     const data = await response.json();
     return data;
+}
 
-  } catch (err) {
-    console.error('Erreur lors du chargement des animaux:', err);
-    throw err;
-  }
+export async function getLastAnimalsList() {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/animal/getRandomLastAnimals`
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error('Erreur lors du chargement des animaux:', err);
+        throw err;
+    }
 }
 
 export async function findById(id: number) {
-  if (typeof (id) === "number" && id) {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/findById?id=${id}`);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      const data = await response.json();
-      return data;
-    } catch (err) {
-      console.error('Erreur lors de la recherche par ID:', err);
-      throw err;
+    if (typeof id === 'number' && id) {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/animal/findById?id=${id}`
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error('Erreur lors de la recherche par ID:', err);
+            throw err;
+        }
     }
-  }
-  console.error("l'id est obligatoire et doit être de type number");
-  return
-
+    console.error("l'id est obligatoire et doit être de type number");
+    return;
 }

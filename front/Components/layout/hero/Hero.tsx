@@ -1,50 +1,46 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { ButtonRadio } from "@/Components/ui/buttonRadio/ButtonRadio";
-import AnimalForm from "@/Components/forms/AnimalForm"
-import AssociationForm from "@/Components/forms/AssociationForm"
-import { useAnimalStore } from "@/store/animalStore"
-
-
-
+import { useState } from 'react';
+import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
+import AnimalForm from '@/Components/forms/AnimalForm';
+import AssociationForm from '@/Components/forms/AssociationForm';
+import { useAnimalStore } from '@/store/animalStore';
 
 export function Hero() {
+    const [radioBtns, setRadioBtns] = useState([
+        { name: 'radio1', label: 'Rechercher un animal', isActive: true },
+        { name: 'radio2', label: 'Rechercher une association', isActive: false },
+    ]);
 
-  const [radioBtns, setRadioBtns] = useState(
-    [
-      { name: "radio1", label: "Rechercher un animal", isActive: true },
-      { name: "radio2", label: "Rechercher une association", isActive: false }
-    ]
-  )
+    const handleRadioClick = (selectedIndex: number) => {
+        setRadioBtns((prev) =>
+            prev.map((radio, key) => ({
+                ...radio,
+                isActive: key === selectedIndex,
+            }))
+        );
+    };
 
-
-  const handleRadioClick = (selectedIndex: number) => {
-    setRadioBtns(prev =>
-      prev.map((radio, key) => ({
-        ...radio,
-        isActive: key === selectedIndex
-      }))
+    return (
+        <div className="bg-fit i flex min-h-[450px] w-full justify-center bg-[url(/img/Hero.png)] bg-left bg-no-repeat px-3 py-[98px] lg:bg-cover lg:px-0">
+            <div className="container flex min-h-[550px] flex-col justify-center gap-5 rounded-xl bg-white/50 px-[50px]">
+                <div className="radio-container flex flex-col flex-wrap items-center justify-center gap-5 lg:flex-row">
+                    {radioBtns.map((radio, key) => {
+                        return (
+                            <div
+                                key={key}
+                                className="flex w-fit"
+                                onClick={() => handleRadioClick(key)}
+                            >
+                                <ButtonRadio label={radio.label} isActive={radio.isActive} />
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className="form-container container flex min-h-[360px] grid-cols-12 flex-wrap gap-3">
+                    {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
+                </div>
+            </div>
+        </div>
     );
-  };
-
-
-  return (
-    <div className="lg:bg-cover bg-left bg-[url(/img/Hero.png)]  min-h-[450px] bg-no-repeat bg-fit py-[98px] w-full flex justify-center i px-3 lg:px-0">
-      <div className="container bg-white/50 px-[50px] min-h-[550px] flex flex-col rounded-xl gap-5 justify-center">
-        <div className="radio-container flex justify-center flex-wrap  gap-5 flex-col lg:flex-row items-center">
-          {radioBtns.map((radio, key) => {
-            return (
-              <div key={key} className="flex w-fit" onClick={() => handleRadioClick(key)}>
-                <ButtonRadio label={radio.label} isActive={radio.isActive} />
-              </div>
-            )
-          })}
-        </div>
-        <div className="form-container container flex grid-cols-12 flex-wrap gap-3 min-h-[360px]">
-          {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
-        </div>
-      </div>
-    </div>
-  );
 }

@@ -1,0 +1,37 @@
+# Dependencies
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Production
+build
+dist
+out
+.next
+
+# Cache
+.cache
+.parcel-cache
+.eslintcache
+
+# Misc
+coverage
+.DS_Store
+*.log
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode
+.idea
+
+# Generated files
+*.min.js
+*.min.css
+public/
+
+# Tailwind
+tailwind.config.js
+postcss.config.js

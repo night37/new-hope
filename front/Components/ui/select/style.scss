@@ -1,16 +1,12 @@
-
 .select-item {
-
-    &::before{
-        content: url("/assets/icons/patte.svg");
+    &::before {
+        content: url('/assets/icons/patte.svg');
         margin-right: 5px;
-        visibility: hidden ;
-    }     
-} 
-.isSelected{
-    &::before{
-        visibility: visible ;
+        visibility: hidden;
     }
-
-}  
-
+}
+.isSelected {
+    &::before {
+        visibility: visible;
+    }
+}

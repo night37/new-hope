@@ -1,26 +1,9 @@
 import React from 'react';
-import Slider from "@/Components/animalSlider/AnimalSlider";
-
-interface HighLightProps {
-    introduction: {
-        title: string,
-        content: string,
-    }
-    animals: Animal[],
-    error: string,
-    loading: boolean
-}
+import Slider from '@/Components/animalSlider/AnimalSlider';
+import { HighLightProps } from '@/types/highLight.type';
 
 
-interface Animal {
-    id: number,
-    name: string
-    thumbnail: string;
-    breed: string[],
-    gender: string,
-    structureName: string,
-    type: string
-}
+
 
 function HighLight({ introduction, animals, error, loading }: HighLightProps) {
     return (
@@ -30,10 +13,19 @@ function HighLight({ introduction, animals, error, loading }: HighLightProps) {
                 <p className="font-handlee">{introduction.content}</p>
             </h2>
 
-            {animals.length > 0 && error != "" ?
-                <Slider items={animals} /> : loading
-                    ? <div className="w-full flex justify-center"><span className="loading loading-spinner text-custom-secondary p-4 my-10"></span></div>
-                    : <span className="font-caveat text-xl flex justify-center w-full"><p className="border p-4 my-10 border-black">Une erreur serveur est survenue </p></span>}
+            {animals.length > 0 && error != '' ? (
+                <Slider items={animals} />
+            ) : loading ? (
+                <div className="flex w-full justify-center">
+                    <span className="loading loading-spinner my-10 p-4 text-custom-secondary"></span>
+                </div>
+            ) : (
+                <span className="flex w-full justify-center font-caveat text-xl">
+                    <p className="my-10 border border-black p-4">
+                        Une erreur serveur est survenue{' '}
+                    </p>
+                </span>
+            )}
         </div>
     );
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import './style.scss';
 
-
 interface AnimalDetailsProps {
     animal: {
         id: number;
@@ -12,7 +11,7 @@ interface AnimalDetailsProps {
         out_department: boolean;
         size: 'petit' | 'moyen' | 'grand';
         color: string;
-        affinity: string[]
+        affinity: string[];
         adoption_status: 'adopté' | 'en attente' | 'réservé';
         breed: string[];
         type: 'chat' | 'chien';
@@ -25,26 +24,33 @@ interface AnimalDetailsProps {
         structureCity: string;
         structurePhone: string;
         structureEmail: string;
-
-    }
+    };
 }
 
 type affinityType = { [key: string]: string }[];
 
-
 function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
-
-    const affinityList: affinityType = [{ Children: "enfants" }, { Seniors: "seniors" }, { Dogs: "chiens" }, { Cats: "chats" }];
-
+    const affinityList: affinityType = [
+        { Children: 'enfants' },
+        { Seniors: 'seniors' },
+        { Dogs: 'chiens' },
+        { Cats: 'chats' },
+    ];
 
     return (
         <>
-            <div className="top-container justify-between items-center flex flex-col lg:flex-row my-10 lg:my-0">
-                <div className="image-container lg:col-span-3 lg:hidden mb-10">
-                    <Image className="object-cover" src={"/img/placeholder.svg"} alt={animal.name} height={319} width={400} />
+            <div className="top-container my-10 flex flex-col items-center justify-between lg:my-0 lg:flex-row">
+                <div className="image-container mb-10 lg:col-span-3 lg:hidden">
+                    <Image
+                        className="object-cover"
+                        src={'/img/placeholder.svg'}
+                        alt={animal.name}
+                        height={319}
+                        width={400}
+                    />
                 </div>
-                <div className="identity-container lg:border-r-2 border-custom-primary lg:pr-10  items-center flex flex-col">
-                    <h3 className="text-xl font-caveat text-font-green">Fiche d&apos;identité</h3>
+                <div className="identity-container flex flex-col items-center border-custom-primary lg:border-r-2 lg:pr-10">
+                    <h3 className="font-caveat text-xl text-font-green">Fiche d&apos;identité</h3>
                     <ul className="columns-2 text-sm">
                         <li className="font-handlee">espèce : {animal.type} </li>
                         <li className="font-handlee">race : {animal.breed} </li>
@@ -56,20 +62,21 @@ function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
                         <li className="font-handlee">status: {animal.adoption_status} </li>
                     </ul>
                 </div>
-                <div className="particularity-container lg:border-r-2 border-custom-primary lg:pr-10 items-center flex flex-col">
-                    <h3 className="text-xl font-caveat text-font-green">Affinités</h3>
+                <div className="particularity-container flex flex-col items-center border-custom-primary lg:border-r-2 lg:pr-10">
+                    <h3 className="font-caveat text-xl text-font-green">Affinités</h3>
                     <ul className="columns-1 gap-3">
                         {affinityList.map((affinity, index) => (
                             <li key={index} className="font-handlee text-sm">
-                                {animal.affinity.includes(Object.keys(affinity)[0]) ?
-                                    `s'entend avec ${Object.values(affinity)[0]}` : `ne s'entend pas avec ${Object.values(affinity)[0]}`}
+                                {animal.affinity.includes(Object.keys(affinity)[0])
+                                    ? `s'entend avec ${Object.values(affinity)[0]}`
+                                    : `ne s'entend pas avec ${Object.values(affinity)[0]}`}
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="meet-me-container items-center flex flex-col">
-                    <h3 className="text-xl font-caveat text-font-green">Me rencontrer</h3>
-                    <p className="font-handlee text-center text-sm">
+                <div className="meet-me-container flex flex-col items-center">
+                    <h3 className="font-caveat text-xl text-font-green">Me rencontrer</h3>
+                    <p className="text-center font-handlee text-sm">
                         {animal.structureName} <br />
                         {animal.structureStreet} <br />
                         {animal.structureZipCode} {animal.structureCity} <br />
@@ -78,7 +85,13 @@ function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
                     </p>
                 </div>
                 <div className="image-container hidden lg:block">
-                    <Image className="object-cover" src={"/img/placeholder.svg"} alt={animal.name} height={319} width={400} />
+                    <Image
+                        className="object-cover"
+                        src={'/img/placeholder.svg'}
+                        alt={animal.name}
+                        height={319}
+                        width={400}
+                    />
                 </div>
             </div>
         </>
