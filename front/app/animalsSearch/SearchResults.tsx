@@ -4,19 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
 import { AnimalCard } from '@/Components/animalCard/AnimalCard';
 import { Pagination } from '@/Components/pagination/Pagination';
+import { AnimalsList } from "@/types/animalsList.type";
 
-interface Animal {
-    id: number;
-    name: string;
-    type: string;
-    structureName: string;
-    thumbnail: string;
-    breed: string;
-}
 
-interface AnimalsList {
-    animals: { data: Animal[] };
-}
 
 export default function SearchResults() {
     const searchResults = useAnimalStore((state) => state.searchResults);
@@ -27,7 +17,7 @@ export default function SearchResults() {
             setAnimalsList({ animals: searchResults.animals });
         }
     }, [searchResults]);
-
+    console.log(animalsList);
     return (
         <>
             {animalsList.animals.data.length > 0 ? (
@@ -43,13 +33,13 @@ export default function SearchResults() {
                             <div className="w-[265px]" key={key}>
                                 <AnimalCard
                                     key={key}
-                                    image={{ src: animal.thumbnail, alt: animal.name }}
+                                    image={{ src: animal.thumbnail ? animal.thumbnail : "/img/placeholder.png", alt: animal.name }}
                                     animal={{
                                         id: animal.id,
                                         name: animal.name,
-                                        breed: animal.breed ? [animal.breed] : [],
+                                        breed: animal.breed ? animal.breed: [],
                                         type: animal.type,
-                                        structure: { name: animal.structure.name }
+                                        structure: { name: animal.structure.name },
                                     }}
                                     path={`/animal/${animal.name}`}
                                 />

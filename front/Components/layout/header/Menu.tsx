@@ -12,7 +12,7 @@ export function Menu({ direction }: DirectionProps) {
                 <Link href="animalsSearch">TROUVER UN ANIMAL</Link>
             </li>
             <li className="flex justify-center text-xl">
-                <Link href="">TROUVER UNE ASSOCIATION </Link>
+                <Link href="associationSearch">TROUVER UNE ASSOCIATION </Link>
             </li>
             <li className="flex justify-center text-xl">
                 <Link href="">QUI SOMMES NOUS ?</Link>

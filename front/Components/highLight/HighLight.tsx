@@ -2,9 +2,6 @@ import React from 'react';
 import Slider from '@/Components/animalSlider/AnimalSlider';
 import { HighLightProps } from '@/types/highLight.type';
 
-
-
-
 function HighLight({ introduction, animals, error, loading }: HighLightProps) {
     return (
         <div className="highLight-container px-3 lg:px-0">
@@ -20,7 +17,7 @@ function HighLight({ introduction, animals, error, loading }: HighLightProps) {
                     <span className="loading loading-spinner my-10 p-4 text-custom-secondary"></span>
                 </div>
             ) : (
-                <span className="flex w-full justify-center font-caveat text-xl">
+                <span className="flex w-full justify-center items-centerfont-caveat text-xl">
                     <p className="my-10 border border-black p-4">
                         Une erreur serveur est survenue{' '}
                     </p>

@@ -99,21 +99,30 @@ final class AnimalController extends AbstractController
 
     #[Route('filtersResults', name:'api_animal_filters_results', methods:['GET'])]
     public function getFiltersResults(Request $request, AnimalRepository $animalRepository): Response
-    {   
+    {
         $data = $request->query->all();
         $response = $animalRepository->findByFilters($data);
+        foreach ($response['data'] as $key => $value) {
+            $response['data'][$key]['structure'] = [
+                'name' => $value['structureName']
+            ];
+            unset($response['data'][$key]['structureName']);
+        }
 
         return $this->json([
             'message' => 'display filters animals result',
             'timestamp' => time(),
-            'animals' => $animalRepository->findByFilters($data),
+            'animals' => $response,
         ]);
-       
     }
-    
+
     #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods:['GET'])]
     public function getRandomLastAnimals(Request $request,  AnimalRepository $animalRepository): Response {
         $dogsList = $animalRepository-> getRandomLastAnimals("chien");
+        if (!$dogsList) {
+            $dogsList = [];
+        }
+
         foreach ($dogsList as $key => $value) {
             $dogsList[$key]['structure'] = [
                 'name' => $value['structureName']
@@ -121,16 +130,17 @@ final class AnimalController extends AbstractController
             unset($dogsList[$key]['structureName']);
         }
 
-   
         $catsList = $animalRepository-> getRandomLastAnimals("chat");
+        if (! $catsList) {
+            $catsList = [];
+        }
         foreach ($catsList as $key => $value) {
             $catsList[$key]['structure'] = [
                 'name' => $value['structureName']
             ];
             unset($catsList[$key]['structureName']);
         }
-
-        
+  
         return $this->json([
             'message' => 'display filters animals result',
             'timestamp' => time(),
@@ -143,11 +153,36 @@ final class AnimalController extends AbstractController
     public function findById (Request $request, AnimalRepository $animalRepository): Response {
 
         $data = $request->query->all();
+        $animal = $animalRepository->findById($data["id"]);
+
+        if (!empty($animal) && isset($animal[0])) {
+            $animal[0]['structure'] = [
+                'name' => $animal[0]['structureName'],
+                'street' => $animal[0]['structureStreet'],
+                'city' => $animal[0]['structureCity'],
+                'zip_code' => $animal[0]['structureZipCode'],
+                'phone' => $animal[0]['structurePhone'],
+                'email' => $animal[0]['structureEmail'],
+            ];
+            unset($animal[0]['structureName']);
+            unset($animal[0]['structureStreet']);
+            unset($animal[0]['structureCity']);
+            unset($animal[0]['structureZipCode']);
+            unset($animal[0]['structurePhone']);
+            unset($animal[0]['structureEmail']);
+        }
+
+        if (!$animal) {
+            return $this->json([
+                'message' => 'Animal not found',
+                'timestamp' => time(),
+            ], 200, [], ['groups' => 'animal:read']);
+        }
 
         return $this->json([
             'message' => 'display find result for id',
             'timestamp' => time(),
-            'animal' => $animalRepository->findById($data["id"]),
+            'animal' => $animal[0],
         ], 200, [], ['groups' => 'animal:read']);
 
     }

@@ -1,16 +1,6 @@
 import React from 'react';
 import Column from '@/Components/column/Column';
-
-interface ColumnData {
-    paragraph?: {
-        title: string;
-        content: string;
-    };
-    picture?: {
-        src: string;
-        alt: string;
-    };
-}
+import { Column as ColumnData } from '@/types/column';
 
 interface DoubleColumnsProps {
     columns: [ColumnData, ColumnData]; // Tuple de 2 éléments exactement

@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
 import { filtersResults } from '@/api/filters/animals';
 import { smoothScroll } from '@/utils';
-
-interface PaginationProps {
-    totalPages: number;
-    currentPage: number;
-}
+import { Pagination as PaginationProps } from '@/types/pagination.type';
 
 export function Pagination({ totalPages, currentPage }: PaginationProps) {
     const [pageArray, setPageArray] = useState<number[]>([]);

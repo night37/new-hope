@@ -4,12 +4,11 @@ import { useState } from 'react';
 import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
 import AnimalForm from '@/Components/forms/AnimalForm';
 import AssociationForm from '@/Components/forms/AssociationForm';
-import { useAnimalStore } from '@/store/animalStore';
 
-export function Hero() {
+export function Hero({filterOption}: {filterOption: string}) {
     const [radioBtns, setRadioBtns] = useState([
-        { name: 'radio1', label: 'Rechercher un animal', isActive: true },
-        { name: 'radio2', label: 'Rechercher une association', isActive: false },
+        { name: 'radio1', label: 'Rechercher un animal', isActive: filterOption === "animal" ? true : false },
+        { name: 'radio2', label: 'Rechercher une association', isActive: filterOption === "association" ? true : false },
     ]);
 
     const handleRadioClick = (selectedIndex: number) => {
@@ -37,7 +36,7 @@ export function Hero() {
                         );
                     })}
                 </div>
-                <div className="form-container container flex min-h-[360px] grid-cols-12 flex-wrap gap-3">
+                <div className="form-container flex items-center container flex min-h-[360px] grid-cols-12 flex-wrap gap-3">
                     {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
                 </div>
             </div>

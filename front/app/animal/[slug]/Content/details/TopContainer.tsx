@@ -1,46 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
 import './style.scss';
+import { Animal } from '@/types/animal.type';
+import { affinityType } from "@/types/affinity.type";
 
-interface AnimalDetailsProps {
-    animal: {
-        id: number;
-        name: string;
-        gender: 'male' | 'female';
-        age: number;
-        out_department: boolean;
-        size: 'petit' | 'moyen' | 'grand';
-        color: string;
-        affinity: string[];
-        adoption_status: 'adopté' | 'en attente' | 'réservé';
-        breed: string[];
-        type: 'chat' | 'chien';
-        thumbnail: string;
-        images: string[];
-        description: string;
-        structureName: string;
-        structureStreet: string;
-        structureZipCode: number;
-        structureCity: string;
-        structurePhone: string;
-        structureEmail: string;
-    };
-}
 
-type affinityType = { [key: string]: string }[];
 
-function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
+function TopContainer({ animal }: { animal: Animal }) {
     const affinityList: affinityType = [
         { Children: 'enfants' },
         { Seniors: 'seniors' },
         { Dogs: 'chiens' },
         { Cats: 'chats' },
     ];
-
+    console.log(animal);
     return (
         <>
-            <div className="top-container my-10 flex flex-col items-center justify-between lg:my-0 lg:flex-row">
-                <div className="image-container mb-10 lg:col-span-3 lg:hidden">
+            <div className="top-container lg:my-10 flex flex-col items-center justify-between lg:my-0 lg:flex-row">
+                <div className="image-container mb-2 mt-8 lg:col-span-3 lg:hidden">
                     <Image
                         className="object-cover"
                         src={'/img/placeholder.svg'}
@@ -65,9 +42,9 @@ function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
                 <div className="particularity-container flex flex-col items-center border-custom-primary lg:border-r-2 lg:pr-10">
                     <h3 className="font-caveat text-xl text-font-green">Affinités</h3>
                     <ul className="columns-1 gap-3">
-                        {affinityList.map((affinity, index) => (
+                        {affinityList.length > 0 && affinityList.map((affinity, index) => (
                             <li key={index} className="font-handlee text-sm">
-                                {animal.affinity.includes(Object.keys(affinity)[0])
+                                {animal?.affinity?.includes(Object.keys(affinity)[0])
                                     ? `s'entend avec ${Object.values(affinity)[0]}`
                                     : `ne s'entend pas avec ${Object.values(affinity)[0]}`}
                             </li>
@@ -78,10 +55,10 @@ function TopContainer({ animal }: { animal: AnimalDetailsProps['animal'] }) {
                     <h3 className="font-caveat text-xl text-font-green">Me rencontrer</h3>
                     <p className="text-center font-handlee text-sm">
                         {animal.structure.name} <br />
-                        {animal.structureStreet} <br />
-                        {animal.structureZipCode} {animal.structureCity} <br />
-                        {animal.structurePhone} <br />
-                        {animal.structureEmail}
+                        {animal.structure.street} <br />
+                        {animal.structure.zipCode} {animal.structure.city} <br />
+                        {animal.structure.phone} <br />
+                        {animal.structure.email}
                     </p>
                 </div>
                 <div className="image-container hidden lg:block">

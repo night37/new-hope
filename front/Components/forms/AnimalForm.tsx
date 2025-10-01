@@ -141,7 +141,7 @@ export default function AnimalForm() {
     };
     return (
         <form
-            className="flex min-h-[300px] w-full flex-wrap justify-center gap-5 lg:justify-start"
+            className="flex min-h-[300px] w-full relative flex-wrap justify-center gap-5 lg:justify-start"
             onSubmit={(e) => {
                 submitForm(e);
             }}
@@ -152,17 +152,17 @@ export default function AnimalForm() {
                 </div>
             )}
             {loading ? (
-                <div className="absolute flex w-full justify-center">
+                <div className="absolute top-10 flex w-full justify-center items-end">
                     <span className="loading loading-spinner text-custom-secondary"></span>
                 </div>
             ) : (
                 error && (
-                    <span className="flex w-full justify-center font-caveat text-xl">
+                    <span className="flex w-full justify-center items-center font-caveat text-xl">
                         <p className="border border-black p-4">Une erreur serveur est survenue </p>
                     </span>
                 )
             )}
-            <div className="mx-auto flex w-2/4 flex-col justify-center gap-4">
+            <div className="mx-auto flex lg:w-2/4 flex-col justify-center gap-4">
                 <Button
                     label={'Trouver votre nouveau compagnon'}
                     type={'submit'}

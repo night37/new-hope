@@ -1,7 +1,4 @@
-
-import { Animal } from "./animal.type";
-
-
+import { Animal } from './animal.type';
 
 export type HighLightProps = {
     introduction: {
@@ -11,4 +8,4 @@ export type HighLightProps = {
     animals: Animal[];
     error: string;
     loading: boolean;
-}
+};

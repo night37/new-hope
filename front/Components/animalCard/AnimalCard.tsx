@@ -11,7 +11,6 @@ export const AnimalCard = ({ image, animal, path }: AnimalCardProps) => {
     const updateId = useAnimalStore((state) => state.updateId);
 
     const onClick = () => {
-        console.log(animal.id);
         updateId(animal.id);
         router.push(path);
     };

@@ -9,8 +9,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import './style.scss';
 
-
-
 function Slider({ items }: SliderProps) {
     const swiperRef = useRef<SwiperRef | null>(null);
 
@@ -52,7 +50,10 @@ function Slider({ items }: SliderProps) {
                         <SwiperSlide key={key}>
                             <AnimalCard
                                 image={{
-                                    src: typeof item.thumbnail === 'string' ? item.thumbnail : '/img/placeholder.svg',
+                                    src:
+                                        typeof item.thumbnail === 'string'
+                                            ? item.thumbnail
+                                            : '/img/placeholder.svg',
                                     alt: `photo de ${item.name}`,
                                 }}
                                 animal={{

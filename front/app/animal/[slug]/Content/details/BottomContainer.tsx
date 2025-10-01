@@ -1,35 +1,13 @@
 import React from 'react';
 import './style.scss';
+import { Animal as AnimalDetailsProps } from '@/types/animal.type';
 
-interface AnimalDetailsProps {
-    animal: {
-        id: number;
-        name: string;
-        gender: 'male' | 'female';
-        age: number;
-        out_department: boolean;
-        size: 'petit' | 'moyen' | 'grand';
-        color: string;
-        affinity: ('enfants' | 'seniors' | 'autres_animaux')[];
-        adoption_status: 'adopté' | 'en attente' | 'réservé';
-        breed: string[];
-        type: 'chat' | 'chien';
-        thumbnail: string;
-        images: string[];
-        description: string;
-        structureName: string;
-        structureStreet: string;
-        structureZipCode: number;
-        structureCity: string;
-        structurePhone: string;
-        structureEmail: string;
-    };
-}
 
-function BottomContainer({ animal }: AnimalDetailsProps) {
+
+function BottomContainer({ animal }: { animal: AnimalDetailsProps }) {
     return (
-        <div className="bottom-container my-10 flex flex-col lg:my-20 lg:flex-row">
-            <div className="description-container mx-auto mb-10 flex w-2/4 flex-col items-center border-custom-primary lg:w-3/4 lg:items-start lg:border-r-2 lg:pr-10">
+        <div className="bottom-container lg:my-10 flex flex-col lg:my-20 lg:flex-row">
+            <div className="description-container mx-auto lg:mb-10 flex w-2/4 flex-col items-center border-custom-primary lg:w-3/4 lg:items-start lg:border-r-2 lg:pr-10">
                 <h3 className="mb-5 font-caveat text-xl text-font-green">Qui suis-je ?</h3>
                 <p className="text-justify font-handlee text-sm">{animal.description}</p>
             </div>
