@@ -5,9 +5,9 @@ import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
 import AnimalForm from '@/Components/forms/AnimalForm';
 import AssociationForm from '@/Components/forms/AssociationForm';
 
-export function Hero({filterOption}: {filterOption: string}) {
+export function Hero({filterOption}: {filterOption?: string}) {
     const [radioBtns, setRadioBtns] = useState([
-        { name: 'radio1', label: 'Rechercher un animal', isActive: filterOption === "animal" ? true : false },
+        { name: 'radio1', label: 'Rechercher un animal', isActive: filterOption === "association" ? false : true },
         { name: 'radio2', label: 'Rechercher une association', isActive: filterOption === "association" ? true : false },
     ]);
 

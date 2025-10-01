@@ -33,7 +33,11 @@ export default function SearchResults() {
                             <div className="w-[265px]" key={key}>
                                 <AnimalCard
                                     key={key}
-                                    image={{ src: animal.thumbnail ? animal.thumbnail : "/img/placeholder.png", alt: animal.name }}
+                                    image={
+                                        {
+                                            src: typeof animal.thumbnail === 'string' ? animal.thumbnail : "/img/placeholder.png",
+                                            alt: animal.name
+                                        }}
                                     animal={{
                                         id: animal.id,
                                         name: animal.name,
