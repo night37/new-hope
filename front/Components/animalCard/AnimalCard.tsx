@@ -6,11 +6,11 @@ import { useAnimalStore } from '@/store/animalStore';
 import type { AnimalCard as AnimalCardProps } from '@/types/animalCard.type';
 
 export const AnimalCard = ({ image, animal, path }: AnimalCardProps) => {
-    console.log(animal);
     const router = useRouter();
     const updateId = useAnimalStore((state) => state.updateId);
 
     const onClick = () => {
+        sessionStorage.removeItem('animal-store');
         updateId(animal.id);
         router.push(path);
     };

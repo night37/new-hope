@@ -11,7 +11,6 @@ function TopContainer({ animal }: { animal: Animal }) {
         { Dogs: 'chiens' },
         { Cats: 'chats' },
     ];
-    console.log(animal);
     return (
         <>
             <div className="top-container flex flex-col items-center justify-between lg:my-0 lg:my-10 lg:flex-row">

@@ -103,7 +103,7 @@ export async function findById(id: number) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             const data = await response.json();
-            console.log(data);
+
             return data;
         } catch (err) {
             console.error('Erreur lors de la recherche par ID:', err);

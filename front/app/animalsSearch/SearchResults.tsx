@@ -15,7 +15,7 @@ export default function SearchResults() {
             setAnimalsList({ animals: searchResults.animals });
         }
     }, [searchResults]);
-    console.log(animalsList);
+
     return (
         <>
             {animalsList.animals.data.length > 0 ? (
