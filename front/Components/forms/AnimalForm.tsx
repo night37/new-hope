@@ -141,7 +141,7 @@ export default function AnimalForm() {
     };
     return (
         <form
-            className="relative flex min-h-[300px] w-full flex-wrap justify-center gap-5 lg:justify-start"
+            className="relative flex min-h-[300px] w-full flex-wrap justify-center gap-10 lg:justify-start"
             onSubmit={(e) => {
                 submitForm(e);
             }}

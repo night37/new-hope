@@ -20,7 +20,7 @@ export default function SearchResults() {
         <>
             {animalsList.animals.data.length > 0 ? (
                 <div className="container mx-auto my-10 flex flex-col gap-10">
-                    <div className="flex items-center gap-3">
+                    <div className="mx-auto flex items-center gap-3 lg:mx-0">
                         <h2 className="font-handlee text-lg font-bold">
                             Résultats de la recherche{' '}
                         </h2>
@@ -43,7 +43,7 @@ export default function SearchResults() {
                                         name: animal.name,
                                         breed: animal.breed ? animal.breed : [],
                                         type: animal.type,
-                                        structure: { name: animal?.structure.name },
+                                        structure: { name: animal?.structure?.name },
                                     }}
                                     path={`/animal/${animal.name}`}
                                 />
