@@ -27,7 +27,7 @@ use ApiPlatform\OpenApi\Model\Operation;
 
     operations: [
         new Get(
-            name: 'api_animal_filters', 
+            name: 'api_animal_filters',
             uriTemplate: '/backoffice/animal/filters',
             controller: 'App\Controller\AnimalController::getFiltersList',
             openapi: new Operation(
@@ -36,7 +36,7 @@ use ApiPlatform\OpenApi\Model\Operation;
             )
         ),
         new Get(
-            name: 'api_animals_list', 
+            name: 'api_animals_list',
             uriTemplate: '/backoffice/animal/get_animals_list',
             controller: 'App\Controller\AnimalController::index',
             description: 'Get the list of animals',
@@ -46,7 +46,7 @@ use ApiPlatform\OpenApi\Model\Operation;
             )
         ),
         new Get(
-            name: 'api_animal_filters_results', 
+            name: 'api_animal_filters_results',
             uriTemplate: '/backoffice/animal/filtersResults',
             controller: 'App\Controller\AnimalController::getFiltersResults',
             description: 'Get the list of animal filters results',
@@ -56,7 +56,7 @@ use ApiPlatform\OpenApi\Model\Operation;
             )
         ),
         new Get(
-            name: 'api_get_random_last_animals', 
+            name: 'api_get_random_last_animals',
             uriTemplate: '/backoffice/animal/getRandomLastAnimals',
             controller: 'App\Controller\AnimalController::getRandomLastAnimals',
             description: 'Get a random list of the last animals',
@@ -66,7 +66,7 @@ use ApiPlatform\OpenApi\Model\Operation;
             )
             ),
         new Get(
-            name: 'api_find_by_id', 
+            name: 'api_find_by_id',
             uriTemplate: '/backoffice/animal/findById',
             controller: 'App\Controller\AnimalController::findById',
             description: 'find animal by id',
