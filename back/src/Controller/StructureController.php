@@ -13,14 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use App\Service\AutocompleteService;
 
 final class StructureController extends AbstractController
 {
 
 
-    public function __construct(    
-        
+    public function __construct(
         private LocationService $locationService
         )
         {}
@@ -41,29 +40,36 @@ final class StructureController extends AbstractController
         $form = $this->createForm(RequestCreateStructureFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-  
             $structure = $form->getData();
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
             $structure->setIsActive(false);
             $this->locationService->getCoordinates($structure);
-        
-
             try {
-                $entityManager->persist($structure);             
+                $entityManager->persist($structure);
                 $entityManager->flush();
             } catch (UniqueConstraintViolationException $e) {
                 $this->addFlash('error', 'Cette structure existe déjà. Veuillez en choisir une autre.');
             }
-
-
-
             return $this->redirectToRoute('app_create_structure');
         }
-        
         return $this->render('structure/create_structure.html.twig', [
             'controller_name' => 'StructureController',
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('api/autocomplete', name: 'app_autocomplete')]
+    public function autocomplete(Request $request, AutocompleteService $autocompleteService): Response
+    {
+        $option = $request->query->get('option');
+        $param = $request->query->get('nom');
+
+        $results = $autocompleteService->autocomplete($option, $param);
+
+        return $this->json($results);
+    }
+
+
+
 }
