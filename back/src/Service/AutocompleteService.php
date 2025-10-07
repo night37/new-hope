@@ -14,11 +14,12 @@ class AutocompleteService
         $this->url = $_ENV['AUTOCOMPLETE_API_BASE_URL'];
     }
 
-    public function autocomplete (string $option, ?string $param) : array {
-        $query = $this->url . "/$option";
-        if ($param) {
-            $query .= "?nom=$param";
+    public function autocomplete (string $option, ?string $name ) : array {
+        $query = $this->url . "/$option?";
+        if ($name) {
+            $query .= "nom=$name";
         }
+        $query .="&limit=10";
         $response = $this->client->request('GET', $query);
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Erreur lors de la requête d\'autocomplétion');
@@ -31,6 +32,18 @@ class AutocompleteService
                         "code" => $value["code"]
                     ]
                 );
+                if($option === "departements") {
+                    array_push($data,["codeRegion" => $value["codeRegion"]]
+                    );
+                }
+                if($option === "communes") {
+                    array_push($data,
+                    [
+                        "codeRegion" => $value["codeRegion"],
+                        "codeDepartement" => $value["codeDepartement"]
+                        ]
+                    );
+                }
         }
         return $data;
     }

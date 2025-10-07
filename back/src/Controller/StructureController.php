@@ -63,15 +63,16 @@ final class StructureController extends AbstractController
     public function autocomplete(Request $request, AutocompleteService $autocompleteService): Response
     {
         $option = $request->query->get('option');
-        
+        $name = $request->query->get('name');
+
+
         if (!$option) {
             return $this->json(['message' => 'Le paramètre "option" est requis'], Response::HTTP_BAD_REQUEST);
         }
         if (!in_array($option, ['communes', 'departements', 'regions'])) {
             return $this->json(['message' => 'Le paramètre "option" est invalide'], Response::HTTP_BAD_REQUEST);
         }
-        $param = $request->query->get('nom');
-        $results = $autocompleteService->autocomplete($option, $param);
+        $results = $autocompleteService->autocomplete($option, $name);
 
         if (empty($results)) {
             return $this->json(['message' => 'Aucun résultat trouvé'], Response::HTTP_NOT_FOUND);
