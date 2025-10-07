@@ -20,7 +20,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 
 
-#[AdminDashboard(routePath: 'backoffice', routeName: 'admin')]
+#[AdminDashboard(routePath: '/backoffice', routeName: 'admin')]
 
 class DashboardController extends AbstractDashboardController
 {
