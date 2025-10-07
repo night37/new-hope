@@ -32,8 +32,6 @@ class DashboardController extends AbstractDashboardController
 
     public function index(): Response
     {
-        
-        
         if($this->getUser() === null) {
             return $this->redirectToRoute('app_login');
         }
@@ -44,7 +42,6 @@ class DashboardController extends AbstractDashboardController
         return $this->render('admin/dashboard.html.twig', [
             'chart' => $chart,
         ]);
-        
     }
 
     public function configureDashboard(): Dashboard

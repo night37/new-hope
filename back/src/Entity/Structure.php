@@ -23,8 +23,8 @@ use ApiPlatform\OpenApi\Model\Operation;
             controller: 'App\Controller\StructureController::autocomplete',
             description: 'autocomplete structure address',
             openapi: new Operation(
-                summary: 'autocomplete des adresses des structures',
-                description: 'Renvoie une liste d\'adresses de structures correspondant aux termes de recherche fournis.',
+                summary: 'autocomplete des adresses',
+                description: 'Renvoie une liste d\'adresses correspondant aux termes de recherche fournis.',
                 parameters: [
                     [
                         'name' => 'option',

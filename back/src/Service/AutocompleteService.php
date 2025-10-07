@@ -25,14 +25,12 @@ class AutocompleteService
         }
         $data = [];
         foreach ($response->toArray() as $key => $value) {
-            if($option === "communes") {
                 array_push($data,
                     [
                         "name" => $value["nom"],
                         "code" => $value["code"]
                     ]
                 );
-            }
         }
         return $data;
     }
