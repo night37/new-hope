@@ -15,8 +15,6 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
         for (let i = 1; i <= totalPages; i++) {
             indexArray.push(i);
         }
-        // const result = async () => await filtersResults(searchParameters, 1)
-        // setSearchResults(result);
         setPageArray(indexArray);
     }, [totalPages]);
 
@@ -28,7 +26,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
     };
 
     return (
-        <div className="mx-auto gap-2 join">
+        <div className="mx-auto flex flex-col gap-5 lg:flex-row">
             <button
                 className="btn !rounded-full bg-custom-primary hover:bg-custom-secondary focus:bg-custom-secondary"
                 onClick={() => {
@@ -37,21 +35,23 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             >
                 Page précédente
             </button>
-            {pageArray.map((page, key) => {
-                return (
-                    <input
-                        className={`btn h-[40] w-[40] !rounded-full !text-black join-item ${page === currentPage ? 'bg-custom-secondary' : 'bg-custom-primary hover:bg-custom-secondary'} btn-sm btn-circle`}
-                        type="radio"
-                        key={key}
-                        name="options"
-                        aria-label={page.toString()}
-                        onClick={() => {
-                            fetchApi(page);
-                        }}
-                        defaultChecked={page === 1}
-                    />
-                );
-            })}
+            <div className="flex gap-3 join">
+                {pageArray.map((page, key) => {
+                    return (
+                        <input
+                            className={`btn h-[40] w-[40] !rounded-full !text-black join-item ${page === currentPage ? 'bg-custom-secondary' : 'bg-custom-primary hover:bg-custom-secondary'} btn-sm btn-circle`}
+                            type="radio"
+                            key={key}
+                            name="options"
+                            aria-label={page.toString()}
+                            onClick={() => {
+                                fetchApi(page);
+                            }}
+                            defaultChecked={page === 1}
+                        />
+                    );
+                })}
+            </div>
             <button
                 className="btn !rounded-full bg-custom-primary hover:bg-custom-secondary focus:bg-custom-secondary"
                 onClick={() => {

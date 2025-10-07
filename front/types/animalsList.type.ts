@@ -1,7 +1,5 @@
-import { Animal } from "./animal.type";
-
-
+import { Animal } from './animal.type';
 
 export type AnimalsList = {
     animals: { data: Animal[] };
-}
+};

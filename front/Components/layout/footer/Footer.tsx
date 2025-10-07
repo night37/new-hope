@@ -14,10 +14,10 @@ export const Footer = ({ font }: FontType) => {
                 <div className="col-span-12 flex flex-col lg:col-span-10 lg:flex-row lg:gap-12">
                     <ul className="color-custom-third flex w-full flex-col">
                         <li className="flex justify-center lg:justify-end">
-                            <Link href="">TROUVER UN ANIMAL</Link>
+                            <Link href="/animalsSearch">TROUVER UN ANIMAL</Link>
                         </li>
                         <li className="flex justify-center lg:justify-end">
-                            <Link href="">TROUVER UNE ASSOCIATION </Link>
+                            <Link href="/associationsSearch">TROUVER UNE ASSOCIATION </Link>
                         </li>
                         <li className="flex justify-center lg:justify-end">
                             <Link href="">QUI SOMMES NOUS ?</Link>
@@ -28,10 +28,10 @@ export const Footer = ({ font }: FontType) => {
                             <Link href="">NOUS SOUTENIR</Link>
                         </li>
                         <li className="flex justify-center lg:justify-start">
-                            <Link href="">CONNEXION</Link>
+                            <Link href={process.env.NEXT_PUBLIC_BACKEND_URL ?? '#'}>CONNEXION</Link>
                         </li>
                         <li className="flex justify-center lg:justify-start">
-                            <Link href="">MENTIONS LEGALES</Link>
+                            <Link href="/mentionsLegales">MENTIONS LEGALES</Link>
                         </li>
                     </ul>
                 </div>

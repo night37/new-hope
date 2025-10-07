@@ -6,7 +6,7 @@ import { FilterOption } from '../../types/filter.type';
 export default function page() {
     return (
         <div>
-            <Hero filterOption={"association"} />
+            <Hero filterOption={'association'} />
             {/* <SearchResults /> */}
         </div>
     );

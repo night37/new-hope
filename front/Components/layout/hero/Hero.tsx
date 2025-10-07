@@ -5,10 +5,18 @@ import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
 import AnimalForm from '@/Components/forms/AnimalForm';
 import AssociationForm from '@/Components/forms/AssociationForm';
 
-export function Hero({filterOption}: {filterOption?: string}) {
+export function Hero({ filterOption }: { filterOption?: string }) {
     const [radioBtns, setRadioBtns] = useState([
-        { name: 'radio1', label: 'Rechercher un animal', isActive: filterOption === "association" ? false : true },
-        { name: 'radio2', label: 'Rechercher une association', isActive: filterOption === "association" ? true : false },
+        {
+            name: 'radio1',
+            label: 'Rechercher un animal',
+            isActive: filterOption === 'association' ? false : true,
+        },
+        {
+            name: 'radio2',
+            label: 'Rechercher une association',
+            isActive: filterOption === 'association' ? true : false,
+        },
     ]);
 
     const handleRadioClick = (selectedIndex: number) => {
@@ -21,9 +29,9 @@ export function Hero({filterOption}: {filterOption?: string}) {
     };
 
     return (
-        <div className="bg-fit i flex min-h-[450px] w-full justify-center bg-[url(/img/Hero.png)] bg-left bg-no-repeat px-3 py-[98px] lg:bg-cover lg:px-0">
-            <div className="container flex min-h-[550px] flex-col justify-center gap-5 rounded-xl bg-white/50 px-[50px]">
-                <div className="radio-container flex flex-col flex-wrap items-center justify-center gap-5 lg:flex-row">
+        <div className="bg-fit flex min-h-[450px] w-full justify-center bg-[url(/img/Hero.png)] bg-left bg-no-repeat px-3 py-[40px] lg:bg-cover lg:px-0 lg:py-[98px]">
+            <div className="container flex min-h-[550px] flex-col justify-center gap-10 rounded-xl bg-white/50 px-[50px] py-10 lg:py-0">
+                <div className="radio-container flex flex-col flex-wrap justify-center gap-5 lg:flex-row lg:items-center">
                     {radioBtns.map((radio, key) => {
                         return (
                             <div
@@ -36,7 +44,7 @@ export function Hero({filterOption}: {filterOption?: string}) {
                         );
                     })}
                 </div>
-                <div className="form-container flex items-center container flex min-h-[360px] grid-cols-12 flex-wrap gap-3">
+                <div className="form-container container flex min-h-[360px] grid-cols-12 flex-wrap items-center gap-10">
                     {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
                 </div>
             </div>

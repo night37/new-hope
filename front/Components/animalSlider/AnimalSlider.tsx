@@ -70,7 +70,7 @@ function Slider({ items }: SliderProps) {
                     ))}
             </Swiper>
             <button
-                className="custom-prev-btn absolute left-2 top-2/4 z-10 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
+                className="custom-prev-btn absolute left-2 top-[70%] z-10 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary md:top-2/4"
                 onClick={() => swiperRef.current?.swiper.slidePrev()}
             >
                 <Image
@@ -83,7 +83,7 @@ function Slider({ items }: SliderProps) {
             </button>
 
             <button
-                className="custom-next-btn absolute right-2 top-2/4 z-10 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
+                className="custom-next-btn absolute right-2 top-[70%] z-10 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-custom-secondary hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary md:top-2/4"
                 onClick={() => swiperRef.current?.swiper.slideNext()}
             >
                 <Image
