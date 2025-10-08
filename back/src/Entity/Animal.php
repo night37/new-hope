@@ -52,7 +52,89 @@ use ApiPlatform\OpenApi\Model\Operation;
             description: 'Get the list of animal filters results',
             openapi: new Operation(
                 summary: 'Liste des résultats de filtres d\'animaux',
-                description: 'Récupère la liste complète des résultats de filtres d\'animaux'
+                description: 'Récupère la liste complète des résultats de filtres d\'animaux',
+                parameters: [
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'espece',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'chien/chat'
+                        ]
+                    ],
+                                        [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'race',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'labrador'
+                        ]
+                    ],
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'gabarit',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'grand'
+                        ]
+                    ],
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'age',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '12'
+                        ]
+                    ],
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'lieu d\'adoption',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'ville'
+                        ]
+                    ],
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'pelage',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'court/long'
+                        ]
+                    ],             
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'cas spécifique',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'handicapé/âgé/urgent'
+                        ]
+                    ],
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'affinité',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'chien/chat/enfant'
+                        ]
+                    ]
+                ]   
             )
         ),
         new Get(
@@ -72,6 +154,18 @@ use ApiPlatform\OpenApi\Model\Operation;
             description: 'find animal by id',
             openapi: new Operation(
                 summary: 'trouver un animal avec son id',
+                 parameters: [
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'id de l\'animal',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '5'
+                        ]
+                    ],
+                ]
             )
         )
     ]
