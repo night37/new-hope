@@ -20,7 +20,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 
 
-#[AdminDashboard(routePath: 'backoffice', routeName: 'admin')]
+#[AdminDashboard(routePath: '/backoffice', routeName: 'admin')]
 
 class DashboardController extends AbstractDashboardController
 {
@@ -70,7 +70,7 @@ class DashboardController extends AbstractDashboardController
 
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');
-        if($structureId != null) {
+        if($structureId != null || in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true)) {
             yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
                 MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
                 MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),

@@ -12,14 +12,44 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Entity\Animal;
+use ApiPlatform\OpenApi\Model\Operation;
 
 #[ApiResource(
     normalizationContext: ['groups' => ['animal:read']],
     operations: [
-        new Get(),
-        new GetCollection()
-
-    ]    
+        new Get(
+            name: 'autocomplete_structure',
+            uriTemplate:'/backoffice/structures/autocomplete',
+            controller: 'App\Controller\StructureController::autocomplete',
+            description: 'autocomplete structure address',
+            openapi: new Operation(
+                summary: 'autocomplete des adresses des structures',
+                description: 'Renvoie une liste d\'adresses de structures correspondant aux termes de recherche fournis.',
+                parameters: [
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'Url de recherche pour l\'autocomplete',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'communes / departements / regions'
+                        ]
+                    ],
+                    [
+                        'name' => 'param',
+                        'in' => 'query',
+                        'description' => 'Termes de recherche pour l\'autocomplete',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'paris'
+                        ]
+                    ]
+                ]
+            ),
+        )
+    ]
 )]
 #[ORM\Entity(repositoryClass: StructureRepository::class)]
 class Structure
