@@ -54,7 +54,7 @@ class SecurityController extends AbstractController
             if (!$user->isVerified()) {
                 return $this->emailService->sendVerificationEmail($user->getEmail());
             }else if (!$user->isActive()){
-                $this->emailService->displayMessage('danger',"Votre compte n'est pas activé, veuillez vous contacter l'administrateur");
+                $this->emailService->displayMessage('danger',"Votre compte n'est pas activé, veuillez contacter l'administrateur");
                 return new RedirectResponse('/');
                 
             }
