@@ -117,7 +117,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods:['GET'])]
-    public function getRandomLastAnimals(Request $request,  AnimalRepository $animalRepository): Response {
+    public function getRandomLastAnimals(AnimalRepository $animalRepository): Response {
         $dogsList = $animalRepository-> getRandomLastAnimals("chien");
         if (!$dogsList) {
             $dogsList = [];
@@ -153,6 +153,12 @@ final class AnimalController extends AbstractController
     public function findById (Request $request, AnimalRepository $animalRepository): Response {
 
         $data = $request->query->all();
+        if(!isset($data["id"]) || empty($data["id"]) ) {
+            return $this->json([
+                'message' => 'id is required',
+                'timestamp' => time(),
+            ], 400, [], ['groups' => 'animal:read']);
+        }
         $animal = $animalRepository->findById($data["id"]);
 
         if (!empty($animal) && isset($animal[0])) {
