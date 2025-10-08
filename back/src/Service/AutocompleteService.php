@@ -34,7 +34,8 @@ class AutocompleteService
             }
             if($option == 'departements'){
                 $data["codeRegion"] = $value["codeRegion"];
-            }        }
+            }
+        }
         return $data;
     }
 }
