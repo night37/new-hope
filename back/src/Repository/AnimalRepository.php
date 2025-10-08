@@ -16,7 +16,7 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
-  /**
+/**
     * @return Animal[] Returns an array of Animal objects
  */
         public function findAll(): array
@@ -40,14 +40,13 @@ class AnimalRepository extends ServiceEntityRepository
                 ->where('animal.isActive = true')
                 ->andWhere('animal.isVisible = true')
                 ->andWhere('animal.type = :type')
-                ->andWhere('animal.createdAt >= :oneMonthAgo') 
+                ->andWhere('animal.createdAt >= :oneMonthAgo')
                 ->setParameter('type', $type)
                 ->setParameter('oneMonthAgo', $oneMonthAgo)
                 ->orderBy('animal.createdAt', 'DESC')
                 ->setMaxResults(6)
                 ->getQuery()
                 ->getResult();
-    
         }
 
         private function fieldsList(): array
@@ -71,24 +70,23 @@ class AnimalRepository extends ServiceEntityRepository
                 'animal.description',
             ];
         }
-        public function findByFilters($data): array 
+        public function findByFilters($data): array
         {
             $page = isset($data["page"]) ? $data["page"] : 1;
             $pageSize = 10;
             $firstResult = ($page - 1) * $pageSize;
             $allowedFields = [
-                'gender', 
-                'out_department', 
-                'highlight', 
-                'size', 
-                'color', 
-                'affinity', 
-                'adoption_status', 
+                'gender',
+                'out_department',
+                'highlight',
+                'size',
+                'color',
+                'affinity',
+                'adoption_status',
                 'breed',
                 'type'
             ];
 
-            
             $qb = $this->createQueryBuilder('animal')
                 ->innerJoin('animal.structure', 'structure')
                 ->orderBy('animal.id', 'ASC')
@@ -121,7 +119,6 @@ class AnimalRepository extends ServiceEntityRepository
                             default:
                                 if (is_string($value) && strpos($value, ',') !== false) {
                                     $values = array_filter(array_map('trim', explode(',', $value)));
-                                    
                                     $conditions = [];
                                     foreach ($values as $index => $val) {
                                         $paramName = $key . '_' . $index;
