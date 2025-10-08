@@ -19,21 +19,23 @@ class AutocompleteService
         if ($param) {
             $query .= "?nom=$param";
         }
+        $query .= "&limit=20";
         $response = $this->client->request('GET', $query);
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Erreur lors de la requête d\'autocomplétion');
         }
+     ;
         $data = [];
         foreach ($response->toArray() as $key => $value) {
-            if($option === "communes") {
-                array_push($data,
-                    [
-                        "name" => $value["nom"],
-                        "code" => $value["code"]
-                    ]
-                );
+            $data["name"] = $value["nom"];
+            $data["code"] = $value["code"];
+            if($option == 'communes'){
+                $data["codeDepartement"] = $value["codeDepartement"];
+                $data["codeRegion"] = $value["codeRegion"];
             }
-        }
+            if($option == 'departements'){
+                $data["codeRegion"] = $value["codeRegion"];                
+            }        }
         return $data;
     }
 }
