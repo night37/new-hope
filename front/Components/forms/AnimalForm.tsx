@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Select from '@/Components/ui/select/Select';
-import { animalFilters, filtersResults } from '@/api/filters/animals';
+import { animalFilters } from '@/api/animals/animalFilters';
+import { filtersResults } from '@/api/animals/filtersResult';
 import { Button } from '@/Components/ui/button/Button';
 import { useAnimalStore } from '@/store/animalStore';
 import { useRouter, usePathname } from 'next/navigation';
