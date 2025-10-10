@@ -1,0 +1,17 @@
+.autocomplete_container {
+    :nth-child(3) {
+        width: 100%;
+    }
+    *{
+        border-radius: 10px;
+    }
+
+    span[class$="indicatorSeparator"] {
+        display: none !important;
+    }
+    div[class$="indicatorContainer"] {
+        svg {
+            display: none !important;
+        }
+    }
+}

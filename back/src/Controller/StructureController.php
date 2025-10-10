@@ -75,7 +75,7 @@ final class StructureController extends AbstractController
         $results = $autocompleteService->autocomplete($option, $name);
 
         if (empty($results)) {
-            return $this->json(['message' => 'Aucun résultat trouvé'], Response::HTTP_NOT_FOUND);
+            return $this->json(['message' => 'Aucun résultat trouvé'], Response::HTTP_OK);
         }
         return $this->json($results, Response::HTTP_OK);
     }

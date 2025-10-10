@@ -19,24 +19,25 @@ class AutocompleteService
         if ($name) {
             $query .= "nom=$name";
         }
-        $query .= "&limit=20";
+        $query .= "&limit=500";
         $response = $this->client->request('GET', $query);
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Erreur lors de la requête d\'autocomplétion');
         };
         $data = [];
         foreach ($response->toArray() as $key => $value) {
-            $data["name"] = $value["nom"];
-            $data["code"] = $value["code"];
+            $newData = [];
+            $newData["name"] = $value["nom"];
+            $newData["code"] = $value["code"];
             if($option == 'communes'){
-                $data["codeDepartement"] = $value["codeDepartement"];
-                $data["codeRegion"] = $value["codeRegion"];
+                $newData["codeDepartement"] = $value["codeDepartement"];
+                $newData    ["codeRegion"] = $value["codeRegion"];
             }
             if($option == 'departements'){
-                $data["codeRegion"] = $value["codeRegion"];
+                $newData["codeRegion"] = $value["codeRegion"];
             }
+            array_push($data, $newData);
         }
-        dd($data);
         return $data;
     }
 }
