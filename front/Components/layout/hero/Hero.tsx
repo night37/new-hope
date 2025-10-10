@@ -37,9 +37,13 @@ export function Hero({ filterOption }: { filterOption?: string }) {
                             <div
                                 key={key}
                                 className="flex w-fit"
-                                onClick={() => handleRadioClick(key)}
                             >
-                                <ButtonRadio label={radio.label} isActive={radio.isActive} />
+                                <ButtonRadio
+                                    label={radio.label}
+                                    isActive={radio.isActive}
+                                    onClick={() => handleRadioClick(key)}
+                                    index={key}
+                                />
                             </div>
                         );
                     })}

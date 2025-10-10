@@ -7,9 +7,7 @@ export async function findById(id: number) {
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-            const data = await response.json();
-
-            return data;
+            return await response.json();
         } catch (err) {
             console.error('Erreur lors de la recherche par ID:', err);
             throw err;

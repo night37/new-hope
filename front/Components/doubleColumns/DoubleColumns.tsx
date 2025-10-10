@@ -10,7 +10,11 @@ const DoubleColumns = ({ columns }: DoubleColumnsProps) => {
     const displayInMobileDevice = (columns: ColumnData[]): React.ReactNode => {
         const reorderColums: ColumnData[] = [];
         columns.forEach((column) => {
-            column.picture ? reorderColums.unshift(column) : reorderColums.push(column);
+            if (column.picture) {
+                reorderColums.unshift(column);
+            } else {
+                reorderColums.push(column);
+            }
         });
         return reorderColums.map((column, index) => {
             return <Column key={index} {...column} />;

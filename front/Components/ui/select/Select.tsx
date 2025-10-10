@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import './style.scss';
+import { select as SelectProps } from '@/types/select.type'
 
-interface SelectProps {
-    label: string;
-    options: { name: string; value: string; isSelected: boolean }[];
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}
 
 export default function Select({ label, options, onChange }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -140,6 +136,13 @@ export default function Select({ label, options, onChange }: SelectProps) {
                                         data-key={key}
                                         onClick={() => handleOptionClick(option.value)}
                                         onMouseEnter={() => setFocusedIndex(key)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                handleOptionClick(option.value);
+                                            }
+                                        }}
+                                        tabIndex={0}
                                         className={`select-item cursor-pointer p-2 text-large hover:bg-slate-200 ${
                                             option?.isSelected ? 'isSelected' : ''
                                         } ${focusedIndex === key ? 'bg-slate-200' : ''}`}
@@ -163,9 +166,11 @@ export default function Select({ label, options, onChange }: SelectProps) {
                         (option, key) => {
                             if (option.isSelected) {
                                 return (
-                                    <div
+                                    <button
                                         onClick={() => handleOptionClick(option.value)}
                                         key={key}
+                                        role="option"
+                                        aria-selected={option.isSelected}
                                         className="flex h-fit w-fit items-center justify-evenly gap-2 rounded-lg border-custom-secondary bg-custom-secondary p-1 text-lg"
                                     >
                                         <p>{option.value} </p>
@@ -186,7 +191,7 @@ export default function Select({ label, options, onChange }: SelectProps) {
                                                 ></path>
                                             </svg>
                                         </span>
-                                    </div>
+                                    </button>
                                 );
                             }
                             return null;

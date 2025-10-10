@@ -1,21 +1,22 @@
 import React from 'react';
+import  {ButtonRadio as ButtonRadioProps} from '@/types/buttonRadio.type'
 
-type ButtonType = {
-    label: string;
-    isActive?: boolean;
-};
-
-export function ButtonRadio({ label, isActive }: ButtonType) {
+export function ButtonRadio({ label, isActive, onClick, index }: ButtonRadioProps) {
     return (
-        <div className="flex items-center gap-3">
+        <button
+            className="flex items-center gap-3"
+            onClick={() => onClick(index)}
+        >
             <input
                 type="radio"
                 readOnly
+                tabIndex={-1}
                 name={`radio-${label}`}
                 className="radio-custom-secondary radio bg-white"
                 checked={isActive}
             />
-            <span className="w-max font-caveat text-[20px] text-xl">{label}</span>
-        </div>
+            <span className="w-max font-caveat text-xl">{label}</span>
+        </button>
     );
 }
+

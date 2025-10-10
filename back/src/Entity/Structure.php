@@ -37,7 +37,7 @@ use ApiPlatform\OpenApi\Model\Operation;
                         ]
                     ],
                     [
-                        'name' => 'nom',
+                        'name' => 'name',
                         'in' => 'query',
                         'description' => 'Termes de recherche pour l\'autocomplete',
                         'required' => false,

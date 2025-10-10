@@ -36,6 +36,7 @@ class AutocompleteService
                 $data["codeRegion"] = $value["codeRegion"];
             }
         }
+        dd($data);
         return $data;
     }
 }
