@@ -1,7 +1,5 @@
-import {query} from '@/api/structure/location/query'
+import { query } from '@/api/structure/location/query';
 
-export async function getRegions (name: string) {
-
-return  await query("regions", name)
-
+export async function getRegions(name: string) {
+    return await query('regions', name);
 }

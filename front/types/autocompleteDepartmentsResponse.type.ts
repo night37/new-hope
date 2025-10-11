@@ -1,4 +1,3 @@
-import { AutocompleteApiResponse } from './autocompleteApiResponse.type'
+import { AutocompleteApiResponse } from './autocompleteApiResponse.type';
 
-
-export type AutocompleteDepartmentsResponse = Omit<AutocompleteApiResponse, 'codeDepartement'>
+export type AutocompleteDepartmentsResponse = Omit<AutocompleteApiResponse, 'codeDepartement'>;

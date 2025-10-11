@@ -3,4 +3,4 @@ export type ButtonRadio = {
     isActive?: boolean;
     onClick: (index: number) => void;
     index: number;
-}
+};

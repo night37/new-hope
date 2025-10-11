@@ -1,3 +1,4 @@
 export type Autocomplete = {
-    option : string
-}
+    option: string;
+    onChange?: (value: string) => void;
+};

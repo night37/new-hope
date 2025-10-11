@@ -1,4 +1,3 @@
-import { AutocompleteApiResponse } from './autocompleteApiResponse.type'
+import { AutocompleteApiResponse } from './autocompleteApiResponse.type';
 
-
-export type AutocompleteRegionsResponse = Pick<AutocompleteApiResponse, 'name' | 'code'  >
+export type AutocompleteRegionsResponse = Pick<AutocompleteApiResponse, 'name' | 'code'>;

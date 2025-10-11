@@ -1,12 +1,9 @@
 import React from 'react';
-import  {ButtonRadio as ButtonRadioProps} from '@/types/buttonRadio.type'
+import { ButtonRadio as ButtonRadioProps } from '@/types/buttonRadio.type';
 
 export function ButtonRadio({ label, isActive, onClick, index }: ButtonRadioProps) {
     return (
-        <button
-            className="flex items-center gap-3"
-            onClick={() => onClick(index)}
-        >
+        <button className="flex items-center gap-3" onClick={() => onClick(index)}>
             <input
                 type="radio"
                 readOnly
@@ -19,4 +16,3 @@ export function ButtonRadio({ label, isActive, onClick, index }: ButtonRadioProp
         </button>
     );
 }
-

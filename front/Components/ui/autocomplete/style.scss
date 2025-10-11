@@ -2,16 +2,23 @@
     :nth-child(3) {
         width: 100%;
     }
-    *{
+    * {
         border-radius: 10px;
     }
-
-    span[class$="indicatorSeparator"] {
-        display: none !important;
+    span[class$='indicatorSeparator'] {
+        display: none;
     }
-    div[class$="indicatorContainer"] {
+    div[class$='indicatorContainer'] {
         svg {
-            display: none !important;
+            display: none;
         }
+    }
+    div[class$='placeholder'] {
+        width: max-content;
+    }
+    div[class$='control'] {
+        height: inherit;
+        border: none;
+        box-shadow: none;
     }
 }

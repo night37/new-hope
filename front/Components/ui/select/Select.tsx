@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import './style.scss';
-import { select as SelectProps } from '@/types/select.type'
-
+import { select as SelectProps } from '@/types/select.type';
 
 export default function Select({ label, options, onChange }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -113,14 +112,13 @@ export default function Select({ label, options, onChange }: SelectProps) {
                     onClick={() => setIsOpen(!isOpen)}
                     onKeyDown={handleKeyDown}
                     tabIndex={0}
-                    className="z-1 select flex w-52 cursor-pointer justify-between rounded-box rounded-xl border-solid border-custom-primary bg-white p-2 text-large shadow-sm"
+                    className="z-1 select flex w-52 cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 text-large shadow-sm"
                     role="combobox"
                     aria-expanded={isOpen}
                     aria-haspopup="listbox"
                     aria-controls="select-listbox"
                 >
                     <span>{getDisplayText()}</span>
-                    <Image src="/assets/icons/patte.svg" width={16} height={16} alt="" />
                 </div>
 
                 {isOpen && (

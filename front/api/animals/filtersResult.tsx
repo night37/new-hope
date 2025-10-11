@@ -1,4 +1,4 @@
-import { Filters } from '@/types/queryFilters'
+import { Filters } from '@/types/queryFilters';
 
 export async function filtersResults(filters: Filters, currentPage: number = 1) {
     const filterList: Filters = [];

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ButtonRadio } from '@/Components/ui/buttonRadio/ButtonRadio';
 import AnimalForm from '@/Components/forms/AnimalForm';
-import AssociationForm from '@/Components/forms/AssociationForm';
+import StructureForm from '@/Components/forms/StructureForm';
 
 export function Hero({ filterOption }: { filterOption?: string }) {
     const [radioBtns, setRadioBtns] = useState([
@@ -34,10 +34,7 @@ export function Hero({ filterOption }: { filterOption?: string }) {
                 <div className="radio-container flex flex-col flex-wrap justify-center gap-5 lg:flex-row lg:items-center">
                     {radioBtns.map((radio, key) => {
                         return (
-                            <div
-                                key={key}
-                                className="flex w-fit"
-                            >
+                            <div key={key} className="flex w-fit">
                                 <ButtonRadio
                                     label={radio.label}
                                     isActive={radio.isActive}
@@ -49,7 +46,7 @@ export function Hero({ filterOption }: { filterOption?: string }) {
                     })}
                 </div>
                 <div className="form-container container flex min-h-[360px] grid-cols-12 flex-wrap items-center gap-10">
-                    {radioBtns[0].isActive ? <AnimalForm /> : <AssociationForm />}
+                    {radioBtns[0].isActive ? <AnimalForm /> : <StructureForm />}
                 </div>
             </div>
         </div>

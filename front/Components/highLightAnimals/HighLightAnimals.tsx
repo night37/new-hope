@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense, useEffect, useState } from 'react';
-import { getLastAnimalsList } from '@/api/animals/getLastAnimal'
+import { getLastAnimalsList } from '@/api/animals/getLastAnimal';
 import HighLight from '@/Components/highLight/HighLight';
 import { Animal } from '@/types/animal.type';
 
