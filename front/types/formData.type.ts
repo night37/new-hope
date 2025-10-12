@@ -1,4 +1,3 @@
-import { StructureAutocomplete } from "./structureAutocomplete.type";
+import { StructureAutocomplete } from './structureAutocomplete.type';
 
-
-export  type FormData = Pick< StructureAutocomplete, 'formData'>
+export type FormData = Pick<StructureAutocomplete, 'formData'>;

@@ -29,9 +29,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="fr" className={`${caveat.variable} ${handlee.variable}`}>
-            <body className={`antialiased`}>
+            <body className={`flex min-h-screen flex-col antialiased`}>
                 <Header />
-                {children}
+                <div className="flex-1">{children}</div>
                 <Footer font={caveat} />
             </body>
         </html>

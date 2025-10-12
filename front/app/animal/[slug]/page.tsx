@@ -22,6 +22,9 @@ export default function AnimalDetails() {
                     id = Number(parsedData.state.id);
                     const result = await findById(id);
                     setAnimal(result.animal);
+                } else if (id) {
+                    const result = await findById(id);
+                    setAnimal(result.animal);
                 } else {
                     router.push('/');
                 }
@@ -34,13 +37,11 @@ export default function AnimalDetails() {
 
     return (
         <>
-            {animal ? (
+            {animal && (
                 <div>
                     <Header name={animal.name} />
                     <Content animal={animal} />
                 </div>
-            ) : (
-                <div>test</div>
             )}
         </>
     );

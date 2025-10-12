@@ -142,7 +142,7 @@ export default function AnimalForm() {
     };
     return (
         <form
-            className="relative flex min-h-[300px] w-full flex-wrap justify-center gap-10 lg:justify-start"
+            className="relative flex min-h-[360px] w-full flex-wrap justify-center gap-10 lg:justify-start"
             onSubmit={(e) => {
                 submitForm(e);
             }}
@@ -153,8 +153,10 @@ export default function AnimalForm() {
                 </div>
             )}
             {loading ? (
-                <div className="absolute top-10 flex w-full items-end justify-center">
-                    <span className="loading loading-spinner text-custom-secondary"></span>
+                <div className="min-h-[85px] w-full">
+                    <div className="absolute top-10 flex w-full items-end justify-center">
+                        <span className="loading loading-spinner text-custom-secondary"></span>
+                    </div>
                 </div>
             ) : (
                 error && (

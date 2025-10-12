@@ -4,18 +4,15 @@ import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
 
 export default function AssociationForm() {
-
     const [formData, setFormData] = useState({
-        'autocomplete-communes':  { code: '', name: '' },
+        'autocomplete-communes': { code: '', name: '' },
         'autocomplete-departements': { code: '', name: '' },
         'autocomplete-regions': { code: '', name: '' },
-        'distance': '',
+        distance: '',
     });
     const setSearchParameters = useStructureStore((state) => state.updateSearchParameters);
     const setSearchResults = useStructureStore((state) => state.setSearchResults);
     const searchParameters = useStructureStore((state) => state.searchParameters);
-
-
 
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,38 +24,38 @@ export default function AssociationForm() {
                 'autocomplete-communes': { code: '', name: '' },
                 'autocomplete-departements': { code: '', name: '' },
                 'autocomplete-regions': value,
-                'distance': ''
+                distance: '',
             });
         } else {
             setFormData({
                 'autocomplete-communes': { code: '', name: '' },
                 'autocomplete-departements': { code: '', name: '' },
                 'autocomplete-regions': { code: '', name: '' },
-                'distance': ''
+                distance: '',
             });
         }
     };
 
     const handleDepartementChange = (value: { code: string; name: string } | null) => {
         if (value) {
-            setFormData(prev => ({
+            setFormData((prev) => ({
                 ...prev,
                 'autocomplete-departements': value,
-                'autocomplete-communes': { code: '', name: '' }
+                'autocomplete-communes': { code: '', name: '' },
             }));
         } else {
-            setFormData(prev => ({
+            setFormData((prev) => ({
                 ...prev,
                 'autocomplete-departements': { code: '', name: '' },
-                'autocomplete-communes': { code: '', name: '' }
+                'autocomplete-communes': { code: '', name: '' },
             }));
         }
     };
 
     const handleCommuneChange = (value: { code: string; name: string } | null) => {
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            'autocomplete-communes': value ? value : { code: '', name: '' }
+            'autocomplete-communes': value ? value : { code: '', name: '' },
         }));
     };
 

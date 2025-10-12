@@ -8,17 +8,16 @@ export async function query(option: string, name?: string, departement?: string,
     try {
         let query = `${process.env.NEXT_PUBLIC_API_URL}/structures/autocomplete?option=${option}`;
 
-
         if (name) {
             query += `&name=${name}`;
         }
-        if(departement ){
+        if (departement) {
             query += `&departement=${departement}`;
         }
-        if(region ){
+        if (region) {
             query += `&region=${region}`;
         }
-        console.log("query",query);
+        console.log('query', query);
         const response = await fetch(query);
         return await response.json();
     } catch (err) {
