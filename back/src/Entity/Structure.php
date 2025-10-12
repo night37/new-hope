@@ -37,6 +37,26 @@ use ApiPlatform\OpenApi\Model\Operation;
                         ]
                     ],
                     [
+                        'name' => 'departement',
+                        'in' => 'query',
+                        'description' => 'departement pour affiner la recherche',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '75'
+                        ]
+                    ],
+                    [
+                        'name' => 'region',
+                        'in' => 'query',
+                        'description' => 'region pour affiner la recherche',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '11'
+                        ]
+                    ],
+                    [
                         'name' => 'name',
                         'in' => 'query',
                         'description' => 'Termes de recherche pour l\'autocomplete',

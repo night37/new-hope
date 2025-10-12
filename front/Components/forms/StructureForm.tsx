@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Autocomplete } from '@/Components/ui/autocomplete/Autocomplete';
+import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
 
 export default function AssociationForm() {
 
     const [formData, setFormData] = useState({
-        'autocomplete-communes': '',
-        'autocomplete-departements': '',
-        'autocomplete-regions': '',
+        'autocomplete-communes':  { code: '', name: '' },
+        'autocomplete-departements': { code: '', name: '' },
+        'autocomplete-regions': { code: '', name: '' },
         'distance': '',
     });
     const setSearchParameters = useStructureStore((state) => state.updateSearchParameters);
@@ -20,8 +20,48 @@ export default function AssociationForm() {
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSearchParameters(formData);
+    };
 
-        console.log(formData);
+    
+    const handleRegionChange = (value: { code: string; name: string } | null) => {
+        if (value) {
+            setFormData({
+                'autocomplete-communes': { code: '', name: '' },
+                'autocomplete-departements': { code: '', name: '' },
+                'autocomplete-regions': value,
+                'distance': ''
+            });
+        } else {
+            setFormData({
+                'autocomplete-communes': { code: '', name: '' },
+                'autocomplete-departements': { code: '', name: '' },
+                'autocomplete-regions': { code: '', name: '' },
+                'distance': ''
+            });
+        }
+    };
+
+    const handleDepartementChange = (value: { code: string; name: string } | null) => {
+        if (value) {
+            setFormData(prev => ({
+                ...prev,
+                'autocomplete-departements': value,
+                'autocomplete-communes': { code: '', name: '' }
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                'autocomplete-departements': { code: '', name: '' },
+                'autocomplete-communes': { code: '', name: '' }
+            }));
+        }
+    };
+
+    const handleCommuneChange = (value: { code: string; name: string } | null) => {
+        setFormData(prev => ({
+            ...prev,
+            'autocomplete-communes': value ? value : { code: '', name: '' }
+        }));
     };
 
     return (
@@ -35,28 +75,22 @@ export default function AssociationForm() {
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
                         option={'communes'}
-                        onChange={(value) =>
-                            setFormData((prev) => ({ ...prev, ['autocomplete-communes']: value }))
-                        }
+                        formData={formData}
+                        onChange={(value) => handleCommuneChange(value)}
                     />
                 </div>
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
                         option={'departements'}
-                        onChange={(value) =>
-                            setFormData((prev) => ({
-                                ...prev,
-                                ['autocomplete-departements']: value,
-                            }))
-                        }
+                        formData={formData}
+                        onChange={(value) => handleDepartementChange(value)}
                     />
                 </div>
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
                         option={'regions'}
-                        onChange={(value) =>
-                            setFormData((prev) => ({ ...prev, ['autocomplete-regions']: value }))
-                        }
+                        formData={formData}
+                        onChange={(value) => handleRegionChange(value)}
                     />
                 </div>
                 <div className="px-3 lg:w-1/4">
@@ -80,14 +114,6 @@ export default function AssociationForm() {
             </div>
             <div className="mx-auto flex flex-col justify-center gap-4 lg:w-2/4">
                 <Button label={'Trouver une association'} type={'submit'} onClick={() => {}} />
-                {/* <button
-                            className="rounded-3xl border-custom-primary px-[5px] font-caveat"
-                            onClick={() => {
-                                resetFilters();
-                            }}
-                        >
-                            Réinitialiser les filtres
-                        </button> */}
             </div>
         </form>
     );

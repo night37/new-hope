@@ -64,16 +64,19 @@ final class StructureController extends AbstractController
     {
         $option = $request->query->get('option');
         $name = $request->query->get('name');
+        $departement = $request->query->get('departement');
+        $region = $request->query->get('region');
 
 
         if (!$option) {
             return $this->json(['message' => 'Le paramètre "option" est requis'], Response::HTTP_BAD_REQUEST);
         }
         if (!in_array($option, ['communes', 'departements', 'regions'])) {
-            return $this->json(['message' => 'Le paramètre "option" est invalide'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['message' => 'Le paramètre "option" doit être l\'un des suivants : communes, departements, regions'], Response::HTTP_BAD_REQUEST);
         }
-        $results = $autocompleteService->autocomplete($option, $name);
 
+
+        $results = $autocompleteService->autocomplete($option, $name, $departement, $region);
         if (empty($results)) {
             return $this->json(['message' => 'Aucun résultat trouvé'], Response::HTTP_OK);
         }
