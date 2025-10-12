@@ -21,8 +21,6 @@ export default function AssociationForm() {
         e.preventDefault();
         setSearchParameters(formData);
     };
-
-    
     const handleRegionChange = (value: { code: string; name: string } | null) => {
         if (value) {
             setFormData({
