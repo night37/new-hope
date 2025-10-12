@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import './style.scss';
-import { select as SelectProps } from '@/types/select.type';
+import { Select as SelectProps } from '@/types/select.type';
 
 export default function Select({ label, options, onChange }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false);

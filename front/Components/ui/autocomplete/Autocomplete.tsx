@@ -1,7 +1,7 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 import { query } from '@/api/structure/location/query';
-import { Autocomplete as autocompleteProps } from '@/types/Autocomplete.type';
+import { Autocomplete as autocompleteProps } from '@/types/autocomplete.type';
 import { AutocompleteCitiesResponse } from '@/types/autocompleteCitiesResponse.type';
 import { AutocompleteDepartmentsResponse } from '@/types/autocompleteDepartmentsResponse.type';
 import { AutocompleteRegionsResponse } from '@/types/autocompleteRegionsResponse.type';

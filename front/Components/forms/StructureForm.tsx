@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Autocomplete } from '@/Components/ui/autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
@@ -9,7 +9,7 @@ export default function AssociationForm() {
         'autocomplete-communes': '',
         'autocomplete-departements': '',
         'autocomplete-regions': '',
-        distance: '',
+        'distance': '',
     });
     const setSearchParameters = useStructureStore((state) => state.updateSearchParameters);
     const setSearchResults = useStructureStore((state) => state.setSearchResults);
