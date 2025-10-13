@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
-import { query } from '@/api/structure/location/query';
+import { getFiltersResult } from '@/api/structure/filtersResult';
+import { smoothScroll } from '@/utils';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
@@ -14,10 +16,19 @@ export default function AssociationForm() {
     const setSearchParameters = useStructureStore((state) => state.updateSearchParameters);
     const setSearchResults = useStructureStore((state) => state.setSearchResults);
     const searchParameters = useStructureStore((state) => state.searchParameters);
+    const router = useRouter();
+    const currentPath = usePathname();
 
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSearchParameters(formData);
+        const results = await getFiltersResult(formData);
+        console.log(results);
+        setSearchResults(results);
+    //     smoothScroll(600, 80);
+    //             if (currentPath != '/structuresSearch') {
+    //                 router.push('/structuresSearch');
+    //     }
     };
 
     const resetFilters = () => {
