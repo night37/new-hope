@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
+import { query } from '@/api/structure/location/query';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
@@ -18,6 +19,23 @@ export default function AssociationForm() {
         e.preventDefault();
         setSearchParameters(formData);
     };
+
+    const resetFilters = () => {
+        setFormData({
+            'autocomplete-communes': { code: '', name: '' },
+            'autocomplete-departements': { code: '', name: '' },
+            'autocomplete-regions': { code: '', name: '' },
+            distance: '',
+        });
+        setSearchParameters({
+            'autocomplete-communes': { code: '', name: '' },
+            'autocomplete-departements': { code: '', name: '' },
+            'autocomplete-regions': { code: '', name: '' },
+            distance: '',
+        });
+        setSearchResults([]);
+    };
+
     const handleRegionChange = (value: { code: string; name: string } | null) => {
         if (value) {
             setFormData({
@@ -36,27 +54,57 @@ export default function AssociationForm() {
         }
     };
 
-    const handleDepartementChange = (value: { code: string; name: string } | null) => {
-        if (value) {
+    const handleDepartementChange = async (
+        value: { code: string; name: string; codeRegion?: string } | null
+    ) => {
+        if (value && value.codeRegion) {
+            const query = await fetch('https://geo.api.gouv.fr/regions?code=' + value.codeRegion);
+            const result = await query.json();
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-departements': value,
+                'autocomplete-departements': { code: value.code, name: value.name },
                 'autocomplete-communes': { code: '', name: '' },
+                'autocomplete-regions': {
+                    code: value.codeRegion ?? '',
+                    name: result[0]?.nom ?? '',
+                },
             }));
         } else {
             setFormData((prev) => ({
                 ...prev,
                 'autocomplete-departements': { code: '', name: '' },
                 'autocomplete-communes': { code: '', name: '' },
+                'autocomplete-regions': { code: '', name: '' },
             }));
         }
     };
 
-    const handleCommuneChange = (value: { code: string; name: string } | null) => {
-        setFormData((prev) => ({
-            ...prev,
-            'autocomplete-communes': value ? value : { code: '', name: '' },
-        }));
+    const handleCommuneChange = async (
+        value: { code: string; name: string; codeRegion?: string; codeDepartement?: string } | null
+    ) => {
+        if (value && value.codeRegion && value.codeDepartement) {
+            const regionQuery = await fetch(
+                'https://geo.api.gouv.fr/departements?code=' + value.codeDepartement
+            );
+            const regionResult = await regionQuery.json();
+            const departementQuery = await fetch(
+                'https://geo.api.gouv.fr/regions?code=' + value.codeRegion
+            );
+            const departementResult = await departementQuery.json();
+
+            setFormData((prev) => ({
+                ...prev,
+                'autocomplete-communes': value ? value : { code: '', name: '' },
+                'autocomplete-departements': {
+                    code: value.codeDepartement ?? '',
+                    name: regionResult[0].nom ?? '',
+                },
+                'autocomplete-regions': {
+                    code: value.codeRegion ?? '',
+                    name: departementResult[0].nom ?? '',
+                },
+            }));
+        }
     };
 
     return (
@@ -69,9 +117,9 @@ export default function AssociationForm() {
             <div className="flex w-full flex-wrap justify-center lg:justify-start">
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
-                        option={'communes'}
+                        option={'regions'}
                         formData={formData}
-                        onChange={(value) => handleCommuneChange(value)}
+                        onChange={(value) => handleRegionChange(value)}
                     />
                 </div>
                 <div className="px-3 lg:w-1/4">
@@ -83,9 +131,9 @@ export default function AssociationForm() {
                 </div>
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
-                        option={'regions'}
+                        option={'communes'}
                         formData={formData}
-                        onChange={(value) => handleRegionChange(value)}
+                        onChange={(value) => handleCommuneChange(value)}
                     />
                 </div>
                 <div className="px-3 lg:w-1/4">
@@ -102,13 +150,21 @@ export default function AssociationForm() {
                             onChange={(e) =>
                                 setFormData((prev) => ({ ...prev, distance: e.target.value }))
                             }
-                            className="z-1 input flex w-96 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white p-2 font-caveat text-large shadow-sm"
+                            className="z-1 input flex xl:w-96 w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white p-2 font-caveat text-large shadow-sm"
                         />
                     </div>
                 </div>
             </div>
             <div className="mx-auto flex flex-col justify-center gap-4 lg:w-2/4">
                 <Button label={'Trouver une association'} type={'submit'} onClick={() => {}} />
+                <button
+                    className="rounded-3xl border-custom-primary px-[5px] font-caveat"
+                    onClick={() => {
+                        resetFilters();
+                    }}
+                >
+                    Réinitialiser les filtres
+                </button>
             </div>
         </form>
     );

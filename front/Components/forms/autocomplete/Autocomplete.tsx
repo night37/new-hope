@@ -2,9 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import AsyncSelect from 'react-select/async';
 import { query } from '@/api/structure/location/query';
 import { StructureAutocomplete as autocompleteProps } from '@/types/structureAutocomplete.type';
-import { AutocompleteCitiesResponse } from '@/types/autocompleteCitiesResponse.type';
-import { AutocompleteDepartmentsResponse } from '@/types/autocompleteDepartmentsResponse.type';
-import { AutocompleteRegionsResponse } from '@/types/autocompleteRegionsResponse.type';
+import { AutocompleteApiResponse } from '@/types/autocompleteApiResponse.type';
 import { AutocompleteNotFoundResponse } from '@/types/autocompleteNotFoundResponse.type';
 import { OptionType } from '@/types/autocompleteOption.type';
 import { LocationValue } from '@/types/structureAutocomplete.type';
@@ -21,27 +19,20 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                     departementCode = formData['autocomplete-departements']?.code;
                 }
                 setTimeout(async () => {
-                    const response:
-                        | AutocompleteCitiesResponse[]
-                        | AutocompleteDepartmentsResponse[]
-                        | AutocompleteRegionsResponse[]
-                        | AutocompleteNotFoundResponse = await query(
-                        option,
-                        inputValue,
-                        departementCode,
-                        regionCode
-                    );
+                    const response: AutocompleteApiResponse[] | AutocompleteNotFoundResponse =
+                        await query(option, inputValue, departementCode, regionCode);
                     if (Array.isArray(response) && response.length > 0) {
-                        const data: OptionType[] = response.map(
-                            (
-                                el:
-                                    | AutocompleteCitiesResponse
-                                    | AutocompleteDepartmentsResponse
-                                    | AutocompleteRegionsResponse
-                            ) => {
-                                return { value: { code: el.code, name: el.name }, label: el.name };
-                            }
-                        );
+                        const data: OptionType[] = response.map((el: AutocompleteApiResponse) => {
+                            return {
+                                value: {
+                                    code: el.code,
+                                    name: el.name,
+                                    codeDepartement: el.codeDepartement,
+                                    codeRegion: el.codeRegion,
+                                },
+                                label: el.name,
+                            };
+                        });
                         resolve(data);
                     } else {
                         resolve([]);
@@ -86,7 +77,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                 name={`autocomplete-${option}`}
                 placeholder={`ex: ${option === 'communes' ? 'Paris' : option === 'departements' ? 'Seine-et-Marne' : 'Île-de-France'}`}
                 noOptionsMessage={() => 'Aucun résultat'}
-                className="z-1 select flex w-96 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm"
+                className="z-1 select flex xl:w-96 w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm"
                 cacheOptions={false}
                 loadOptions={loadOptions}
                 defaultOptions

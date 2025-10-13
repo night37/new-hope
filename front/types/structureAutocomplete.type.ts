@@ -1,6 +1,8 @@
 export type LocationValue = {
     code: string;
     name: string;
+    codeDepartement?: string;
+    codeRegion?: string;
 };
 
 export type StructureAutocomplete = {

@@ -17,7 +17,6 @@ export async function query(option: string, name?: string, departement?: string,
         if (region) {
             query += `&region=${region}`;
         }
-        console.log('query', query);
         const response = await fetch(query);
         return await response.json();
     } catch (err) {
