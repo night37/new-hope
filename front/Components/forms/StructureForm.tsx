@@ -5,6 +5,8 @@ import { useStructureStore } from '@/store/structureStore';
 import { getFiltersResult } from '@/api/structure/filtersResult';
 import { smoothScroll } from '@/utils';
 import { useRouter, usePathname } from 'next/navigation';
+import { getRegionByCode } from '@/api/structure/location/getRegionByCode';
+import { getDepartementByCode } from '@/api/structure/location/getDepartmentByCode';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
@@ -69,8 +71,8 @@ export default function AssociationForm() {
         value: { code: string; name: string; codeRegion?: string } | null
     ) => {
         if (value && value.codeRegion) {
-            const query = await fetch('https://geo.api.gouv.fr/regions?code=' + value.codeRegion);
-            const result = await query.json();
+            const result = await getRegionByCode(value.codeRegion);
+          
             setFormData((prev) => ({
                 ...prev,
                 'autocomplete-departements': { code: value.code, name: value.name },
@@ -94,14 +96,8 @@ export default function AssociationForm() {
         value: { code: string; name: string; codeRegion?: string; codeDepartement?: string } | null
     ) => {
         if (value && value.codeRegion && value.codeDepartement) {
-            const regionQuery = await fetch(
-                'https://geo.api.gouv.fr/departements?code=' + value.codeDepartement
-            );
-            const regionResult = await regionQuery.json();
-            const departementQuery = await fetch(
-                'https://geo.api.gouv.fr/regions?code=' + value.codeRegion
-            );
-            const departementResult = await departementQuery.json();
+            const regionResult = await getDepartementByCode(value.codeDepartement);
+            const departementResult = await getRegionByCode( value.codeRegion);
 
             setFormData((prev) => ({
                 ...prev,

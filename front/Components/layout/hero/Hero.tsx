@@ -29,7 +29,7 @@ export function Hero({ filterOption }: { filterOption?: string }) {
     };
 
     return (
-        <div className="bg-fit flex min-h-[450px] w-full justify-center bg-[url(/img/Hero.png)] bg-left bg-no-repeat px-3 py-[40px] lg:bg-cover lg:px-0 lg:py-[98px]">
+        <div className="bg-fit flex min-h-[450px] w-full justify-center bg-[url(/img/hero.webp)] bg-left bg-no-repeat px-3 py-[40px] lg:bg-cover lg:px-0 lg:py-[98px]">
             <div className="container flex min-h-[550px] flex-col justify-center gap-10 rounded-xl bg-white/50 px-[50px] py-10 lg:py-0">
                 <div className="radio-container flex flex-col flex-wrap justify-center gap-5 lg:flex-row lg:items-center">
                     {radioBtns.map((radio, key) => {
