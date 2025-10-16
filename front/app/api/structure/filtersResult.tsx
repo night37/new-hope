@@ -5,5 +5,5 @@ export async function getFiltersResult(filters: {
     distance: string;
 }) {
     console.log(filters);
-    let query = 'https://geo.api.gouv.fr/communes?';
+    // let query = 'https://geo.api.gouv.fr/communes?';
 }
