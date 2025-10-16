@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
-<<<<<<< HEAD
-import { getFiltersResult } from '@/api/structure/filtersResult';
+import { getFiltersResult } from '@/app/api/structure/filtersResult';
 import { smoothScroll } from '@/utils';
 import { useRouter, usePathname } from 'next/navigation';
-import { getRegionByCode } from '@/api/structure/location/getRegionByCode';
-import { getDepartementByCode } from '@/api/structure/location/getDepartmentByCode';
-=======
-import { query } from '@/app/api/structure/location/query';
->>>>>>> frontend
+import { getRegionByCode } from '@/app/api/structure/location/getRegionByCode';
+import { getDepartementByCode } from '@/app/api/structure/location/getDepartmentByCode';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
