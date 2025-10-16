@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
-import { query } from '@/api/structure/location/query';
+import { query } from '@/app/api/structure/location/query';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
