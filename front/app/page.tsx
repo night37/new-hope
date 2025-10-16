@@ -20,7 +20,7 @@ export default function Home() {
                                 },
                                 {
                                     picture: {
-                                        src: '/img/chien-triste.png',
+                                        src: '/img/chien-triste.webp',
                                         alt: 'chien avec un regard triste',
                                     },
                                 },
@@ -30,7 +30,7 @@ export default function Home() {
                             columns={[
                                 {
                                     picture: {
-                                        src: '/img/main-patte.png',
+                                        src: '/img/main-patte.webp',
                                         alt: 'une main tiens une patte de chien',
                                     },
                                 },
