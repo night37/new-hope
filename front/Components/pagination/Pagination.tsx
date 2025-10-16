@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
-import { filtersResults } from '@/api/animals/filtersResult';
+import { filtersResults } from '@/app/api/animals/filtersResult';
 import { smoothScroll } from '@/utils';
 import { Pagination as PaginationProps } from '@/types/pagination.type';
 

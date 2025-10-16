@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAnimalStore } from '@/store/animalStore';
-import { findById } from '@/api/animals/findAnimalById';
+import { findById } from '@/app/api/animals/findAnimalById';
 import Header from './Header';
 import Content from './Content/Content';
 import { Animal as AnimalDetailsProps } from '@/types/animal.type';
