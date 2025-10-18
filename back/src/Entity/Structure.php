@@ -68,6 +68,55 @@ use ApiPlatform\OpenApi\Model\Operation;
                     ]
                 ]
             ),
+        ),
+        new Get(
+            name: 'api_structure_filters_results',
+            uriTemplate: '/backoffice/structure/filtersResults',
+            controller: 'App\Controller\StructureController::getFiltersResults',
+            description: 'Get the list of structures filters results',
+            openapi: new Operation(
+                summary: 'Liste des résultats de filtres de structures',
+                description: 'Récupère la liste complète des résultats de filtres de structures',
+                    parameters: [
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'region',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'Ile-de-France/Occitanie'
+                        ]
+                    ],[
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'departements',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'Seine et Marne/Haute Garonne'
+                        ]
+                    ],[
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'region',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'Seine et Marne/Occitanie'
+                        ]
+                    ],[
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'communes',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'Paris/Toulouse'
+                        ]
+                    ]
+                    ]
+            )
         )
     ]
 )]

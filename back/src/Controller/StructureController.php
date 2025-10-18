@@ -83,6 +83,11 @@ final class StructureController extends AbstractController
         return $this->json($results, Response::HTTP_OK);
     }
 
+    #[Route('api/filtersResults', name: "structure_filters_results", methods:['GET'])]
+    public function  getFiltersResults(request $request) {
+      
+        dd($request);
+    }
 
 
 }
