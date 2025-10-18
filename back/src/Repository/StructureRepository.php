@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Structure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @extends ServiceEntityRepository<Structure>
  */
@@ -40,4 +40,17 @@ class StructureRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+        public function findByFilters($params): array
+        {
+            $query = $this->createQueryBuilder('s')
+                ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude','s.structureType')
+                ->where('s.isActive = :active')
+                ->setParameter('active', 1)
+                ->getQuery()
+                ->getResult();
+            
+
+            dd($query);
+        }
 }

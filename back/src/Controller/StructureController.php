@@ -14,6 +14,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\AutocompleteService;
+use App\Repository\StructureRepository;
+
+use function PHPUnit\Framework\isEmpty;
 
 final class StructureController extends AbstractController
 {
@@ -84,8 +87,18 @@ final class StructureController extends AbstractController
     }
 
     #[Route('api/filtersResults', name: "structure_filters_results", methods:['GET'])]
-    public function  getFiltersResults(request $request) {
-      
+    public function  getFiltersResults(request $request, StructureRepository $structureRepository) {
+        $data = $request->query->all();
+        $response = $structureRepository->findByFilters($data);
+
+        if(isEmpty($response)) {
+        return $this->json([
+            'message' => 'display filters structures result',
+            'timestamp' => time(),
+            'structure' => $response,
+        ], 200, [], ['groups' => 'structure:read']);
+        }
+
         dd($request);
     }
 

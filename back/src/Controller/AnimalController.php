@@ -91,8 +91,6 @@ final class AnimalController extends AbstractController
     public function getFiltersList(): Response
     {
         $animalFilterDTO = new AnimalFilterDTO();
-
-        
         return $this->json($animalFilterDTO->enums);
 
     }
@@ -192,6 +190,4 @@ final class AnimalController extends AbstractController
         ], 200, [], ['groups' => 'animal:read']);
 
     }
-
-    
 }

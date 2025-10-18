@@ -184,7 +184,7 @@ class Structure
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(enumType: StructureType::class)]
-    private ?StructureType $StructureType = null;
+    private ?StructureType $structureType = null;
 
 
     #[ORM\Column]
@@ -392,15 +392,15 @@ class Structure
         return $this;
     }
 
-    public function getStructureType(): ?StructureType
+    public function getStructureType(): ?structureType
     {
-        return $this->StructureType;
+        return $this->structureType;
     }
 
-    public function setStructureType(StructureType $StructureType): static
+    public function setStructureType(StructureType $structureType): static
     {
     
-        $this->StructureType = $StructureType;
+        $this->structureType = $structureType;
       
 
         return $this;
