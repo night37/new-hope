@@ -5,17 +5,17 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AutocompleteService
 {
-    private $url;
+    private $geoApiUrl;
     private $client;
 
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
-        $this->url = $_ENV['AUTOCOMPLETE_API_BASE_URL'];
+        $this->geoApiUrl = $_ENV['AUTOCOMPLETE_API_BASE_URL'];
     }
 
     public function autocomplete (string $option, ?string $name, ?string $departement, ?string $region) : array {
-        $query = $this->url . "/$option?";
+        $query = $this->geoApiUrl . "/$option?";
         if ($name ) {
             $query .= "nom=$name";
         }
@@ -29,7 +29,6 @@ class AutocompleteService
             $query .= "&codeDepartement=$departement";
             // $query .= "&code=$departement";
         }
-        
         $response = $this->client->request('GET', $query);
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Erreur lors de la requête d\'autocomplétion');

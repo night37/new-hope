@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocationService
 {
-    private $url;
+    private $coordinateUrl;
+    private $geoApiUrl;
     private $client;
     private $requestStack;
     private $logger;
@@ -19,7 +20,8 @@ class LocationService
         ?LoggerInterface $logger = null
     ) {
         $this->client = $client;
-        $this->url = $_ENV['GEOLOCATION_URL'];
+        $this->coordinateUrl = $_ENV['GEOLOCATION_URL'];
+        $this->geoApiUrl = $_ENV['AUTOCOMPLETE_API_BASE_URL'];
         $this->requestStack = $requestStack;
         $this->logger = $logger;
     }
@@ -30,7 +32,7 @@ class LocationService
         $city = $entityInstance->getCity();
 
         try {
-            $query = $this->url . "/search/?q=" . $street . "&city=" . $city;
+            $query = $this->coordinateUrl . "/search/?q=" . $street . "&city=" . $city;
             $response = $this->client->request('GET', $query);
             $data = $response->toArray();
             if (!empty($data['features'])) {
@@ -58,4 +60,20 @@ class LocationService
             $this->logger->error($message);
         }
     }
+
+    public function getDepartement(string $param) {
+        $query = $this->geoApiUrl.'/regions/'.$param.'/departements';
+        $response = $this->client->request('GET', $query);
+        if ($response->getStatusCode() !== 200) {
+            throw new \Exception('Erreur lors de la requête de récuperation des départements');
+        };
+        dd($response->toArray());
+
+
+    }
+
+    public function getCity(string $param) {
+        
+    }
+
 }

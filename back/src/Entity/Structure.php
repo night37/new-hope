@@ -79,40 +79,31 @@ use ApiPlatform\OpenApi\Model\Operation;
                 description: 'Récupère la liste complète des résultats de filtres de structures',
                     parameters: [
                     [
-                        'name' => 'option',
+                        'name' => 'code region',
                         'in' => 'query',
-                        'description' => 'region',
+                        'description' => 'code de la region',
                         'required' => false,
                         'schema' => [
-                            'type' => 'string',
-                            'example' => 'Ile-de-France/Occitanie'
+                            'type' => 'integer',
+                            'example' => '11'
                         ]
                     ],[
-                        'name' => 'option',
+                        'name' => 'code departement',
                         'in' => 'query',
-                        'description' => 'departements',
+                        'description' => 'code du departement',
                         'required' => false,
                         'schema' => [
-                            'type' => 'string',
-                            'example' => 'Seine et Marne/Haute Garonne'
+                            'type' => 'integer',
+                            'example' => '75'
                         ]
                     ],[
-                        'name' => 'option',
+                        'name' => 'code commune',
                         'in' => 'query',
-                        'description' => 'region',
+                        'description' => 'commune',
                         'required' => false,
                         'schema' => [
-                            'type' => 'string',
-                            'example' => 'Seine et Marne/Occitanie'
-                        ]
-                    ],[
-                        'name' => 'option',
-                        'in' => 'query',
-                        'description' => 'communes',
-                        'required' => false,
-                        'schema' => [
-                            'type' => 'string',
-                            'example' => 'Paris/Toulouse'
+                            'type' => 'integer',
+                            'example' => '75056'
                         ]
                     ]
                     ]

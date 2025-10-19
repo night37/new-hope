@@ -90,6 +90,7 @@ final class StructureController extends AbstractController
     public function  getFiltersResults(request $request, StructureRepository $structureRepository) {
         $data = $request->query->all();
         $response = $structureRepository->findByFilters($data);
+        dd($response);
 
         if(isEmpty($response)) {
         return $this->json([
