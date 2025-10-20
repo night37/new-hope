@@ -1,0 +1,913 @@
+{
+  "departements": [
+    {
+      "nom": "Ain",
+      "code": "01",
+      "region": "84",
+      "centre": {
+        "latitude": 46.0667,
+        "longitude": 5.3500
+      }
+    },
+    {
+      "nom": "Aisne",
+      "code": "02",
+      "region": "32",
+      "centre": {
+        "latitude": 49.5667,
+        "longitude": 3.6167
+      }
+    },
+    {
+      "nom": "Allier",
+      "code": "03",
+      "region": "84",
+      "centre": {
+        "latitude": 46.3667,
+        "longitude": 3.3333
+      }
+    },
+    {
+      "nom": "Alpes-de-Haute-Provence",
+      "code": "04",
+      "region": "93",
+      "centre": {
+        "latitude": 44.0833,
+        "longitude": 6.2333
+      }
+    },
+    {
+      "nom": "Hautes-Alpes",
+      "code": "05",
+      "region": "93",
+      "centre": {
+        "latitude": 44.6667,
+        "longitude": 6.2167
+      }
+    },
+    {
+      "nom": "Alpes-Maritimes",
+      "code": "06",
+      "region": "93",
+      "centre": {
+        "latitude": 43.9333,
+        "longitude": 7.1833
+      }
+    },
+    {
+      "nom": "Ardèche",
+      "code": "07",
+      "region": "84",
+      "centre": {
+        "latitude": 44.7333,
+        "longitude": 4.3667
+      }
+    },
+    {
+      "nom": "Ardennes",
+      "code": "08",
+      "region": "44",
+      "centre": {
+        "latitude": 49.7667,
+        "longitude": 4.7167
+      }
+    },
+    {
+      "nom": "Ariège",
+      "code": "09",
+      "region": "76",
+      "centre": {
+        "latitude": 42.9333,
+        "longitude": 1.5833
+      }
+    },
+    {
+      "nom": "Aube",
+      "code": "10",
+      "region": "44",
+      "centre": {
+        "latitude": 48.3000,
+        "longitude": 4.0833
+      }
+    },
+    {
+      "nom": "Aude",
+      "code": "11",
+      "region": "76",
+      "centre": {
+        "latitude": 43.0500,
+        "longitude": 2.3500
+      }
+    },
+    {
+      "nom": "Aveyron",
+      "code": "12",
+      "region": "76",
+      "centre": {
+        "latitude": 44.3500,
+        "longitude": 2.5833
+      }
+    },
+    {
+      "nom": "Bouches-du-Rhône",
+      "code": "13",
+      "region": "93",
+      "centre": {
+        "latitude": 43.5333,
+        "longitude": 5.0500
+      }
+    },
+    {
+      "nom": "Calvados",
+      "code": "14",
+      "region": "28",
+      "centre": {
+        "latitude": 49.0833,
+        "longitude": -0.3667
+      }
+    },
+    {
+      "nom": "Cantal",
+      "code": "15",
+      "region": "84",
+      "centre": {
+        "latitude": 45.0500,
+        "longitude": 2.7000
+      }
+    },
+    {
+      "nom": "Charente",
+      "code": "16",
+      "region": "75",
+      "centre": {
+        "latitude": 45.6500,
+        "longitude": 0.1667
+      }
+    },
+    {
+      "nom": "Charente-Maritime",
+      "code": "17",
+      "region": "75",
+      "centre": {
+        "latitude": 45.7500,
+        "longitude": -0.6333
+      }
+    },
+    {
+      "nom": "Cher",
+      "code": "18",
+      "region": "24",
+      "centre": {
+        "latitude": 47.0833,
+        "longitude": 2.4000
+      }
+    },
+    {
+      "nom": "Corrèze",
+      "code": "19",
+      "region": "75",
+      "centre": {
+        "latitude": 45.3500,
+        "longitude": 1.8833
+      }
+    },
+    {
+      "nom": "Corse-du-Sud",
+      "code": "2A",
+      "region": "94",
+      "centre": {
+        "latitude": 41.8667,
+        "longitude": 8.9667
+      }
+    },
+    {
+      "nom": "Haute-Corse",
+      "code": "2B",
+      "region": "94",
+      "centre": {
+        "latitude": 42.4167,
+        "longitude": 9.1500
+      }
+    },
+    {
+      "nom": "Côte-d'Or",
+      "code": "21",
+      "region": "27",
+      "centre": {
+        "latitude": 47.3833,
+        "longitude": 4.8667
+      }
+    },
+    {
+      "nom": "Côtes-d'Armor",
+      "code": "22",
+      "region": "53",
+      "centre": {
+        "latitude": 48.4500,
+        "longitude": -2.9333
+      }
+    },
+    {
+      "nom": "Creuse",
+      "code": "23",
+      "region": "75",
+      "centre": {
+        "latitude": 46.1000,
+        "longitude": 2.0500
+      }
+    },
+    {
+      "nom": "Dordogne",
+      "code": "24",
+      "region": "75",
+      "centre": {
+        "latitude": 45.1500,
+        "longitude": 0.7167
+      }
+    },
+    {
+      "nom": "Doubs",
+      "code": "25",
+      "region": "27",
+      "centre": {
+        "latitude": 47.1333,
+        "longitude": 6.3667
+      }
+    },
+    {
+      "nom": "Drôme",
+      "code": "26",
+      "region": "84",
+      "centre": {
+        "latitude": 44.7333,
+        "longitude": 5.1667
+      }
+    },
+    {
+      "nom": "Eure",
+      "code": "27",
+      "region": "28",
+      "centre": {
+        "latitude": 49.1000,
+        "longitude": 1.1500
+      }
+    },
+    {
+      "nom": "Eure-et-Loir",
+      "code": "28",
+      "region": "24",
+      "centre": {
+        "latitude": 48.4500,
+        "longitude": 1.4833
+      }
+    },
+    {
+      "nom": "Finistère",
+      "code": "29",
+      "region": "53",
+      "centre": {
+        "latitude": 48.2667,
+        "longitude": -4.0000
+      }
+    },
+    {
+      "nom": "Gard",
+      "code": "30",
+      "region": "76",
+      "centre": {
+        "latitude": 44.0000,
+        "longitude": 4.2000
+      }
+    },
+    {
+      "nom": "Haute-Garonne",
+      "code": "31",
+      "region": "76",
+      "centre": {
+        "latitude": 43.4167,
+        "longitude": 1.2667
+      }
+    },
+    {
+      "nom": "Gers",
+      "code": "32",
+      "region": "76",
+      "centre": {
+        "latitude": 43.6500,
+        "longitude": 0.5833
+      }
+    },
+    {
+      "nom": "Gironde",
+      "code": "33",
+      "region": "75",
+      "centre": {
+        "latitude": 44.8500,
+        "longitude": -0.5833
+      }
+    },
+    {
+      "nom": "Hérault",
+      "code": "34",
+      "region": "76",
+      "centre": {
+        "latitude": 43.6000,
+        "longitude": 3.2667
+      }
+    },
+    {
+      "nom": "Ille-et-Vilaine",
+      "code": "35",
+      "region": "53",
+      "centre": {
+        "latitude": 48.1667,
+        "longitude": -1.6667
+      }
+    },
+    {
+      "nom": "Indre",
+      "code": "36",
+      "region": "24",
+      "centre": {
+        "latitude": 46.8000,
+        "longitude": 1.5833
+      }
+    },
+    {
+      "nom": "Indre-et-Loire",
+      "code": "37",
+      "region": "24",
+      "centre": {
+        "latitude": 47.2500,
+        "longitude": 0.7000
+      }
+    },
+    {
+      "nom": "Isère",
+      "code": "38",
+      "region": "84",
+      "centre": {
+        "latitude": 45.2667,
+        "longitude": 5.6167
+      }
+    },
+    {
+      "nom": "Jura",
+      "code": "39",
+      "region": "27",
+      "centre": {
+        "latitude": 46.7500,
+        "longitude": 5.7500
+      }
+    },
+    {
+      "nom": "Landes",
+      "code": "40",
+      "region": "75",
+      "centre": {
+        "latitude": 43.9333,
+        "longitude": -0.7667
+      }
+    },
+    {
+      "nom": "Loir-et-Cher",
+      "code": "41",
+      "region": "24",
+      "centre": {
+        "latitude": 47.6000,
+        "longitude": 1.3333
+      }
+    },
+    {
+      "nom": "Loire",
+      "code": "42",
+      "region": "84",
+      "centre": {
+        "latitude": 45.7500,
+        "longitude": 4.2833
+      }
+    },
+    {
+      "nom": "Haute-Loire",
+      "code": "43",
+      "region": "84",
+      "centre": {
+        "latitude": 45.0500,
+        "longitude": 3.8833
+      }
+    },
+    {
+      "nom": "Loire-Atlantique",
+      "code": "44",
+      "region": "52",
+      "centre": {
+        "latitude": 47.3500,
+        "longitude": -1.6167
+      }
+    },
+    {
+      "nom": "Loiret",
+      "code": "45",
+      "region": "24",
+      "centre": {
+        "latitude": 47.9167,
+        "longitude": 2.3333
+      }
+    },
+    {
+      "nom": "Lot",
+      "code": "46",
+      "region": "76",
+      "centre": {
+        "latitude": 44.6167,
+        "longitude": 1.6667
+      }
+    },
+    {
+      "nom": "Lot-et-Garonne",
+      "code": "47",
+      "region": "75",
+      "centre": {
+        "latitude": 44.3500,
+        "longitude": 0.6167
+      }
+    },
+    {
+      "nom": "Lozère",
+      "code": "48",
+      "region": "76",
+      "centre": {
+        "latitude": 44.5167,
+        "longitude": 3.5000
+      }
+    },
+    {
+      "nom": "Maine-et-Loire",
+      "code": "49",
+      "region": "52",
+      "centre": {
+        "latitude": 47.4667,
+        "longitude": -0.5500
+      }
+    },
+    {
+      "nom": "Manche",
+      "code": "50",
+      "region": "28",
+      "centre": {
+        "latitude": 49.1000,
+        "longitude": -1.3000
+      }
+    },
+    {
+      "nom": "Marne",
+      "code": "51",
+      "region": "44",
+      "centre": {
+        "latitude": 49.0000,
+        "longitude": 4.3667
+      }
+    },
+    {
+      "nom": "Haute-Marne",
+      "code": "52",
+      "region": "44",
+      "centre": {
+        "latitude": 48.1333,
+        "longitude": 5.1500
+      }
+    },
+    {
+      "nom": "Mayenne",
+      "code": "53",
+      "region": "52",
+      "centre": {
+        "latitude": 48.1333,
+        "longitude": -0.7333
+      }
+    },
+    {
+      "nom": "Meurthe-et-Moselle",
+      "code": "54",
+      "region": "44",
+      "centre": {
+        "latitude": 48.8000,
+        "longitude": 6.1833
+      }
+    },
+    {
+      "nom": "Meuse",
+      "code": "55",
+      "region": "44",
+      "centre": {
+        "latitude": 49.0000,
+        "longitude": 5.4167
+      }
+    },
+    {
+      "nom": "Morbihan",
+      "code": "56",
+      "region": "53",
+      "centre": {
+        "latitude": 47.8333,
+        "longitude": -2.7500
+      }
+    },
+    {
+      "nom": "Moselle",
+      "code": "57",
+      "region": "44",
+      "centre": {
+        "latitude": 49.1167,
+        "longitude": 6.6833
+      }
+    },
+    {
+      "nom": "Nièvre",
+      "code": "58",
+      "region": "27",
+      "centre": {
+        "latitude": 47.1167,
+        "longitude": 3.5333
+      }
+    },
+    {
+      "nom": "Nord",
+      "code": "59",
+      "region": "32",
+      "centre": {
+        "latitude": 50.5333,
+        "longitude": 3.3833
+      }
+    },
+    {
+      "nom": "Oise",
+      "code": "60",
+      "region": "32",
+      "centre": {
+        "latitude": 49.4167,
+        "longitude": 2.4500
+      }
+    },
+    {
+      "nom": "Orne",
+      "code": "61",
+      "region": "28",
+      "centre": {
+        "latitude": 48.6167,
+        "longitude": 0.1500
+      }
+    },
+    {
+      "nom": "Pas-de-Calais",
+      "code": "62",
+      "region": "32",
+      "centre": {
+        "latitude": 50.5167,
+        "longitude": 2.4667
+      }
+    },
+    {
+      "nom": "Puy-de-Dôme",
+      "code": "63",
+      "region": "84",
+      "centre": {
+        "latitude": 45.7667,
+        "longitude": 3.0833
+      }
+    },
+    {
+      "nom": "Pyrénées-Atlantiques",
+      "code": "64",
+      "region": "75",
+      "centre": {
+        "latitude": 43.3000,
+        "longitude": -0.8833
+      }
+    },
+    {
+      "nom": "Hautes-Pyrénées",
+      "code": "65",
+      "region": "76",
+      "centre": {
+        "latitude": 43.0667,
+        "longitude": 0.1167
+      }
+    },
+    {
+      "nom": "Pyrénées-Orientales",
+      "code": "66",
+      "region": "76",
+      "centre": {
+        "latitude": 42.6167,
+        "longitude": 2.5333
+      }
+    },
+    {
+      "nom": "Bas-Rhin",
+      "code": "67",
+      "region": "44",
+      "centre": {
+        "latitude": 48.6500,
+        "longitude": 7.6167
+      }
+    },
+    {
+      "nom": "Haut-Rhin",
+      "code": "68",
+      "region": "44",
+      "centre": {
+        "latitude": 47.9000,
+        "longitude": 7.2500
+      }
+    },
+    {
+      "nom": "Rhône",
+      "code": "69",
+      "region": "84",
+      "centre": {
+        "latitude": 45.8167,
+        "longitude": 4.5833
+      }
+    },
+    {
+      "nom": "Haute-Saône",
+      "code": "70",
+      "region": "27",
+      "centre": {
+        "latitude": 47.6333,
+        "longitude": 6.1333
+      }
+    },
+    {
+      "nom": "Saône-et-Loire",
+      "code": "71",
+      "region": "27",
+      "centre": {
+        "latitude": 46.6500,
+        "longitude": 4.5500
+      }
+    },
+    {
+      "nom": "Sarthe",
+      "code": "72",
+      "region": "52",
+      "centre": {
+        "latitude": 48.0000,
+        "longitude": 0.2000
+      }
+    },
+    {
+      "nom": "Savoie",
+      "code": "73",
+      "region": "84",
+      "centre": {
+        "latitude": 45.5333,
+        "longitude": 6.3667
+      }
+    },
+    {
+      "nom": "Haute-Savoie",
+      "code": "74",
+      "region": "84",
+      "centre": {
+        "latitude": 46.0667,
+        "longitude": 6.4000
+      }
+    },
+    {
+      "nom": "Paris",
+      "code": "75",
+      "region": "11",
+      "centre": {
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      }
+    },
+    {
+      "nom": "Seine-Maritime",
+      "code": "76",
+      "region": "28",
+      "centre": {
+        "latitude": 49.6500,
+        "longitude": 0.9500
+      }
+    },
+    {
+      "nom": "Seine-et-Marne",
+      "code": "77",
+      "region": "11",
+      "centre": {
+        "latitude": 48.6167,
+        "longitude": 2.9667
+      }
+    },
+    {
+      "nom": "Yvelines",
+      "code": "78",
+      "region": "11",
+      "centre": {
+        "latitude": 48.8000,
+        "longitude": 1.9333
+      }
+    },
+    {
+      "nom": "Deux-Sèvres",
+      "code": "79",
+      "region": "75",
+      "centre": {
+        "latitude": 46.5667,
+        "longitude": -0.4167
+      }
+    },
+    {
+      "nom": "Somme",
+      "code": "80",
+      "region": "32",
+      "centre": {
+        "latitude": 49.9167,
+        "longitude": 2.3000
+      }
+    },
+    {
+      "nom": "Tarn",
+      "code": "81",
+      "region": "76",
+      "centre": {
+        "latitude": 43.8333,
+        "longitude": 2.1500
+      }
+    },
+    {
+      "nom": "Tarn-et-Garonne",
+      "code": "82",
+      "region": "76",
+      "centre": {
+        "latitude": 44.0500,
+        "longitude": 1.3500
+      }
+    },
+    {
+      "nom": "Var",
+      "code": "83",
+      "region": "93",
+      "centre": {
+        "latitude": 43.4667,
+        "longitude": 6.2333
+      }
+    },
+    {
+      "nom": "Vaucluse",
+      "code": "84",
+      "region": "93",
+      "centre": {
+        "latitude": 44.0500,
+        "longitude": 5.1333
+      }
+    },
+    {
+      "nom": "Vendée",
+      "code": "85",
+      "region": "52",
+      "centre": {
+        "latitude": 46.6667,
+        "longitude": -1.4333
+      }
+    },
+    {
+      "nom": "Vienne",
+      "code": "86",
+      "region": "75",
+      "centre": {
+        "latitude": 46.5833,
+        "longitude": 0.3333
+      }
+    },
+    {
+      "nom": "Haute-Vienne",
+      "code": "87",
+      "region": "75",
+      "centre": {
+        "latitude": 45.8500,
+        "longitude": 1.2667
+      }
+    },
+    {
+      "nom": "Vosges",
+      "code": "88",
+      "region": "44",
+      "centre": {
+        "latitude": 48.1667,
+        "longitude": 6.4500
+      }
+    },
+    {
+      "nom": "Yonne",
+      "code": "89",
+      "region": "27",
+      "centre": {
+        "latitude": 47.8500,
+        "longitude": 3.5667
+      }
+    },
+    {
+      "nom": "Territoire de Belfort",
+      "code": "90",
+      "region": "27",
+      "centre": {
+        "latitude": 47.6333,
+        "longitude": 6.9167
+      }
+    },
+    {
+      "nom": "Essonne",
+      "code": "91",
+      "region": "11",
+      "centre": {
+        "latitude": 48.5333,
+        "longitude": 2.2833
+      }
+    },
+    {
+      "nom": "Hauts-de-Seine",
+      "code": "92",
+      "region": "11",
+      "centre": {
+        "latitude": 48.8333,
+        "longitude": 2.2500
+      }
+    },
+    {
+      "nom": "Seine-Saint-Denis",
+      "code": "93",
+      "region": "11",
+      "centre": {
+        "latitude": 48.9167,
+        "longitude": 2.4833
+      }
+    },
+    {
+      "nom": "Val-de-Marne",
+      "code": "94",
+      "region": "11",
+      "centre": {
+        "latitude": 48.7833,
+        "longitude": 2.4500
+      }
+    },
+    {
+      "nom": "Val-d'Oise",
+      "code": "95",
+      "region": "11",
+      "centre": {
+        "latitude": 49.0667,
+        "longitude": 2.1167
+      }
+    },
+    {
+      "nom": "Guadeloupe",
+      "code": "971",
+      "region": "01",
+      "centre": {
+        "latitude": 16.2650,
+        "longitude": -61.5510
+      }
+    },
+    {
+      "nom": "Martinique",
+      "code": "972",
+      "region": "02",
+      "centre": {
+        "latitude": 14.6415,
+        "longitude": -61.0242
+      }
+    },
+    {
+      "nom": "Guyane",
+      "code": "973",
+      "region": "03",
+      "centre": {
+        "latitude": 3.9339,
+        "longitude": -53.1258
+      }
+    },
+    {
+      "nom": "La Réunion",
+      "code": "974",
+      "region": "04",
+      "centre": {
+        "latitude": -21.1151,
+        "longitude": 55.5364
+      }
+    },
+    {
+      "nom": "Mayotte",
+      "code": "976",
+      "region": "06",
+      "centre": {
+        "latitude": -12.8275,
+        "longitude": 45.1662
+      }
+    }
+  ]
+}
