@@ -59,12 +59,25 @@ class AutocompleteService
         return $data;
     }
 
+    public function getCenterPosition (string $type, string $name): array {
+        $jsonToArray = $this->getJson($type);
+        $data = $this->findInArray($jsonToArray[$type], $name);
+        return $data["centre"];
+    }
 
+    public function getJson(string $type): array {
+        $jsonPath =  $type === 'departements' ? $this->kernel->getProjectDir() .'/data/departements.json' : $this->kernel->getProjectDir().'/data/regions.json';
+        $jsonContent = file_get_contents($jsonPath);
+        return json_decode($jsonContent, true);
+    }
 
-    public function getCenterPosition (string $type, string $name): object {
-        $path = $this->kernel->getProjectDir() . $type == 'regions' ? '../assets/data/regions.json' : '../assets/data/departements.json';
-        
-        dd($type, $name);
-
-    } 
+    public function findInArray(array $data, string $name): array{
+        $findData = [];
+        foreach ($data as $key => $value) {
+            if($value["nom"] === $name) {
+                $findData = $value;
+            }
+        }
+        return $findData;
+    }
 }
