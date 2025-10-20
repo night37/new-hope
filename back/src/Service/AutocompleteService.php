@@ -46,13 +46,14 @@ class AutocompleteService
             if($option == 'communes'){
                 $newData["codeDepartement"] = $value["codeDepartement"];
                 $newData["codeRegion"] = $value["codeRegion"];
-                $newData["centre"] = $value["centre"];
+                $newData["centre"]["latitude"] = $value["centre"]["coordinates"][0];
+                $newData["centre"]["longitude"] = $value["centre"]["coordinates"][1];
             }
             if($option == 'departements'){
                 $newData["codeRegion"] = $value["codeRegion"];
             }
             if($option == 'departements' || $option == 'regions') {
-                $newData["center"] = $this->getCenterPosition($option, $value["nom"] );
+                $newData["centre"] = $this->getCenterPosition($option, $value["nom"] );
             }
             array_push($data, $newData);
         }

@@ -99,8 +99,6 @@ final class StructureController extends AbstractController
             'structure' => $response,
         ], 200, [], ['groups' => 'structure:read']);
         }
-
-        dd($request);
     }
 
 
