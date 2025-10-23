@@ -7,6 +7,7 @@ import { smoothScroll } from '@/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import { getRegionByCode } from '@/app/api/structure/location/getRegionByCode';
 import { getDepartementByCode } from '@/app/api/structure/location/getDepartmentByCode';
+import { LocationValue } from '@/types/structureAutocomplete.type';
 
 export default function AssociationForm() {
     const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ export default function AssociationForm() {
         setSearchResults([]);
     };
 
-    const handleRegionChange = (value: { code: string; name: string } | null) => {
+    const handleRegionChange = (value: LocationValue | null) => {
         if (value) {
             setFormData({
                 'autocomplete-communes': { code: '', name: '' },
@@ -68,12 +69,11 @@ export default function AssociationForm() {
     };
 
     const handleDepartementChange = async (
-        value: { code: string; name: string; codeRegion?: string, centre: object } | null
+        value: LocationValue | null
     ) => {
 
         if (value && value.codeRegion) {
             const result = await getRegionByCode(value.codeRegion);
-          
             setFormData((prev) => ({
                 ...prev,
                 'autocomplete-departements': { code: value.code, name: value.name, centre: value.centre },
@@ -94,12 +94,11 @@ export default function AssociationForm() {
     };
 
     const handleCommuneChange = async (
-        value: { code: string; name: string; codeRegion?: string; codeDepartement?: string } | null
+        value: LocationValue | null
     ) => {
         if (value && value.codeRegion && value.codeDepartement) {
             const regionResult = await getDepartementByCode(value.codeDepartement);
             const departementResult = await getRegionByCode( value.codeRegion);
- console.log(value);
             setFormData((prev) => ({
                 ...prev,
                 'autocomplete-communes': value ? value : { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
