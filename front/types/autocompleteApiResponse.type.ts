@@ -3,4 +3,10 @@ export type AutocompleteApiResponse = {
     code: string;
     codeDepartement?: string;
     codeRegion: string;
+    centre: centerObject;
+};
+
+type centerObject = {
+    latitude: number;
+    longitude: number;
 };

@@ -68,14 +68,15 @@ export default function AssociationForm() {
     };
 
     const handleDepartementChange = async (
-        value: { code: string; name: string; codeRegion?: string } | null
+        value: { code: string; name: string; codeRegion?: string, centre: object } | null
     ) => {
+
         if (value && value.codeRegion) {
             const result = await getRegionByCode(value.codeRegion);
           
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-departements': { code: value.code, name: value.name },
+                'autocomplete-departements': { code: value.code, name: value.name, centre: value.centre },
                 'autocomplete-communes': { code: '', name: '' },
                 'autocomplete-regions': {
                     code: value.codeRegion ?? '',
@@ -98,10 +99,10 @@ export default function AssociationForm() {
         if (value && value.codeRegion && value.codeDepartement) {
             const regionResult = await getDepartementByCode(value.codeDepartement);
             const departementResult = await getRegionByCode( value.codeRegion);
-
+ console.log(value);
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-communes': value ? value : { code: '', name: '' },
+                'autocomplete-communes': value ? value : { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
                 'autocomplete-departements': {
                     code: value.codeDepartement ?? '',
                     name: regionResult[0].nom ?? '',

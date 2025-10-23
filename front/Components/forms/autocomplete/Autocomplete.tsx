@@ -29,6 +29,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                                     name: el.name,
                                     codeDepartement: el.codeDepartement,
                                     codeRegion: el.codeRegion,
+                                    centre: el.centre,
                                 },
                                 label: el.name,
                             };
