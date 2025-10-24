@@ -6,7 +6,6 @@ namespace App\Service;
 class TimestampService
 {
 
-
   public function getCreatedAt($entityInstance): \DateTimeInterface
   {
   

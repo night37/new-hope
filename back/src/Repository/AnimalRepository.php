@@ -177,14 +177,16 @@ class AnimalRepository extends ServiceEntityRepository
                 animal.thumbnail,
                 animal.images,
                 animal.description,
-                structure.name as structureName,
-                structure.street as structureStreet,
-                structure.zip_code as structureZipCode,
-                structure.city as structureCity,
-                structure.phone as structurePhone,
-                structure.email as structureEmail'
+                NEW App\DTO\StructureDTO(
+                    s.name,
+                    s.street,
+                    s.city,
+                    s.zip_code,
+                    s.phone,
+                    s.email
+                ) as structure'
                 )
-            ->innerJoin('animal.structure', 'structure')
+            ->innerJoin('animal.structure', 's')
             ->where("animal.id = :id")
             ->setParameter('id', $id)
             ->getQuery()

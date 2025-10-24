@@ -19,8 +19,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
-
-
+use function PHPUnit\Framework\isEmpty;
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -67,24 +66,24 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        
         $user = $token->getUser();
-        
-        if ($user instanceof User && !$user->isVerified()) {
-            $request->getSession()->getFlashBag()->add('danger', 
+
+        if ($user instanceof User && !$user->isVerified() && $request instanceof Request) {
+            $request->getSession()->getFlashBag()->add('danger',
             'Vous devez vérifier votre email avant de pouvoir accéder à votre compte.'
         );
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
-    }
-    $baseUrl = $_ENV['APP_BASE_URL'] ?? $request->getSchemeAndHttpHost();
-    if ($targetPath = $request->getSession()->get('_security.main.path')) {
-        $request->getSession()->remove('_security.main.target_path');
-        return new RedirectResponse($targetPath);
-    }
-    if(isset($baseUrl)) {
+        }
+        $baseUrl = $_ENV['APP_BASE_URL'] ?? $request->getSchemeAndHttpHost();
+        if ($targetPath = $request->getSession()->get('_security.main.path')) {
+            $request->getSession()->remove('_security.main.target_path');
+            return new RedirectResponse($targetPath);
+        }
+        if(isset($baseUrl) && !isEmpty($user)  && $user instanceof User) {
+
             return new RedirectResponse($baseUrl . '/backoffice/user/' . $user->getId() . '/edit');
-    }
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
+        }
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 
     protected function getLoginUrl(Request $request): string
