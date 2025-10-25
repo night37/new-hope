@@ -20,7 +20,8 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class EasyPhpFieldService
 {
-   public static function EmailField(string $fieldName, string $fieldLabel,  $data = null): TextField
+
+  public static function EmailField(string $fieldName, string $fieldLabel,  $data = null): TextField
   {
     $emailField = TextField::new($fieldName, $fieldLabel);
     if ($data) {
