@@ -29,7 +29,7 @@ class StructureRepository extends ServiceEntityRepository
         {
     
             return $this->createQueryBuilder('s')
-                ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude','s.structureType')
+                ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude','s.structureType','s.email')
                 ->where('s.isActive = :active')
                 ->setParameter('active', 1)
                 ->getQuery()
