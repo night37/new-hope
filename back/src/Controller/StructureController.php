@@ -86,12 +86,9 @@ final class StructureController extends AbstractController
         return $this->json($results, Response::HTTP_OK);
     }
 
-    #[Route('api/filtersResults', name: "structure_filters_results", methods:['GET'])]
-    public function  getFiltersResults(request $request, StructureRepository $structureRepository) {
-        $data = $request->query->all();
-        $response = $structureRepository->findByFilters($data);
-        dd($response);
-
+    #[Route('api/getAllStructures', name: "api_structure_get_all_structures", methods:['GET'])]
+    public function  getAllStructures(StructureRepository $structureRepository) {
+        $response = $structureRepository->getAllStructures();
         if(isEmpty($response)) {
         return $this->json([
             'message' => 'display filters structures result',
@@ -100,6 +97,5 @@ final class StructureController extends AbstractController
         ], 200, [], ['groups' => 'structure:read']);
         }
     }
-
 
 }

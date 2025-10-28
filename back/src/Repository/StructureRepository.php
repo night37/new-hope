@@ -25,27 +25,15 @@ class StructureRepository extends ServiceEntityRepository
 
 
 
-        public function findByFilters($params): array | string
+        public function getAllStructures(): array | string
         {
-        if ((!is_numeric($params['region'] ?? null) && isset($params['region'])) || (!is_numeric($params['communes'] ?? null) && isset($params['communes']))) {
-            return 'Les paramètres doivent être numériques';
-        }
-
-
-            $query = $this->createQueryBuilder('s')
+    
+            return $this->createQueryBuilder('s')
                 ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude','s.structureType')
                 ->where('s.isActive = :active')
-                ->setParameter('active', 1);
-
-                if(isset($params['region'])){
-
-                    $this->locationService->getDepartement($params['region']);
-                };
-
-                if(isset($params['communes'])){
-                    $this->locationService->getCity($params['communes']);
-                };
-                $query->getQuery()
+                ->setParameter('active', 1)
+                ->getQuery()
                 ->getResult();
+                
         }
 }

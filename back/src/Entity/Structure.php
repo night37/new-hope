@@ -70,43 +70,13 @@ use ApiPlatform\OpenApi\Model\Operation;
             ),
         ),
         new Get(
-            name: 'api_structure_filters_results',
-            uriTemplate: '/backoffice/structure/filtersResults',
-            controller: 'App\Controller\StructureController::getFiltersResults',
-            description: 'Get the list of structures filters results',
+            name: 'structure_get_all_structures',
+            uriTemplate: '/backoffice/structure/getAllStructures',
+            controller: 'App\Controller\StructureController::getAllStructures',
+            description: 'Liste des structures',
             openapi: new Operation(
-                summary: 'Liste des résultats de filtres de structures',
-                description: 'Récupère la liste complète des résultats de filtres de structures',
-                    parameters: [
-                    [
-                        'name' => 'code region',
-                        'in' => 'query',
-                        'description' => 'code de la region',
-                        'required' => false,
-                        'schema' => [
-                            'type' => 'integer',
-                            'example' => '11'
-                        ]
-                    ],[
-                        'name' => 'code departement',
-                        'in' => 'query',
-                        'description' => 'code du departement',
-                        'required' => false,
-                        'schema' => [
-                            'type' => 'integer',
-                            'example' => '75'
-                        ]
-                    ],[
-                        'name' => 'code commune',
-                        'in' => 'query',
-                        'description' => 'commune',
-                        'required' => false,
-                        'schema' => [
-                            'type' => 'integer',
-                            'example' => '75056'
-                        ]
-                    ]
-                    ]
+                summary: 'Liste des structures',
+                description: 'Liste des structures',
             )
         )
     ]
