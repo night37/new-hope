@@ -9,20 +9,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use App\Service\EasyPhpFieldService as EasyPhpField;
+use App\Service\StructureCrudService;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 
 
-
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class StructureCrudController extends AbstractCrudController
 {
 
-   
 
-    public function __construct(    
-    private TimestampService $timestampService, 
-    private LocationService $locationService
+    public function __construct(
+    private TimestampService $timestampService,
+    private LocationService $locationService,
+    private StructureCrudService $structureCrudService
     )
     {}
 
@@ -32,30 +34,13 @@ class StructureCrudController extends AbstractCrudController
         return Structure::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
 
         $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
-        $field =  [
-            EasyPhpField::TextField('name', 'Nom de la structure'),
-            EasyPhpField::ChoiceField('structureType', 'structureType', 'type de structure'),
-            EasyPhpField::TextField('street', 'Rue'),
-            EasyPhpField::IntegerField('zip_code', 'Code postal'),
-            EasyPhpField::TextField('city', 'Ville'),
-            EasyPhpField::TelephoneField('phone', 'Téléphone'),
-            EasyPhpField::TextField('email', 'Email'),
-            EasyPhpField::TextEditorField('description', 'Description'),
-            EasyPhpField::AssociationField('users', 'membres', true),
-            EasyPhpField::AssociationField('animal', 'animaux', true)
-        ];
 
-        if ($isAdmin) {
-            $field[] =  EasyPhpField::BooleanField('isActif', 'actif');
-            
-        } 
 
-        return $field;
+        return $this->structureCrudService->getFields($isAdmin);
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void

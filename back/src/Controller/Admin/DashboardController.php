@@ -4,20 +4,13 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Animal;
 use App\Entity\Structure;
-use App\Controller\Admin\AnimalCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
-
-
-
-
 
 
 #[AdminDashboard(routePath: '/backoffice', routeName: 'admin')]
@@ -63,7 +56,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
             MenuItem::linkToCrud('ajouter un compte', 'fas fa-plus', User::class)->setAction('new'),
             MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId()),
-            MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())
 
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');

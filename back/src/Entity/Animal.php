@@ -113,7 +113,7 @@ use ApiPlatform\OpenApi\Model\Operation;
                             'type' => 'string',
                             'example' => 'court/long'
                         ]
-                    ],             
+                    ],
                     [
                         'name' => 'option',
                         'in' => 'query',
@@ -134,7 +134,7 @@ use ApiPlatform\OpenApi\Model\Operation;
                             'example' => 'chien/chat/enfant'
                         ]
                     ]
-                ]   
+                ]
             )
         ),
         new Get(
@@ -317,7 +317,6 @@ class Animal
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
-       
 
         return $this;
     }

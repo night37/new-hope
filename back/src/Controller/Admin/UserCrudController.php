@@ -32,9 +32,9 @@ use function PHPUnit\Framework\isEmpty;
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class UserCrudController extends AbstractCrudController
 {
-    private UserCrudService $userCrudService;
 
-    public function __construct(private EmailService $emailService, private TimestampService $timestampService, UserCrudService $userCrudService){
+
+    public function __construct(private EmailService $emailService, private TimestampService $timestampService, private UserCrudService $userCrudService){
         $this->userCrudService = $userCrudService;
     }
 
@@ -50,7 +50,6 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-
         $user = $this->getUser();
         if (!$user) {
             throw $this->createAccessDeniedException();
@@ -59,7 +58,7 @@ class UserCrudController extends AbstractCrudController
         $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
         $selectedUser = $this->getContext()->getEntity()->getInstance();
 
-        return $this->userCrudService->setFields($isAdmin, $selectedUser );
+        return $this->userCrudService->getFields($isAdmin, $user);
     }
 
     public function configureCrud(Crud $crud): Crud

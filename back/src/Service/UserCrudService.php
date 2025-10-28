@@ -7,17 +7,9 @@ use App\Entity\User;
 
 class UserCrudService
 {
+    public function __construct( private UserPasswordHasherInterface $passwordHasher){}
 
-
-
-    public function __construct( private UserPasswordHasherInterface $passwordHasher){
-
-  
-
-
-    }
-
-public function setFields(bool $isAdmin, User $selectedUser) {
+public function getFields(bool $isAdmin, User $selectedUser) {
     $fields = [
             EasyPhpFieldService::EmailField('email', 'Email'),
             EasyPhpFieldService::TextField('name', 'Prénom'),
