@@ -1,14 +1,11 @@
+
+'use client';
 import React, {useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import { StructureListProps } from '@/types/structureListProps.type';
 import { useStructureStore } from '@/store/structureStore';
 import MapUpdater from './MapUpdater';
 import 'leaflet/dist/leaflet.css';
-
-
-
-
-
 
 
 
@@ -44,8 +41,8 @@ export default function Map({ structures }: StructureListProps ) {
   }, [searchParameters]);
 
     return (
-        <div className="w-full  h-[600px]" id="map">
-            <MapContainer style={{ height: '600px' }} center={mapCenter} zoom={zoom} scrollWheelZoom={false}>
+        <div className="w-full" id="map">
+            <MapContainer  className="w-full h-[300px] md:h-[600px]" center={mapCenter} zoom={zoom} scrollWheelZoom={false}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
