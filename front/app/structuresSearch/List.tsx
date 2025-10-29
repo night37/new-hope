@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { StructureListProps } from '@/types/structureListProps.type';
 import StructureCard from '@/Components/structureCard/StructureCard';
