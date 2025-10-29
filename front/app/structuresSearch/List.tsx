@@ -13,7 +13,7 @@ export default function List({ structures }: StructureListProps) {
                     </li>
                 ))
             ) : (
-                <p>Aucune structure n'a été trouvée.</p>
+                <p>Aucune structure n &#39;a été trouvée.</p>
             )}
         </ul>
     );
