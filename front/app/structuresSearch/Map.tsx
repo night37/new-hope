@@ -1,3 +1,5 @@
+"use client";
+
 import React, {useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import { StructureListProps } from '@/types/structureListProps.type';
