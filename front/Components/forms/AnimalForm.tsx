@@ -106,7 +106,7 @@ export default function AnimalForm() {
         });
         setSearchParameters(filterlist);
         const result = await filtersResults(filterlist, 1);
-        setSearchResults(result);
+        setSearchResults(result.animals);
         smoothScroll(600, 80);
         if (currentPath != '/animalsSearch') {
             router.push('/animalsSearch');

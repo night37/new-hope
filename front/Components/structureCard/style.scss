@@ -1,0 +1,8 @@
+.contact-link {
+    &:hover,
+    &:focus {
+        &::before {
+            content: '';
+        }
+    }
+}

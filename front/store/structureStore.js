@@ -6,7 +6,7 @@ export const useStructureStore = create(
         (set) => ({
             id: null,
             searchParameters: null,
-            searchResults: null,
+            structuresList: null,
             updateId(id) {
                 set({ id: id });
             },
@@ -17,9 +17,9 @@ export const useStructureStore = create(
                 });
             },
 
-            setSearchResults(result) {
+            setStructuresList(result) {
                 set({
-                    searchResults: result,
+                    structuresList: result,
                 });
             },
         }),

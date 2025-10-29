@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAnimalStore } from '@/store/animalStore';
 import { AnimalCard } from '@/Components/animalCard/AnimalCard';
 import { Pagination } from '@/Components/pagination/Pagination';
@@ -8,13 +8,9 @@ import { AnimalsList } from '@/types/animalsList.type';
 
 export default function SearchResults() {
     const searchResults = useAnimalStore((state) => state.searchResults);
-    const [animalsList, setAnimalsList] = useState<AnimalsList>({ animals: { data: [] } });
-
-    useEffect(() => {
-        if (searchResults) {
-            setAnimalsList({ animals: searchResults.animals });
-        }
-    }, [searchResults]);
+    const animalsList: AnimalsList = searchResults
+        ? { animals: searchResults }
+        : { animals: { data: [] } };
 
     return (
         <>
@@ -24,7 +20,7 @@ export default function SearchResults() {
                         <h2 className="font-handlee text-lg font-bold">
                             Résultats de la recherche{' '}
                         </h2>
-                        <p className="text-sm"> {searchResults.animals.count} résultats Trouvés</p>
+                        <p className="text-sm"> {searchResults.count} résultats Trouvés</p>
                     </div>
                     <div className="result-container flex flex-wrap justify-center gap-[40px] lg:justify-start">
                         {animalsList.animals.data.map((animal, key) => (
@@ -50,10 +46,10 @@ export default function SearchResults() {
                             </div>
                         ))}
                     </div>
-                    {searchResults.animals.totalPages > 1 && (
+                    {searchResults.totalPages > 1 && (
                         <Pagination
-                            totalPages={Number(searchResults.animals.totalPages)}
-                            currentPage={Number(searchResults.animals.currentPage)}
+                            totalPages={Number(searchResults.totalPages)}
+                            currentPage={Number(searchResults.currentPage)}
                         />
                     )}
                 </div>

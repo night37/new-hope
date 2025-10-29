@@ -5,4 +5,7 @@ export type Structure = {
     city?: string;
     phone?: string;
     email?: string;
+    id?: number;
+    latitude?: number;
+    longitude?: number;
 };

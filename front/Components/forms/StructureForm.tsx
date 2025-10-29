@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Autocomplete } from './autocomplete/Autocomplete';
 import { Button } from '../ui/button/Button';
 import { useStructureStore } from '@/store/structureStore';
-import { getFiltersResult } from '@/app/api/structure/filtersResult';
+import { getStructures } from '@/app/api/structure/getStructures';
 import { smoothScroll } from '@/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import { getRegionByCode } from '@/app/api/structure/location/getRegionByCode';
@@ -17,21 +17,19 @@ export default function AssociationForm() {
         distance: '',
     });
     const setSearchParameters = useStructureStore((state) => state.updateSearchParameters);
-    const setSearchResults = useStructureStore((state) => state.setSearchResults);
-    const searchParameters = useStructureStore((state) => state.searchParameters);
+    const setStructuresList = useStructureStore((state) => state.setStructuresList);
     const router = useRouter();
     const currentPath = usePathname();
 
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSearchParameters(formData);
-        const results = await getFiltersResult(formData);
-        console.log(results);
-        setSearchResults(results);
-    //     smoothScroll(600, 80);
-    //             if (currentPath != '/structuresSearch') {
-    //                 router.push('/structuresSearch');
-    //     }
+        const structuresList = await getStructures();
+        setStructuresList(structuresList.structure);
+        smoothScroll(600, 80);
+        if (currentPath != '/structuresSearch') {
+            router.push('/structuresSearch');
+        }
     };
 
     const resetFilters = () => {
@@ -47,7 +45,7 @@ export default function AssociationForm() {
             'autocomplete-regions': { code: '', name: '' },
             distance: '',
         });
-        setSearchResults([]);
+        setStructuresList([]);
     };
 
     const handleRegionChange = (value: LocationValue | null) => {
@@ -68,15 +66,16 @@ export default function AssociationForm() {
         }
     };
 
-    const handleDepartementChange = async (
-        value: LocationValue | null
-    ) => {
-
+    const handleDepartementChange = async (value: LocationValue | null) => {
         if (value && value.codeRegion) {
             const result = await getRegionByCode(value.codeRegion);
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-departements': { code: value.code, name: value.name, centre: value.centre },
+                'autocomplete-departements': {
+                    code: value.code,
+                    name: value.name,
+                    centre: value.centre,
+                },
                 'autocomplete-communes': { code: '', name: '' },
                 'autocomplete-regions': {
                     code: value.codeRegion ?? '',
@@ -93,15 +92,15 @@ export default function AssociationForm() {
         }
     };
 
-    const handleCommuneChange = async (
-        value: LocationValue | null
-    ) => {
+    const handleCommuneChange = async (value: LocationValue | null) => {
         if (value && value.codeRegion && value.codeDepartement) {
             const regionResult = await getDepartementByCode(value.codeDepartement);
-            const departementResult = await getRegionByCode( value.codeRegion);
+            const departementResult = await getRegionByCode(value.codeRegion);
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-communes': value ? value : { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
+                'autocomplete-communes': value
+                    ? value
+                    : { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
                 'autocomplete-departements': {
                     code: value.codeDepartement ?? '',
                     name: regionResult[0].nom ?? '',
@@ -121,7 +120,7 @@ export default function AssociationForm() {
                 submitForm(e);
             }}
         >
-            <div className="flex w-full flex-wrap justify-center lg:justify-start">
+            <div className="flex w-full flex-wrap justify-center">
                 <div className="px-3 lg:w-1/4">
                     <Autocomplete
                         option={'regions'}
@@ -142,24 +141,6 @@ export default function AssociationForm() {
                         formData={formData}
                         onChange={(value) => handleCommuneChange(value)}
                     />
-                </div>
-                <div className="px-3 lg:w-1/4">
-                    <div className="flex flex-col">
-                        <label htmlFor="distance-input" className="font-caveat text-large">
-                            Distance maximum (en km)
-                        </label>
-                        <input
-                            id="distance-input"
-                            type="number"
-                            min="0"
-                            placeholder="ex: 10"
-                            value={formData.distance}
-                            onChange={(e) =>
-                                setFormData((prev) => ({ ...prev, distance: e.target.value }))
-                            }
-                            className="z-1 input flex xl:w-96 w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white p-2 font-caveat text-large shadow-sm"
-                        />
-                    </div>
                 </div>
             </div>
             <div className="mx-auto flex flex-col justify-center gap-4 lg:w-2/4">

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useId } from 'react';
 import AsyncSelect from 'react-select/async';
 import { query } from '@/app/api/structure/location/query';
 import { StructureAutocomplete as autocompleteProps } from '@/types/structureAutocomplete.type';
@@ -9,6 +9,7 @@ import { LocationValue } from '@/types/structureAutocomplete.type';
 import './style.scss';
 
 export function Autocomplete({ option, onChange, formData }: autocompleteProps) {
+    const id: string = useId();
     const loadOptions = useCallback(
         (inputValue: string): Promise<OptionType[]> => {
             return new Promise<OptionType[]>((resolve) => {
@@ -71,6 +72,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
         <div className="autocomplete_container w-full">
             <label className="font-caveat text-large">{`${option}`}</label>
             <AsyncSelect
+                id={id}
                 key={selectKey}
                 value={
                     currentValue ? { value: currentValue.value, label: currentValue.label } : null
@@ -78,7 +80,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                 name={`autocomplete-${option}`}
                 placeholder={`ex: ${option === 'communes' ? 'Paris' : option === 'departements' ? 'Seine-et-Marne' : 'Île-de-France'}`}
                 noOptionsMessage={() => 'Aucun résultat'}
-                className="z-1 select flex xl:w-96 w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm"
+                className="z-1 select flex w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm xl:w-96"
                 cacheOptions={false}
                 loadOptions={loadOptions}
                 defaultOptions
