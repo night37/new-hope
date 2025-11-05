@@ -17,5 +17,7 @@ class StructureDTO
          #[Groups(['animal:read'])]
         public readonly string $email,
 
-    ) {}
+    ) {
+        
+    }
 }
