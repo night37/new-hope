@@ -3,5 +3,5 @@ export async function getRegionByCode(code: string) {
     if (!response) {
         throw new Error('Network response was not ok');
     }
-    return response;
+    return response.json();
 }

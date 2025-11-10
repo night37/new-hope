@@ -95,6 +95,7 @@ export default function AssociationForm() {
     const handleCommuneChange = async (value: LocationValue | null) => {
         if (value && value.codeRegion && value.codeDepartement) {
             const regionResult = await getDepartementByCode(value.codeDepartement);
+
             const departementResult = await getRegionByCode(value.codeRegion);
             setFormData((prev) => ({
                 ...prev,
