@@ -34,7 +34,8 @@ class UserCrudController extends AbstractCrudController
 {
 
 
-    public function __construct(private EmailService $emailService, private TimestampService $timestampService, private UserCrudService $userCrudService){
+    public function __construct(private EmailService $emailService, private TimestampService $timestampService, private UserCrudService $userCrudService)
+    {
         $this->userCrudService = $userCrudService;
     }
 
@@ -56,7 +57,6 @@ class UserCrudController extends AbstractCrudController
         }
 
         $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
-        $selectedUser = $this->getContext()->getEntity()->getInstance();
 
         return $this->userCrudService->getFields($isAdmin, $user);
     }
@@ -73,6 +73,7 @@ class UserCrudController extends AbstractCrudController
     {
         $selectedUser = $this->getContext()->getEntity()->getInstance();
         $selectedUser->setIsVerified(true);
+        $selectedUser->setPassword(password_hash($selectedUser->getPassword(), PASSWORD_DEFAULT));
 
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
@@ -84,9 +85,7 @@ class UserCrudController extends AbstractCrudController
         if ($selectedUser->getId() !== null) {
 
             $this->emailService->sendEmailConfirmation($selectedUser, true);
-
         }
-
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -103,9 +102,9 @@ class UserCrudController extends AbstractCrudController
         if ('saveAndReturn' === $submitButtonName) {
             return $this->redirectToRoute('admin');
             $url = $this->container->get(AdminUrlGenerator::class)
-            ->setAction(Action::DETAIL)
-            ->setEntityId($context->getEntity()->getPrimaryKeyValue())
-            ->generateUrl();
+                ->setAction(Action::DETAIL)
+                ->setEntityId($context->getEntity()->getPrimaryKeyValue())
+                ->generateUrl();
             return $this->redirect($url);
         }
 

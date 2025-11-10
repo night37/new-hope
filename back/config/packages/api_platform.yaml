@@ -1,5 +1,5 @@
 api_platform:
-    title: 'My API'
+    title: 'new hope API'
     version: '1.0.0'
     formats:
         jsonld: ['application/ld+json']
@@ -12,3 +12,8 @@ api_platform:
     # Enable GraphQL if needed
     graphql:
         enabled: true
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header

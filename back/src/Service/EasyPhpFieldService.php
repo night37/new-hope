@@ -35,12 +35,12 @@ class EasyPhpFieldService
     ]);
   }
 
-   public static function IntegerField(string $fieldName, string $fieldLabel): IntegerField
+  public static function IntegerField(string $fieldName, string $fieldLabel): IntegerField
   {
     return IntegerField::new($fieldName, $fieldLabel);
   }
 
-   public static function TextField(string $fieldName, string $fieldLabel, $isDisabled=false,  $data = null,): TextField
+  public static function TextField(string $fieldName, string $fieldLabel, $isDisabled = false,  $data = null,): TextField
   {
     $textField = TextField::new($fieldName, $fieldLabel);
     $textField->setDisabled($isDisabled);
@@ -48,7 +48,7 @@ class EasyPhpFieldService
     if ($data) {
       $textField->setFormTypeOptions([
         'data' => $data,
-        
+
       ]);
     }
 
@@ -56,21 +56,21 @@ class EasyPhpFieldService
   }
 
 
-   public static function ChoiceField(string $type, string $fieldName, string $fieldLabel, bool $multiple = false, $data = null): ChoiceField
+  public static function ChoiceField(string $type, string $fieldName, string $fieldLabel, bool $multiple = false, $data = null): ChoiceField
   {
     $enumClass = 'App\\Enum\\' . ucfirst($type);
     $choiceField = ChoiceField::new($fieldName, $fieldLabel)
       ->setChoices(
         array_combine(
-            array_map(fn($case) => ucfirst($case->value), $enumClass::cases()), // Labels (français)
-            $enumClass::cases() // Valeurs enum
+          array_map(fn($case) => ucfirst($case->value), $enumClass::cases()), // Labels (français)
+          $enumClass::cases() // Valeurs enum
 
         )
       )
       ->renderExpanded(false)
       ->formatValue(function ($element) {
         if (is_array($element) && isset($element['value'])) {
-                return ucfirst($element['value']);
+          return ucfirst($element['value']);
         }
         return $element && is_object($element) ? ucfirst($element->value) : '';
       });
@@ -84,19 +84,19 @@ class EasyPhpFieldService
     }
     return $choiceField;
   }
-   public static function BooleanField(string $fieldName, string $fieldLabel,  $data = null): BooleanField
+  public static function BooleanField(string $fieldName, string $fieldLabel,  $data = null): BooleanField
   {
     $booleanField = BooleanField::new($fieldName, $fieldLabel);
     if ($data) {
       $booleanField->setFormTypeOptions([
         'data' => $data,
       ]);
-      $booleanField->hideOnIndex(); 
+      $booleanField->hideOnIndex();
     }
     return $booleanField;
-  } 
+  }
 
-   public static function ImagePreview(string $fileName)
+  public static function ImagePreview(string $fileName)
   {
 
     $imagePreview = Field::new($fileName);
@@ -107,7 +107,7 @@ class EasyPhpFieldService
     return $imagePreview;
   }
 
-   public static function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
+  public static function ImageField(string $fieldName, string $fieldLabel, string $uploadDir, string $basePath, bool $required, bool $multiple = false): ImageField
   {
 
     $imageField = ImageField::new($fieldName, $fieldLabel);
@@ -129,14 +129,14 @@ class EasyPhpFieldService
     return $imageField;
   }
 
-   public static function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
+  public static function TextEditorField(string $fieldName, string $fieldLabel,  $data = null): TextEditorField
   {
-    return TextEditorField::new($fieldName, $fieldLabel)->formatValue(function($element){
+    return TextEditorField::new($fieldName, $fieldLabel)->formatValue(function ($element) {
       return htmlspecialchars_decode($element);
     });
   }
 
-  public static function PasswordField(): TextField
+  public static function  PasswordField(): TextField
   {
     $passwordField = TextField::new('password', 'Mot de passe');
 
@@ -149,36 +149,35 @@ class EasyPhpFieldService
         'empty_data' => '',
         'row_attr' => [
           'class' => 'col-md-6 col-xxl-5',
-          'style' => 'padding-right: 12px;' 
+          'style' => 'padding-right: 12px;'
         ],
       ],
       'second_options' => [
         'label' => 'Confirmation du mot de passe',
         'empty_data' => '',
         'row_attr' => [
-                 'class' => 'col-md-6 col-xxl-5',
-                 'style' => 'padding-right: 12px;'
-          ],
+          'class' => 'col-md-6 col-xxl-5',
+          'style' => 'padding-right: 12px;'
         ],
+      ],
       'invalid_message' => 'Les mots de passe ne correspondent pas',
-      
+
     ]);
-    
+
     return $passwordField;
   }
-  public static function DateField(string $label) {
+  public static function DateField(string $label)
+  {
 
     $dateField = DateTimeField::new($label);
- 
+
     return $dateField;
-   
-    
   }
   public static function TelephoneField(string $phoneNumber): TelephoneField
   {
     $phoneNumberField = TelephoneField::new($phoneNumber);
     $phoneNumberField->setLabel('Téléphone');
-    
+
     return $phoneNumberField;
   }
 
@@ -193,7 +192,6 @@ class EasyPhpFieldService
         'placeholder' => 'Sélectionner une option',
         'disabled' => $disabled,
       ])
-      ->addCssClass( $disabled ? 'remove-delete-btn' : '');
+      ->addCssClass($disabled ? 'remove-delete-btn' : '');
   }
-
 }

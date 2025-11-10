@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('email', message: 'Cet email est déjà utilisé. Veuillez en choisir un autre.')]
-#[ApiResource (
+#[ApiResource(
     operations: [
         new Get(),
         new GetCollection()
@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return "$this->name "."$this->surname"  ?? '';
+        return "$this->name " . "$this->surname"  ?? '';
     }
 
     #[ORM\Id]
@@ -67,8 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column]
-    private ?bool $isActive = null;
+
 
     public function getId(): ?int
     {
@@ -107,11 +106,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-    
+
         return $this->roles;
     }
 
-    public function setRoles(Role|Array $roles): self
+    public function setRoles(Role|array $roles): self
     {
         $this->roles = [$roles->name];
         return $this;
@@ -204,19 +203,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    public function setIsActive(bool $isActive): static
-    {
-        
-        $this->isActive = $isActive;
 
         return $this;
     }

@@ -38,14 +38,13 @@ class ChangePasswordFormType extends AbstractType
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
                         'message' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
                     ]),
-                ],         
-                'first_options' => [                  
+                ],
+                'first_options' => [
                     'label' => 'Nouveau mot de passe',
                     'error_bubbling' => true,
                     'attr' => [
                         'class' => 'block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     ]
-                    
                 ],
                 'second_options' => [
                     'label' => 'Retaper votre mot de passe',
@@ -57,9 +56,8 @@ class ChangePasswordFormType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
- 
-            ])
-        ;
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

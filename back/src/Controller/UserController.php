@@ -23,7 +23,7 @@ final class UserController extends AbstractController
     private $emailService;
 
 
-    public function __construct(private EmailVerifier $emailVerifier,private VerifyEmailHelperInterface $verifyEmailHelper, EmailService $emailService)
+    public function __construct(private EmailVerifier $emailVerifier, private VerifyEmailHelperInterface $verifyEmailHelper, EmailService $emailService)
     {
 
         $this->emailService = $emailService;
@@ -33,7 +33,7 @@ final class UserController extends AbstractController
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, EntityManagerInterface $entityManager ): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -48,55 +48,49 @@ final class UserController extends AbstractController
             $user = $form->getData();
 
             try {
-            $entityManager->persist($user);             
-            $entityManager->flush();
-            
-            $this->emailService->sendEmailConfirmation($user, false);
-            $this->emailService->displayMessage('success','Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.'); 
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-        } catch (UniqueConstraintViolationException $e) {
-            $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
-        }
+                $this->emailService->sendEmailConfirmation($user, false);
+                $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
+            } catch (UniqueConstraintViolationException $e) {
+                $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
+            }
             return $this->redirectToRoute('app_login');
         }
         return $this->render('user/index.html.twig', [
             'form' => $form
         ]);
-
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $id = $request->query->get('id'); 
+        $id = $request->query->get('id');
 
         if (null === $id) {
             return $this->redirectToRoute('app_login');
             $this->addFlash('error', 'une erreur est survenue lors de la vérification de votre compte.(id null)');
-            
         }
-        
+
         $user = $userRepository->find($id);
-        
+
         if (null === $user) {
             return $this->redirectToRoute('app_login');
             $this->addFlash('error', 'une erreur est survenue lors de la vérification de votre compte.(user null)');
         }
         try {
-            if(!$user->isVerified()){
+            if (!$user->isVerified()) {
                 $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, $user->getId(), $user->getEmail());
                 $user->setIsVerified(true);
                 $user->setIsActive(true);
                 $user->setUpdatedAt(new \DateTimeImmutable());
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->emailService->displayMessage('success','Votre compte a été vérifié avec succès. Vous pouvez maintenant vous connecter.'); 
-            }else{
-                $this->emailService->displayMessage('info','Votre compte est déjà vérifié.'); 
+                $this->emailService->displayMessage('success', 'Votre compte a été vérifié avec succès. Vous pouvez maintenant vous connecter.');
+            } else {
+                $this->emailService->displayMessage('info', 'Votre compte est déjà vérifié.');
             }
-           
-
-
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
