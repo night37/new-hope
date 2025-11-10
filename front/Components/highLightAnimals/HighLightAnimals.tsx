@@ -39,7 +39,6 @@ export default function HighLightAnimals() {
     }, []);
 
     return (
-        <>
             <Suspense fallback={<div>Loading...</div>}>
                 <HighLight
                     error={error}
@@ -62,6 +61,5 @@ export default function HighLightAnimals() {
                     animals={catsList}
                 />
             </Suspense>
-        </>
     );
 }

@@ -4,10 +4,10 @@ import { apiQuery } from '../query';
 export async function getStructures() {
     try {
         const result = await apiQuery('/structure/getAllStructures').then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            if (!response) {
+                throw new Error(`Erreur lors du chargement des structures`);
             }
-            return response.json();
+            return response;
         });
 
         return result;

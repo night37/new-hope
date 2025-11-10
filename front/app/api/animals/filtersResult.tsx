@@ -35,8 +35,8 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
         try {
             response = await apiQuery(`/animal/filtersResults?${qb}&page=${currentPage}`);
 
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            if (!response) {
+                throw new Error(`Erreur lors du chargement des resultats`);
             }
         } catch (err) {
             console.error('Erreur lors du chargement des resultats:', err);
@@ -45,6 +45,5 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
     } else {
         response = await apiQuery(`/animal/filtersResults?page=${currentPage}`);
     }
-    const data = await response.json();
-    return data;
+    return response;
 }

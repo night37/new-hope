@@ -5,12 +5,12 @@ export async function animalFilters() {
     try {
         const response = await apiQuery(`/animal/filters`);
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!response) {
+            throw new Error(`Erreur lors du chargement des filtres`);
         }
 
-        const data = await response.json();
-        return data;
+        return response;
+        
     } catch (err) {
         console.error('Erreur lors du chargement des filtres:', err);
         throw err;

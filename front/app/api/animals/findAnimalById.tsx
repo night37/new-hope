@@ -7,10 +7,10 @@ export async function findById(id: number) {
             const response = await apiQuery(
                 `/animal/findById?id=${id}`
             );
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            if (!response) {
+                throw new Error(`Erreur lors de la recherche par ID`);
             }
-            return await response.json();
+            return response
         } catch (err) {
             console.error('Erreur lors de la recherche par ID:', err);
             throw err;

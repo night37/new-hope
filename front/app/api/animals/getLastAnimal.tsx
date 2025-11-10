@@ -6,13 +6,10 @@ export async function getLastAnimalsList() {
         const response = await apiQuery(
             'animal/getRandomLastAnimals',
         );
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!response) {
+            throw new Error(`une erreur est survenue lors du chargement des animaux`);
         }
-
-        const data = await response.json();
-        return data;
+        return response;
     } catch (err) {
         console.error('Erreur lors du chargement des animaux:', err);
         throw err;
