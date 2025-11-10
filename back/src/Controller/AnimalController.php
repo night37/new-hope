@@ -20,26 +20,25 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 #[Route('/animal', name: 'animal_index')]
 final class AnimalController extends AbstractController
 {
-    
+
     public function __construct(
         private readonly AnimalService $animalService,
         private readonly AnimalRepository $animalRepository,
         private readonly EntityManagerInterface $entityManagerInterface,
         private SerializerInterface $serializer
 
-        ) {}
-    
-    
-    #[Route('/api/animal/getAnimalsList',name: 'get_animals_list', methods: ['GET'], priority:10)]
+    ) {}
+
+
+    #[Route('/api/animal/getAnimalsList', name: 'get_animals_list', methods: ['GET'], priority: 10)]
     public function index(): Response
     {
-      
+
         return $this->json([
-                'message' => 'display all animals',
-                'timestamp' => time(),
-                'animals' => $this->animalRepository->findAll(),
-            ]);
-    
+            'message' => 'display all animals',
+            'timestamp' => time(),
+            'animals' => $this->animalRepository->findAll(),
+        ]);
     }
 
     #[Route('/{id}', name: 'app_animal_show', methods: ['GET'])]
@@ -55,8 +54,8 @@ final class AnimalController extends AbstractController
     public function delete(Animal $animal): Response
     {
 
-            $this->entityManagerInterface->remove($animal);
-            $this->entityManagerInterface->flush();
+        $this->entityManagerInterface->remove($animal);
+        $this->entityManagerInterface->flush();
 
         return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -66,10 +65,9 @@ final class AnimalController extends AbstractController
     {
         $animalFilterDTO = new AnimalFilterDTO();
         return $this->json($animalFilterDTO->enums);
-
     }
 
-    #[Route('filtersResults', name:'api_animal_filters_results', methods:['GET'])]
+    #[Route('filtersResults', name: 'api_animal_filters_results', methods: ['GET'])]
     public function getFiltersResults(Request $request): Response
     {
         $data = $request->query->all();
@@ -88,22 +86,23 @@ final class AnimalController extends AbstractController
         ]);
     }
 
-    #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods:['GET'])]
-    public function getRandomLastAnimals(): Response {
+    #[Route('getRandomLastAnimals', name: 'api_get_random_last_animals', methods: ['GET'])]
+    public function getRandomLastAnimals(): Response
+    {
 
         return $this->json([
             'message' => 'display filters animals result',
             'timestamp' => time(),
             'animals' => $this->animalService->getRandomAnimals(),
         ], 200, [], ['groups' => 'animal:read']);
-
     }
 
-    #[Route('findById', name:'api_find_by_id', methods:['GET'])]
-    public function findById (Request $request): Response {
+    #[Route('findById', name: 'api_find_by_id', methods: ['GET'])]
+    public function findById(Request $request): Response
+    {
 
         $data = $request->query->all();
-        if(!isset($data["id"]) || empty($data["id"]) ) {
+        if (!isset($data["id"]) || empty($data["id"])) {
             return $this->json([
                 'message' => 'id is required',
                 'timestamp' => time(),
@@ -111,7 +110,7 @@ final class AnimalController extends AbstractController
         }
 
         $animal = $this->animalRepository->findById($data["id"]);
-    
+
         if (!$animal) {
             return $this->json([
                 'message' => 'Animal not found',
@@ -124,6 +123,5 @@ final class AnimalController extends AbstractController
             'timestamp' => time(),
             'animal' => $animal[0],
         ], 200, [], ['groups' => 'animal:read']);
-
     }
 }

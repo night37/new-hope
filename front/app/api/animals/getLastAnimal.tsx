@@ -1,7 +1,10 @@
+import { apiQuery } from '../query';
+
+
 export async function getLastAnimalsList() {
     try {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/animal/getRandomLastAnimals`
+        const response = await apiQuery(
+            'animal/getRandomLastAnimals',
         );
 
         if (!response.ok) {

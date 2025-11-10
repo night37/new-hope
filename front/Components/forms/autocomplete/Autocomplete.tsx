@@ -1,11 +1,11 @@
+
 import React, { useCallback, useMemo, useId } from 'react';
 import AsyncSelect from 'react-select/async';
-import { query } from '@/app/api/structure/location/query';
-import { StructureAutocomplete as autocompleteProps } from '@/types/structureAutocomplete.type';
+import { locationQuery } from '@/app/api/query';
+import { StructureAutocomplete as autocompleteProps, LocationValue } from '@/types/structureAutocomplete.type';
 import { AutocompleteApiResponse } from '@/types/autocompleteApiResponse.type';
 import { AutocompleteNotFoundResponse } from '@/types/autocompleteNotFoundResponse.type';
 import { OptionType } from '@/types/autocompleteOption.type';
-import { LocationValue } from '@/types/structureAutocomplete.type';
 import './style.scss';
 
 export function Autocomplete({ option, onChange, formData }: autocompleteProps) {
@@ -21,7 +21,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                 }
                 setTimeout(async () => {
                     const response: AutocompleteApiResponse[] | AutocompleteNotFoundResponse =
-                        await query(option, inputValue, departementCode, regionCode);
+                        await locationQuery(option, inputValue, departementCode, regionCode);
                     if (Array.isArray(response) && response.length > 0) {
                         const data: OptionType[] = response.map((el: AutocompleteApiResponse) => {
                             return {

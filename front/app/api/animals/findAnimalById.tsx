@@ -1,8 +1,11 @@
+import { apiQuery } from '../query';
+
+
 export async function findById(id: number) {
     if (typeof id === 'number' && id) {
         try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/animal/findById?id=${id}`
+            const response = await apiQuery(
+                `/animal/findById?id=${id}`
             );
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -14,5 +17,4 @@ export async function findById(id: number) {
         }
     }
     console.error("l'id est obligatoire et doit être de type number");
-    return;
 }

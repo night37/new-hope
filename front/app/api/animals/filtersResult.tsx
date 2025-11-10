@@ -1,4 +1,5 @@
 import { Filters } from '@/types/queryFilters';
+import { apiQuery } from '../query';
 
 export async function filtersResults(filters: Filters, currentPage: number = 1) {
     const filterList: Filters = [];
@@ -32,9 +33,7 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
             qb = qb.slice(0, -1);
         }
         try {
-            response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?${qb}&page=${currentPage}`
-            );
+            response = await apiQuery(`/animal/filtersResults?${qb}&page=${currentPage}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -44,9 +43,7 @@ export async function filtersResults(filters: Filters, currentPage: number = 1) 
             throw err;
         }
     } else {
-        response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/animal/filtersResults?page=${currentPage}`
-        );
+        response = await apiQuery(`/animal/filtersResults?page=${currentPage}`);
     }
     const data = await response.json();
     return data;

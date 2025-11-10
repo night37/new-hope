@@ -1,8 +1,9 @@
+import { apiQuery } from '../query';
+
+
 export async function getStructures() {
     try {
-        const result = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + '/structure/getAllStructures'
-        ).then((response) => {
+        const result = await apiQuery('/structure/getAllStructures').then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }

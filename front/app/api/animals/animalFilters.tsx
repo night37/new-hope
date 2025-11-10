@@ -1,6 +1,9 @@
+import { apiQuery } from '../query';
+
+
 export async function animalFilters() {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/animal/filters`);
+        const response = await apiQuery(`/animal/filters`);
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
