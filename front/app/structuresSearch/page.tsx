@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import React from 'react';
 import SearchResults from './SearchResults';
@@ -8,7 +7,7 @@ export default function page() {
     return (
         <div>
             <Hero filterOption={'association'} />
-            <SearchResults/>
+            <SearchResults />
         </div>
     );
 }

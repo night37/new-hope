@@ -1,19 +1,16 @@
-"use server";
+'use server';
 
 async function getJwtToken() {
-    const response = await fetch(
-        `https://new-hope.ddev.site/api/login_check`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: process.env.SYMFONY_JWT_EMAIL,
-                password: process.env.SYMFONY_JWT_PASSWORD,
-            }),
-        }
-    );
+    const response = await fetch(`https://new-hope.ddev.site/api/login_check`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: process.env.SYMFONY_JWT_EMAIL,
+            password: process.env.SYMFONY_JWT_PASSWORD,
+        }),
+    });
 
     if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -25,20 +22,23 @@ async function getJwtToken() {
 export async function apiQuery(query: string) {
     const token = await getJwtToken();
 
-
     const url = `${process.env.NEXT_PUBLIC_API_URL}/${query}`;
-    const response = await fetch(url,
-        {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/ld+json',
-                'Authorization': `Bearer ${token}`,
-            }
-        });
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/ld+json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return await response.json();
 }
 
-export async function locationQuery(option: string, name?: string, departement?: string, region?: string) {
+export async function locationQuery(
+    option: string,
+    name?: string,
+    departement?: string,
+    region?: string
+) {
     if (!option) {
         throw new Error(
             "le parametre option est obligatoire est avoir obligatoirement une de ces valeurs 'communes / departements / regions'"

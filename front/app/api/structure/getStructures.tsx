@@ -1,6 +1,5 @@
 import { apiQuery } from '../query';
 
-
 export async function getStructures() {
     try {
         const result = await apiQuery('/structure/getAllStructures').then((response) => {

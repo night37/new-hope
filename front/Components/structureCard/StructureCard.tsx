@@ -1,10 +1,23 @@
 import React from 'react';
 import { Structure } from '@/types/structure.type';
+import { useStructureStore } from '@/store/structureStore';
 import './style.scss';
 
 export default function StructureCard({ structure }: { structure: Structure }) {
+    const setSelectedStructureCordinate = useStructureStore(
+        (state) => state.setSelectedStructureCoordinate
+    );
+
     return (
-        <div className="structure-card flex w-full flex-col items-center rounded-xl border-2 p-4">
+        <button
+            onClick={() =>
+                setSelectedStructureCordinate({
+                    latitude: structure.latitude,
+                    longitude: structure.longitude,
+                })
+            }
+            className="structure-card flex w-full flex-col items-center rounded-xl border-2 p-4"
+        >
             <p className="font-caveat font-bold">{structure.name}</p>
             <p className="font-handlee">{structure.street}</p>
             <p className="font-handlee">{structure.city}</p>
@@ -15,6 +28,6 @@ export default function StructureCard({ structure }: { structure: Structure }) {
                 {' '}
                 contacter l&apos;association{' '}
             </a>
-        </div>
+        </button>
     );
 }

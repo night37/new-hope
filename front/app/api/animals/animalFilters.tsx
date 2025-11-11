@@ -1,6 +1,5 @@
 import { apiQuery } from '../query';
 
-
 export async function animalFilters() {
     try {
         const response = await apiQuery(`/animal/filters`);
@@ -10,7 +9,6 @@ export async function animalFilters() {
         }
 
         return response;
-        
     } catch (err) {
         console.error('Erreur lors du chargement des filtres:', err);
         throw err;

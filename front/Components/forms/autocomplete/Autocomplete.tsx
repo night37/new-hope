@@ -1,8 +1,10 @@
-
 import React, { useCallback, useMemo, useId } from 'react';
 import AsyncSelect from 'react-select/async';
 import { locationQuery } from '@/app/api/query';
-import { StructureAutocomplete as autocompleteProps, LocationValue } from '@/types/structureAutocomplete.type';
+import {
+    StructureAutocomplete as autocompleteProps,
+    LocationValue,
+} from '@/types/structureAutocomplete.type';
 import { AutocompleteApiResponse } from '@/types/autocompleteApiResponse.type';
 import { AutocompleteNotFoundResponse } from '@/types/autocompleteNotFoundResponse.type';
 import { OptionType } from '@/types/autocompleteOption.type';

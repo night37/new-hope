@@ -3,5 +3,5 @@ export async function getDepartementByCode(code: string) {
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
-    return await response.json()
+    return await response.json();
 }

@@ -7,6 +7,7 @@ export const useStructureStore = create(
             id: null,
             searchParameters: null,
             structuresList: null,
+            selectedStructureCoordinate: null,
             updateId(id) {
                 set({ id: id });
             },
@@ -20,6 +21,12 @@ export const useStructureStore = create(
             setStructuresList(result) {
                 set({
                     structuresList: result,
+                });
+            },
+
+            setSelectedStructureCoordinate(coordinate) {
+                set({
+                    selectedStructureCoordinate: coordinate,
                 });
             },
         }),
