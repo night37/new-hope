@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-cover bg-center flex items-center
+    justify-center" style="background-image: url('{{
+    asset("assets/images/login_background.jpg")
+    }}')">
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full opacity-75 gap-4 flex flex-col">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6"> Vous avez oublie votre mot de passe ?</h1>
+      
+            {{ form_start(requestForm, {attr: {"class": "gap-4 flex flex-col"}}) }}
+
+
+                {{ form_row(requestForm.email) }}
+                <div>
+                    <small>
+                        Entrez votre adresse email pour recevoir un lien de réinitialisation de mot de passe.   
+                    </small>
+                </div>
+    
+                <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-">recevoir le lien de réinitialisation</button>
+            {{ form_end(requestForm) }}
+            <div>
+                <a
+                type="submit"
+                href="{{ path('app_login') }}"
+                class="text-sm text-blue-600 hover:text-blue-500 mb-4 mt-4"
+              >
+                retourner à la page de connexion
+              </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

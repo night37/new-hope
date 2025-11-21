@@ -1,0 +1,384 @@
+<?php
+
+namespace App\Entity;
+
+use App\Enum\StructureType;
+use ApiPlatform\Metadata\Get;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use App\Repository\StructureRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\Animal;
+use ApiPlatform\OpenApi\Model\Operation;
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['animal:read']],
+    operations: [
+        new Get(
+            name: 'autocomplete_structure',
+            uriTemplate:'/backoffice/structures/autocomplete',
+            controller: 'App\Controller\StructureController::autocomplete',
+            description: 'autocomplete structure address',
+            openapi: new Operation(
+                summary: 'autocomplete des adresses',
+                description: 'Renvoie une liste d\'adresses correspondant aux termes de recherche fournis.',
+                parameters: [
+                    [
+                        'name' => 'option',
+                        'in' => 'query',
+                        'description' => 'Url de recherche pour l\'autocomplete',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'communes / departements / regions'
+                        ]
+                    ],
+                    [
+                        'name' => 'departement',
+                        'in' => 'query',
+                        'description' => 'departement pour affiner la recherche',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '75'
+                        ]
+                    ],
+                    [
+                        'name' => 'region',
+                        'in' => 'query',
+                        'description' => 'region pour affiner la recherche',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => '11'
+                        ]
+                    ],
+                    [
+                        'name' => 'name',
+                        'in' => 'query',
+                        'description' => 'Termes de recherche pour l\'autocomplete',
+                        'required' => false,
+                        'schema' => [
+                            'type' => 'string',
+                            'example' => 'paris'
+                        ]
+                    ]
+                ]
+            ),
+        ),
+        new Get(
+            name: 'structure_get_all_structures',
+            uriTemplate: '/backoffice/structure/getAllStructures',
+            controller: 'App\Controller\StructureController::getAllStructures',
+            description: 'Liste des structures',
+            openapi: new Operation(
+                summary: 'Liste des structures',
+                description: 'Liste des structures',
+            )
+        )
+    ]
+)]
+#[ORM\Entity(repositoryClass: StructureRepository::class)]
+class Structure
+{
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->animal = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
+    
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[Groups(['animal:read'])] 
+    private ?int $id = null;
+
+    #[Groups(['animal:read'])]
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $street = null;
+
+    #[ORM\Column]
+    private ?int $zip_code = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
+
+    #[ORM\Column]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private ?float $latitude = null;
+
+    #[ORM\Column]
+    private ?float $longitude = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure',cascade: ['persist'])]
+    private Collection $users; 
+
+    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Animal::class)]
+    private Collection $animal;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(enumType: StructureType::class)]
+    private ?StructureType $structureType = null;
+
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): static
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?int
+    {
+        return $this->zip_code;
+    }
+
+    public function setZipCode(int $zip_code): static
+    {
+        $this->zip_code = $zip_code;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): static
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): static
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setStructureId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getStructure() === $this) {
+                $user->setStructure(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimal(): Collection
+    {
+    
+        return $this->animal;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animal->contains($animal)) {
+            $this->animal->add($animal);
+            $animal->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): static
+    {
+      
+        if ($this->animal->removeElement($animal)) {
+            // set the owning side to null (unless already changed)
+            if ($animal->getStructure() === $this) {
+                $animal->setStructure(null);
+            }
+        }
+
+        return $this;
+    }
+    
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getStructureType(): ?structureType
+    {
+        return $this->structureType;
+    }
+
+    public function setStructureType(StructureType $structureType): static
+    {
+    
+        $this->structureType = $structureType;
+      
+
+        return $this;
+
+        
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+}

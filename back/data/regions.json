@@ -1,0 +1,148 @@
+{
+  "regions": [
+    {
+      "nom": "Auvergne-Rhône-Alpes",
+      "code": "84",
+      "centre": {
+        "latitude": 45.4472,
+        "longitude": 4.8506
+      }
+    },
+    {
+      "nom": "Bourgogne-Franche-Comté",
+      "code": "27",
+      "centre": {
+        "latitude": 47.2805,
+        "longitude": 4.9994
+      }
+    },
+    {
+      "nom": "Bretagne",
+      "code": "53",
+      "centre": {
+        "latitude": 48.2020,
+        "longitude": -2.9326
+      }
+    },
+    {
+      "nom": "Centre-Val de Loire",
+      "code": "24",
+      "centre": {
+        "latitude": 47.7516,
+        "longitude": 1.6751
+      }
+    },
+    {
+      "nom": "Corse",
+      "code": "94",
+      "centre": {
+        "latitude": 42.0396,
+        "longitude": 9.0129
+      }
+    },
+    {
+      "nom": "Grand Est",
+      "code": "44",
+      "centre": {
+        "latitude": 48.6999,
+        "longitude": 6.1878
+      }
+    },
+    {
+      "nom": "Hauts-de-France",
+      "code": "32",
+      "centre": {
+        "latitude": 50.4801,
+        "longitude": 2.7937
+      }
+    },
+    {
+      "nom": "Île-de-France",
+      "code": "11",
+      "centre": {
+        "latitude": 48.8499,
+        "longitude": 2.6370
+      }
+    },
+    {
+      "nom": "Normandie",
+      "code": "28",
+      "centre": {
+        "latitude": 48.8798,
+        "longitude": 0.1712
+      }
+    },
+    {
+      "nom": "Nouvelle-Aquitaine",
+      "code": "75",
+      "centre": {
+        "latitude": 45.7091,
+        "longitude": 0.6265
+      }
+    },
+    {
+      "nom": "Occitanie",
+      "code": "76",
+      "centre": {
+        "latitude": 43.8927,
+        "longitude": 2.0444
+      }
+    },
+    {
+      "nom": "Pays de la Loire",
+      "code": "52",
+      "centre": {
+        "latitude": 47.7632,
+        "longitude": -0.3299
+      }
+    },
+    {
+      "nom": "Provence-Alpes-Côte d'Azur",
+      "code": "93",
+      "centre": {
+        "latitude": 43.9352,
+        "longitude": 6.0679
+      }
+    },
+    {
+      "nom": "Guadeloupe",
+      "code": "01",
+      "centre": {
+        "latitude": 16.2650,
+        "longitude": -61.5510
+      }
+    },
+    {
+      "nom": "Martinique",
+      "code": "02",
+      "centre": {
+        "latitude": 14.6415,
+        "longitude": -61.0242
+      }
+    },
+    {
+      "nom": "Guyane",
+      "code": "03",
+      "centre": {
+        "latitude": 3.9339,
+        "longitude": -53.1258
+      }
+    },
+    {
+      "nom": "La Réunion",
+      "code": "04",
+      "centre": {
+        "latitude": -21.1151,
+        "longitude": 55.5364
+      }
+    },
+    {
+      "nom": "Mayotte",
+      "code": "06",
+      "centre": {
+        "latitude": -12.8275,
+        "longitude": 45.1662
+      }
+    }
+  ]
+}

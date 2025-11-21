@@ -1,0 +1,38 @@
+import React from 'react';
+import Column from '@/Components/column/Column';
+import { Column as ColumnData } from '@/types/column';
+
+interface DoubleColumnsProps {
+    columns: [ColumnData, ColumnData]; // Tuple de 2 éléments exactement
+}
+
+const DoubleColumns = ({ columns }: DoubleColumnsProps) => {
+    const displayInMobileDevice = (columns: ColumnData[]): React.ReactNode => {
+        const reorderColums: ColumnData[] = [];
+        columns.forEach((column) => {
+            if (column.picture) {
+                reorderColums.unshift(column);
+            } else {
+                reorderColums.push(column);
+            }
+        });
+        return reorderColums.map((column, index) => {
+            return <Column key={index} {...column} />;
+        });
+    };
+
+    return (
+        <>
+            <div className="double-columns-container hidden lg:flex">
+                {columns.map((column, index) => {
+                    return <Column key={index} {...column} />;
+                })}
+            </div>
+            <div className="double-columns-container flex-col px-3 lg:hidden">
+                {displayInMobileDevice(columns)}
+            </div>
+        </>
+    );
+};
+
+export default DoubleColumns;

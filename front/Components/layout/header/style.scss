@@ -1,0 +1,13 @@
+ul {
+    a {
+        position: relative;
+        &:hover,
+        &:focus {
+            &::before {
+                content: url('/assets/icons/patte.svg');
+                position: absolute;
+                left: -20px;
+            }
+        }
+    }
+}

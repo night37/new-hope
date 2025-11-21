@@ -1,0 +1,25 @@
+.autocomplete_container {
+    :nth-child(3) {
+        width: 100%;
+    }
+    * {
+        border-radius: 10px;
+    }
+    span[class$='indicatorSeparator'] {
+        display: none;
+    }
+    div[class$='indicatorContainer'] {
+        svg {
+            display: none;
+        }
+    }
+    div[class$='placeholder'] {
+        width: max-content;
+    }
+    div[class$='control'] {
+        height: inherit;
+        border: none;
+        box-shadow: none;
+        max-width: 90%;
+    }
+}

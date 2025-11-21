@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --font-caveat: 'Caveat', cursive;
+    --font-handlee: 'Handlee', cursive;
+}
+
+.font-caveat {
+    font-family: var(--font-caveat);
+}
+
+.font-handlee {
+    font-family: var(--font-handlee);
+}
+
+.text-small {
+    font-size: 14px;
+}
+
+.text-base {
+    font-size: 16px;
+}
+
+.text-large {
+    font-size: 20px;
+}
+
+.text-xl {
+    font-size: 24px;
+}
+
+.text-2xl {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 38px;
+}
+
+p {
+    font-size: 20px;
+}

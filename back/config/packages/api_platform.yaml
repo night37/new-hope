@@ -1,0 +1,19 @@
+api_platform:
+    title: 'new hope API'
+    version: '1.0.0'
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+        html: ['text/html']
+    docs_formats:
+        jsonld: ['application/ld+json']
+        jsonopenapi: ['application/vnd.openapi+json']
+        html: ['text/html']
+    # Enable GraphQL if needed
+    graphql:
+        enabled: true
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
