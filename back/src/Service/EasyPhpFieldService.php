@@ -87,12 +87,20 @@ class EasyPhpFieldService
   public static function BooleanField(string $fieldName, string $fieldLabel,  $data = null): BooleanField
   {
     $booleanField = BooleanField::new($fieldName, $fieldLabel);
+
     if ($data) {
       $booleanField->setFormTypeOptions([
         'data' => $data,
       ]);
       $booleanField->hideOnIndex();
     }
+    $booleanField->setFormTypeOptions([
+      'data' => $data,
+      'attr' => [
+        'class' => 'form-switch',
+        'style' => 'width: 48px; height: 24px;'
+      ]
+    ]);
     return $booleanField;
   }
 

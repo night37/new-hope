@@ -30,20 +30,21 @@ class StructureFixtures extends Fixture
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
             $structure->setIsActive($faker->randomElement([true, false]));
-            $structure->setStructureType($faker->randomElement([                
+            $structure->setStructureType($faker->randomElement([
                 StructureType::Refuge,
                 StructureType::Association,
                 StructureType::Famille_d_accueil,
                 StructureType::Veterinaire,
                 StructureType::Autre
             ]));
-            
+            $structure->setPassword($faker->password());
+
             $manager->persist($structure);
-            
+
             // Ajouter une référence individuelle pour chaque structure
             $this->addReference(self::STRUCTURE_REFERENCE . $i, $structure);
         }
-        
+
         $manager->flush();
     }
 }

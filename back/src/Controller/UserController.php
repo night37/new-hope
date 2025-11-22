@@ -54,7 +54,7 @@ final class UserController extends AbstractController
                 $this->emailService->sendEmailConfirmation($user, false);
                 $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
             } catch (UniqueConstraintViolationException $e) {
-                $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
+                $this->addFlash('error', 'Une erreur est survenue lors de la creation du compte.');
             }
             return $this->redirectToRoute('app_login');
         }

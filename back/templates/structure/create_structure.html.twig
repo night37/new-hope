@@ -16,6 +16,12 @@ justify-center" style="background-image: url('{{
     <p class="text-green-700">{{ successMessage }}</p>
   </div>
   {% endfor %}
+    <p class="text-sm text-gray-600 mb-4 mt-4">
+    Vous avez un compte ?&nbsp;
+    <a href="{{ path('app_login') }}" class="text-blue-600 hover:text-blue-500"
+      >Se connecter</a
+    >
+  </p>
     <div class="mb-4">
         {{ form_start(form )}}
             {{ form_widget(form, {attr: {"class": "gap-4 flex flex-col"}}) }}

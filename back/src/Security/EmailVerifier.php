@@ -18,33 +18,31 @@ class EmailVerifier
         private MailerInterface $mailer,
         private EntityManagerInterface $entityManager,
         private ResetPasswordHelperInterface $resetPasswordHelper,
-    ) {
-    }
+    ) {}
 
-    public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email, bool $sendResetPassword ): void
+    public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email, bool $sendResetPassword): void
     {
-        
-       
+
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
             $user->getId(),
             $user->getEmail(),
-            ['id' => $user->getId()] 
-            
+            ['id' => $user->getId()]
+
         );
+
         $context = $email->getContext();
         $context['signedUrl'] = $signatureComponents->getSignedUrl();
         $context['expiresAt'] = $signatureComponents->getExpiresAt();
         $context['user'] = $user;
         $context['sendResetPassword'] = $sendResetPassword;
-        $context['sendResetPassword'] = $sendResetPassword;
-        $context['user'] = $user;
 
 
-        if($sendResetPassword) {
+
+        if ($sendResetPassword) {
             $context['resetToken'] = $this->resetPasswordHelper->generateResetToken($user);
         }
-        
+
 
 
 
@@ -52,7 +50,4 @@ class EmailVerifier
 
         $this->mailer->send($email);
     }
-
-
-   
 }

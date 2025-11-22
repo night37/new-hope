@@ -5,27 +5,28 @@ namespace App\Controller;
 
 
 use App\Entity\Structure;
+use App\Form\StructureType;
+use App\Service\EmailService;
 use App\Service\LocationService;
+use App\Service\AutocompleteService;
+use App\Repository\StructureRepository;
+use function PHPUnit\Framework\isEmpty;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\RequestCreateStructureFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\AutocompleteService;
-use App\Repository\StructureRepository;
-
-use function PHPUnit\Framework\isEmpty;
 
 final class StructureController extends AbstractController
 {
 
 
     public function __construct(
-        private LocationService $locationService
-        )
-        {}
+        private LocationService $locationService,
+        private EmailService $emailService
+    ) {}
 
 
     #[Route('/structure', name: 'app_structure')]
@@ -36,29 +37,35 @@ final class StructureController extends AbstractController
         ]);
     }
 
-    #[Route('/demande-creation-struture', name: 'app_create_structure')]
+    #[Route('/demande-creation-structure', name: 'app_create_structure')]
     public function createStructureRequest(Request $request, EntityManagerInterface $entityManager): Response
     {
         $structure = new Structure();
-        $form = $this->createForm(RequestCreateStructureFormType::class);
+        $form = $this->createForm(StructureType::class, $structure);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $structure = $form->getData();
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
             $structure->setIsActive(false);
+            $structure->setIsVerified(false);
+            $structure->setPassword(password_hash($structure->getPassword(), PASSWORD_DEFAULT));
+
             $this->locationService->getCoordinates($structure);
             try {
                 $entityManager->persist($structure);
                 $entityManager->flush();
+
+                $this->emailService->sendEmailConfirmation($structure, false);
+                $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
             } catch (UniqueConstraintViolationException $e) {
-                $this->addFlash('error', 'Cette structure existe déjà. Veuillez en choisir une autre.');
+                $this->addFlash('error', 'Une erreur est survenue lors de la création de la structure.');
             }
-            return $this->redirectToRoute('app_create_structure');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('structure/create_structure.html.twig', [
-            'controller_name' => 'StructureController',
-            'form' => $form->createView(),
+            'form' => $form
         ]);
     }
 
@@ -86,16 +93,16 @@ final class StructureController extends AbstractController
         return $this->json($results, Response::HTTP_OK);
     }
 
-    #[Route('api/getAllStructures', name: "api_structure_get_all_structures", methods:['GET'])]
-    public function  getAllStructures(StructureRepository $structureRepository) {
+    #[Route('api/getAllStructures', name: "api_structure_get_all_structures", methods: ['GET'])]
+    public function  getAllStructures(StructureRepository $structureRepository)
+    {
         $response = $structureRepository->getAllStructures();
-        if(isEmpty($response)) {
-        return $this->json([
-            'message' => 'display filters structures result',
-            'timestamp' => time(),
-            'structure' => $response,
-        ], 200, [], ['groups' => 'structure:read']);
+        if (isEmpty($response)) {
+            return $this->json([
+                'message' => 'display filters structures result',
+                'timestamp' => time(),
+                'structure' => $response,
+            ], 200, [], ['groups' => 'structure:read']);
         }
     }
-
 }

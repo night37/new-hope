@@ -22,15 +22,7 @@ class UserCrudService
         if ($isAdmin) {
 
             $fields[] = EasyPhpFieldService::ChoiceField('role', 'roles', 'Rôle', false);
-            $fields[] = EasyPhpFieldService::TextField('structure', 'Structure', false);
             $fields[] = EasyPhpFieldService::BooleanField('isVerified', 'Vérifié');
-
-            $fields[] = AssociationField::new('structure', 'Structure')
-                ->setRequired(false)
-                ->autocomplete();
-        }
-        if ($selectedUser && $selectedUser->getId() !== null && !$isAdmin) {
-            $fields[] = EasyPhpFieldService::TextField('structure', 'Structure', true);
         }
         $fields[] = EasyPhpFieldService::PasswordField();
 

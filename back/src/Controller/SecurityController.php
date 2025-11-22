@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\EmailService;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
+use App\Repository\StructureRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,13 +50,12 @@ class SecurityController extends AbstractController
         $baseUrl = $request->getSchemeAndHttpHost();
         $basePath = $request->getBasePath();
 
-        if ( $this->getUser()) {
+        if ($this->getUser()) {
             if (!$user->isVerified()) {
                 return $this->emailService->sendVerificationEmail($user->getEmail());
-            }else if (!$user->isActive()){
-                $this->emailService->displayMessage('danger',"Votre compte n'est pas activé, veuillez contacter l'administrateur");
+            } elseif (!$user->isActive()) {
+                $this->emailService->displayMessage('danger', "Votre compte n'est pas activé, veuillez contacter l'administrateur");
                 return new RedirectResponse('/');
-
             }
             return new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
         }
@@ -63,7 +63,11 @@ class SecurityController extends AbstractController
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
 
-        if($error){
+
+
+
+        if ($error) {
+            dd($error);
             $this->addFlash('danger', 'Identifiants invalides.');
         }
 
@@ -82,10 +86,8 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/resend-verification-email-link', name: 'app_resend_verification_email_link')]
-    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository): Response
+    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository, StructureRepository $structureRepository): Response
     {
-        return $this->emailService->resendVerificationEmail($request, $userRepository);
+        return $this->emailService->resendVerificationEmail($request, $userRepository, $structureRepository);
     }
-
 }
-
