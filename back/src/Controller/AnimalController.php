@@ -29,7 +29,7 @@ final class AnimalController extends AbstractController
     ) {}
 
 
-    #[Route('/api/animal/getAnimalsList', name: 'get_animals_list', methods: ['GET'], priority: 10)]
+    #[Route('animalsList', name: 'api_animal_filters_list', methods: ['GET'])]
     public function index(): Response
     {
 
