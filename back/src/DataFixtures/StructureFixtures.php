@@ -30,6 +30,7 @@ class StructureFixtures extends Fixture
             $structure->setCreatedAt(new \DateTimeImmutable());
             $structure->setUpdatedAt(new \DateTimeImmutable());
             $structure->setIsActive($faker->randomElement([true, false]));
+            $structure->setIsVerified($faker->randomElement([true, false]));
             $structure->setStructureType($faker->randomElement([
                 StructureType::Refuge,
                 StructureType::Association,

@@ -34,7 +34,7 @@ security:
       pattern: ^/api
       stateless: true
       provider: app_combined_provider
-      jwt: ~
+      # jwt: ~
 
     main:
       lazy: true
@@ -75,7 +75,7 @@ security:
     - { path: ^/animal, roles: [ROLE_ADMIN, ROLE_USER] }
     - { path: ^/structure, roles: [ROLE_ADMIN] }
     - { path: ^/structure/\d+/edit, roles: [ROLE_ADMIN, ROLE_STRUCTURE] }
-    - { path: ^/api/backoffice, roles: IS_AUTHENTICATED_FULLY }
+    # - { path: ^/api/backoffice, roles: IS_AUTHENTICATED_FULLY }
 when@test:
   security:
     password_hashers:

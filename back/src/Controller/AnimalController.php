@@ -25,7 +25,6 @@ final class AnimalController extends AbstractController
         private readonly AnimalService $animalService,
         private readonly AnimalRepository $animalRepository,
         private readonly EntityManagerInterface $entityManagerInterface,
-        private SerializerInterface $serializer
 
     ) {}
 
@@ -72,12 +71,6 @@ final class AnimalController extends AbstractController
     {
         $data = $request->query->all();
         $response = $this->animalRepository->findByFilters($data);
-        foreach ($response['data'] as $key => $value) {
-            $response['data'][$key]['structure'] = [
-                'name' => $value['structureName']
-            ];
-            unset($response['data'][$key]['structureName']);
-        }
 
         return $this->json([
             'message' => 'display filters animals result',
