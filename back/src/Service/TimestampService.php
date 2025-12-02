@@ -8,22 +8,18 @@ class TimestampService
 
   public function getCreatedAt($entityInstance): \DateTimeInterface
   {
-  
-      $now = new \DateTimeImmutable();
-      $entityInstance->setCreatedAt($now);
-      $entityInstance->setUpdatedAt($now);
-      return $entityInstance->getCreatedAt();
-    
+
+    $now = new \DateTimeImmutable();
+    $entityInstance->setCreatedAt($now);
+    $entityInstance->setUpdatedAt($now);
+    return $entityInstance->getCreatedAt();
   }
 
-    public function getupdatedAt($entityInstance): \DateTimeInterface
+  public function getupdatedAt($entityInstance): \DateTimeInterface
   {
-  
-      $now = new \DateTimeImmutable();
-      $entityInstance->setUpdatedAt($now);
-      return $entityInstance->getCreatedAt();
-    
+
+    $now = new \DateTimeImmutable();
+    $entityInstance->setUpdatedAt($now);
+    return $entityInstance->getCreatedAt();
   }
-
-
 }
