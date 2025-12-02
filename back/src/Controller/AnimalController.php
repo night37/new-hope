@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,10 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\DTO\Request\Animal\AnimalFilterDTO;
 use App\Service\AnimalService;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-
-
 
 #[Route('/animal', name: 'animal_index')]
 final class AnimalController extends AbstractController
@@ -25,7 +20,6 @@ final class AnimalController extends AbstractController
         private readonly AnimalService $animalService,
         private readonly AnimalRepository $animalRepository,
         private readonly EntityManagerInterface $entityManagerInterface,
-        private SerializerInterface $serializer
 
     ) {}
 
@@ -37,18 +31,9 @@ final class AnimalController extends AbstractController
         return $this->json([
             'message' => 'display all animals',
             'timestamp' => time(),
-            'animals' => $this->animalRepository->findAll(),
+            'animals' => $this->animalService->getAllAnimals(),
         ]);
     }
-
-    #[Route('/{id}', name: 'app_animal_show', methods: ['GET'])]
-    public function show(Animal $animal): Response
-    {
-        return $this->render('animal/show.html.twig', [
-            'animal' => $animal,
-        ]);
-    }
-
 
     #[Route('/{id}', name: 'app_animal_delete', methods: ['POST'])]
     public function delete(Animal $animal): Response
