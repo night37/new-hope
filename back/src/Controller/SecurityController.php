@@ -50,32 +50,33 @@ class SecurityController extends AbstractController
         $baseUrl = $request->getSchemeAndHttpHost();
         $basePath = $request->getBasePath();
 
-        if ($this->getUser()) {
+        $response = null;
+
+        if ($user) {
             if (!$user->isVerified()) {
-                return $this->emailService->sendVerificationEmail($user->getEmail());
+                $response = $this->emailService->sendVerificationEmail($user->getEmail());
             } elseif (!$user->isActive()) {
                 $this->emailService->displayMessage('danger', "Votre compte n'est pas activé, veuillez contacter l'administrateur");
-                return new RedirectResponse('/');
+                $response = new RedirectResponse('/');
+            } else {
+                $response = new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
             }
-            return new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
+        } else {
+            $error = $this->authenticationUtils->getLastAuthenticationError();
+            $lastUsername = $this->authenticationUtils->getLastUsername();
+
+            if ($error) {
+                $this->addFlash('danger', 'Identifiants invalides.');
+            }
+
+            $response = $this->render('security/login.html.twig', [
+                'email' => $lastUsername,
+                'error' => $error,
+                'target_path' => $request->getSession()->get('_security.main.target_path')
+            ]);
         }
 
-        $error = $this->authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $this->authenticationUtils->getLastUsername();
-
-
-
-
-        if ($error) {
-            dd($error);
-            $this->addFlash('danger', 'Identifiants invalides.');
-        }
-
-        return $this->render('security/login.html.twig', [
-            'email' => $lastUsername,
-            'error' => $error,
-            'target_path' => $request->getSession()->get('_security.main.target_path')
-        ]);
+        return $response;
     }
 
 
