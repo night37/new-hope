@@ -19,7 +19,7 @@ use ApiPlatform\OpenApi\Model\Operation;
     operations: [
         new Get(
             name: 'autocomplete_structure',
-            uriTemplate:'/backoffice/structures/autocomplete',
+            uriTemplate: '/backoffice/structures/autocomplete',
             controller: 'App\Controller\StructureController::autocomplete',
             description: 'autocomplete structure address',
             openapi: new Operation(
@@ -94,11 +94,11 @@ class Structure
     {
         return $this->name ?? '';
     }
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['animal:read'])] 
+    #[Groups(['animal:read'])]
     private ?int $id = null;
 
     #[Groups(['animal:read'])]
@@ -132,8 +132,8 @@ class Structure
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure',cascade: ['persist'])]
-    private Collection $users; 
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'structure', cascade: ['persist'])]
+    private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Animal::class)]
     private Collection $animal;
@@ -277,7 +277,6 @@ class Structure
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setStructureId($this);
         }
 
         return $this;
@@ -301,7 +300,7 @@ class Structure
      */
     public function getAnimal(): Collection
     {
-    
+
         return $this->animal;
     }
 
@@ -317,7 +316,7 @@ class Structure
 
     public function removeAnimal(Animal $animal): static
     {
-      
+
         if ($this->animal->removeElement($animal)) {
             // set the owning side to null (unless already changed)
             if ($animal->getStructure() === $this) {
@@ -327,7 +326,7 @@ class Structure
 
         return $this;
     }
-    
+
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -360,13 +359,11 @@ class Structure
 
     public function setStructureType(StructureType $structureType): static
     {
-    
+
         $this->structureType = $structureType;
-      
+
 
         return $this;
-
-        
     }
 
     public function isActive(): ?bool
