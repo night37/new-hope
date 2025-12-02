@@ -2,42 +2,49 @@
 
 namespace App\Repository;
 
+use App\Enum\Role;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Service\EmailService;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $entityManager, private EmailService $emailService)
     {
         parent::__construct($registry, User::class);
     }
 
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function saveUser(User $userData)
+    {
 
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        // $form = $this->createForm(UserType::class, $user);
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        $userData->setRoles(Role::ROLE_USER);
+        $userData->setIsVerified(false);
+        $userData->setIsActive(false);
+        $userData->setCreatedAt(new \DateTimeImmutable());
+        $userData->setUpdatedAt(new \DateTimeImmutable());
+        $userData->setPassword(password_hash($userData->getPassword(), PASSWORD_DEFAULT));
+
+
+
+        try {
+            $this->entityManager->persist($userData);
+            $this->entityManager->flush();
+
+            $this->emailService->sendEmailConfirmation($userData, false);
+            $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
+            return $this->redirectToRoute('app_login');
+        } catch (UniqueConstraintViolationException $e) {
+            $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
+        }
+        // }
+    }
 }

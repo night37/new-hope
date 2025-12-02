@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Enum\Role;
+use App\Entity\User;
 use App\Form\UserType;
+use App\Service\UserService;
 use App\Service\EmailService;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
@@ -21,43 +21,33 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 final class UserController extends AbstractController
 {
     private $emailService;
+    private $userService;
 
 
-    public function __construct(private EmailVerifier $emailVerifier, private VerifyEmailHelperInterface $verifyEmailHelper, EmailService $emailService)
+    public function __construct(UserService $userService, private EmailVerifier $emailVerifier, private VerifyEmailHelperInterface $verifyEmailHelper, EmailService $emailService)
     {
 
         $this->emailService = $emailService;
+        $this->userService = $userService;
     }
 
 
 
 
     #[Route('/inscription', name: 'app_register')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(Role::ROLE_USER);
-            $user->setIsVerified(false);
-            $user->setIsActive(false);
-            $user->setCreatedAt(new \DateTimeImmutable());
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
-            $user = $form->getData();
+            $userData = $form->getData();
 
-            try {
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->emailService->sendEmailConfirmation($user, false);
-                $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
-            } catch (UniqueConstraintViolationException $e) {
-                $this->addFlash('error', 'Cet email existe déjà. Veuillez en choisir un autre.');
-            }
-            return $this->redirectToRoute('app_login');
+            $this->userService->register($userData);
         }
+
+
+
         return $this->render('user/index.html.twig', [
             'form' => $form
         ]);

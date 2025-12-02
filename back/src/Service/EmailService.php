@@ -46,7 +46,7 @@ class EmailService
             $this->sendVerificationEmail($user->getEmail());
         } elseif (!$user->isActive()) {
             $this->displayMessage('danger', "Votre compte n'est pas activé, veuillez contacter l'administrateur");
-            $this->redirectService->redirectToHome();
+            $this->redirectService->redirectToPath('/');
         } else {
             $this->redirectService->redirectToUserEditPage($user, $baseUrl, $basePath);
         }
@@ -110,7 +110,7 @@ class EmailService
         return new RedirectResponse($this->router->generate('app_login'));
     }
 
-    public function sendEmailConfirmation($user, ?bool $sendResetPassword): void
+    public function sendEmailConfirmation(User $user, ?bool $sendResetPassword): void
     {
         $this->emailVerifier->sendEmailConfirmation(
             'app_verify_email',
