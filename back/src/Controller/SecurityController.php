@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\EmailService;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
-use App\Repository\StructureRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,40 +42,29 @@ class SecurityController extends AbstractController
 
 
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(Request $request): Response
+    public function login(Request $request): Response | RedirectResponse
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
         $baseUrl = $request->getSchemeAndHttpHost();
         $basePath = $request->getBasePath();
 
-        $response = null;
-
-        if ($user) {
-            if (!$user->isVerified()) {
-                $response = $this->emailService->sendVerificationEmail($user->getEmail());
-            } elseif (!$user->isActive()) {
-                $this->emailService->displayMessage('danger', "Votre compte n'est pas activé, veuillez contacter l'administrateur");
-                $response = new RedirectResponse('/');
-            } else {
-                $response = new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
-            }
-        } else {
-            $error = $this->authenticationUtils->getLastAuthenticationError();
-            $lastUsername = $this->authenticationUtils->getLastUsername();
-
-            if ($error) {
-                $this->addFlash('danger', 'Identifiants invalides.');
-            }
-
-            $response = $this->render('security/login.html.twig', [
-                'email' => $lastUsername,
-                'error' => $error,
-                'target_path' => $request->getSession()->get('_security.main.target_path')
-            ]);
+        if ($this->getUser()) {
+            return $this->emailService->verifieEmail($user, $baseUrl, $basePath);
         }
 
-        return $response;
+        $error = $this->authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
+
+        if ($error) {
+            $this->addFlash('danger', 'Identifiants invalides.');
+        }
+
+        return $this->render('security/login.html.twig', [
+            'email' => $lastUsername,
+            'error' => $error,
+            'target_path' => $request->getSession()->get('_security.main.target_path')
+        ]);
     }
 
 
@@ -87,8 +75,8 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/resend-verification-email-link', name: 'app_resend_verification_email_link')]
-    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository, StructureRepository $structureRepository): Response
+    public function resendVerificationEmailLink(Request $request, UserRepository $userRepository): Response
     {
-        return $this->emailService->resendVerificationEmail($request, $userRepository, $structureRepository);
+        return $this->emailService->resendVerificationEmail($request, $userRepository);
     }
 }
