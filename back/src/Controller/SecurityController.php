@@ -42,28 +42,21 @@ class SecurityController extends AbstractController
 
 
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(Request $request): Response
+    public function login(Request $request): Response | RedirectResponse
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
         $baseUrl = $request->getSchemeAndHttpHost();
         $basePath = $request->getBasePath();
 
-        if ( $this->getUser()) {
-            if (!$user->isVerified()) {
-                return $this->emailService->sendVerificationEmail($user->getEmail());
-            }else if (!$user->isActive()){
-                $this->emailService->displayMessage('danger',"Votre compte n'est pas activé, veuillez contacter l'administrateur");
-                return new RedirectResponse('/');
-
-            }
-            return new RedirectResponse($baseUrl . $basePath . '/backoffice/user/' . $user->getId() . '/edit');
+        if ($this->getUser()) {
+            return $this->emailService->verifieEmail($user, $baseUrl, $basePath);
         }
 
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
 
-        if($error){
+        if ($error) {
             $this->addFlash('danger', 'Identifiants invalides.');
         }
 
@@ -86,6 +79,4 @@ class SecurityController extends AbstractController
     {
         return $this->emailService->resendVerificationEmail($request, $userRepository);
     }
-
 }
-

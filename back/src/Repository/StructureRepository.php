@@ -22,18 +22,14 @@ class StructureRepository extends ServiceEntityRepository
         $this->locationService = $locationService;
     }
 
+    public function getAllStructures(): array | string
+    {
 
-
-
-        public function getAllStructures(): array | string
-        {
-    
-            return $this->createQueryBuilder('s')
-                ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude','s.structureType','s.email')
-                ->where('s.isActive = :active')
-                ->setParameter('active', 1)
-                ->getQuery()
-                ->getResult();
-                
-        }
+        return $this->createQueryBuilder('s')
+            ->select('s.id', 's.name', 's.street', 's.city', 's.latitude', 's.longitude', 's.structureType', 's.email')
+            ->where('s.isActive = :active')
+            ->setParameter('active', 1)
+            ->getQuery()
+            ->getResult();
+    }
 }
