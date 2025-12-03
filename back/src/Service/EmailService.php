@@ -40,15 +40,16 @@ class EmailService
         $this->redirectService = $redirectService;
     }
 
-    public function verifieEmail(User $user, string $baseUrl, $basePath): void
+    public function verifieEmail(User $user, string $baseUrl, $basePath): ?RedirectResponse
     {
         if (!$user->isVerified()) {
-            $this->sendVerificationEmail($user->getEmail());
+            return $this->sendVerificationEmail($user->getEmail());
         } elseif (!$user->isActive()) {
             $this->displayMessage('danger', "Votre compte n'est pas activé, veuillez contacter l'administrateur");
-            $this->redirectService->redirectToPath('/');
+            return $this->redirectService->redirectToPath('/');
         } else {
-            $this->redirectService->redirectToUserEditPage($user, $baseUrl, $basePath);
+
+            return  $this->redirectService->redirectToUserEditPage($user, $baseUrl, $basePath);
         }
     }
 

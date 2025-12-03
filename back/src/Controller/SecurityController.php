@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
 
 
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(Request $request): Response
+    public function login(Request $request): Response | RedirectResponse
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
@@ -50,7 +50,7 @@ class SecurityController extends AbstractController
         $basePath = $request->getBasePath();
 
         if ($this->getUser()) {
-            $this->emailService->verifieEmail($user, $baseUrl, $basePath);
+            return $this->emailService->verifieEmail($user, $baseUrl, $basePath);
         }
 
         $error = $this->authenticationUtils->getLastAuthenticationError();

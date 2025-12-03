@@ -22,11 +22,10 @@ class StructureCrudController extends AbstractCrudController
 
 
     public function __construct(
-    private TimestampService $timestampService,
-    private LocationService $locationService,
-    private StructureCrudService $structureCrudService
-    )
-    {}
+        private TimestampService $timestampService,
+        private LocationService $locationService,
+        private StructureCrudService $structureCrudService
+    ) {}
 
 
     public static function getEntityFqcn(): string
@@ -45,7 +44,7 @@ class StructureCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-     
+
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
             $this->timestampService->getCreatedAt($entityInstance);
@@ -53,18 +52,16 @@ class StructureCrudController extends AbstractCrudController
         if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
             $this->locationService->getCoordinates($entityInstance);
         }
-        
-        parent::persistEntity($entityManager, $entityInstance);
 
+        parent::persistEntity($entityManager, $entityInstance);
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-     
-      
+
+
         if (method_exists($entityInstance, 'setUpdatedAt')) {
             $this->timestampService->getUpdatedAt($entityInstance);
-            
         }
 
         if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
@@ -79,11 +76,10 @@ class StructureCrudController extends AbstractCrudController
         if (!$entityInstance instanceof Structure) {
             return;
         }
-      
+
         try {
             parent::deleteEntity($entityManager, $entityInstance);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('danger', 'Impossible de supprimer cette structure car des animaux lui sont associés.');
         }
     }
@@ -92,9 +88,4 @@ class StructureCrudController extends AbstractCrudController
         return $assets
             ->addCssFile(Asset::new('css/admin/fields/fields.css'));
     }
-
-
-    
-
-    
 }
