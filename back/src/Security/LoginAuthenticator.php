@@ -19,8 +19,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
-use function PHPUnit\Framework\isEmpty;
-
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
@@ -31,63 +29,65 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     private UserRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository , UrlGeneratorInterface $urlGenerator)
+    public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator)
     {
         $this->userRepository = $userRepository;
         $this->urlGenerator = $urlGenerator;
     }
 
     public function authenticate(Request $request): Passport
-{
-    $email = $request->request->get('email', '');
-    $password = $request->request->get('password', '');
+    {
+        $email = $request->request->get('email', '');
+        $password = $request->request->get('password', '');
 
-    if (!$email || !$password) {
-        throw new CustomUserMessageAuthenticationException('Email ou mot de passe manquant');
+        if (!$email || !$password) {
+            throw new CustomUserMessageAuthenticationException('Email ou mot de passe manquant');
+        }
+
+        return new Passport(
+            new UserBadge($email, function ($userIdentifier) {
+                $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
+
+                if (!$user) {
+                    throw new CustomUserMessageAuthenticationException('Email ou mot de passe incorrect.');
+                }
+
+                return $user;
+            }),
+            new PasswordCredentials($password),
+            [
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+                new RememberMeBadge(),
+            ]
+        );
     }
 
-    return new Passport(
-        new UserBadge($email, function ($userIdentifier) {
-            $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
 
-            if (!$user) {
-                throw new CustomUserMessageAuthenticationException('Email ou mot de passe incorrect.');
-            }
-
-            return $user;
-        }),
-        new PasswordCredentials($password),
-        [
-            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-        ]
-    );
-}
-
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): Response | RedirectResponse
     {
         $user = $token->getUser();
 
         if ($user instanceof User && !$user->isVerified() && $request instanceof Request) {
-            $request->getSession()->getFlashBag()->add('danger',
-            'Vous devez vérifier votre email avant de pouvoir accéder à votre compte.'
-        );
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
+            $request->getSession()->getFlashBag()->add(
+                'danger',
+                'Vous devez vérifier votre email avant de pouvoir accéder à votre compte.'
+            );
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
         $baseUrl = $_ENV['APP_BASE_URL'] ?? $request->getSchemeAndHttpHost();
         if ($targetPath = $request->getSession()->get('_security.main.path')) {
             $request->getSession()->remove('_security.main.target_path');
             return new RedirectResponse($targetPath);
         }
-        if(isset($baseUrl) && !isEmpty($user)  && $user instanceof User) {
+
+        if (isset($baseUrl) && $user !== null && $user instanceof User) {
 
             return new RedirectResponse($baseUrl . '/backoffice/user/' . $user->getId() . '/edit');
         }
-            return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
-    }
+}
