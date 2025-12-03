@@ -25,12 +25,11 @@ final class AnimalController extends AbstractController
         private readonly AnimalService $animalService,
         private readonly AnimalRepository $animalRepository,
         private readonly EntityManagerInterface $entityManagerInterface,
-        private SerializerInterface $serializer
 
     ) {}
 
 
-    #[Route('/api/animal/getAnimalsList', name: 'get_animals_list', methods: ['GET'], priority: 10)]
+    #[Route('animalsList', name: 'api_animal_filters_list', methods: ['GET'])]
     public function index(): Response
     {
 
@@ -72,12 +71,6 @@ final class AnimalController extends AbstractController
     {
         $data = $request->query->all();
         $response = $this->animalRepository->findByFilters($data);
-        foreach ($response['data'] as $key => $value) {
-            $response['data'][$key]['structure'] = [
-                'name' => $value['structureName']
-            ];
-            unset($response['data'][$key]['structureName']);
-        }
 
         return $this->json([
             'message' => 'display filters animals result',

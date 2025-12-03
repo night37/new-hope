@@ -1,2 +1,7 @@
 @import "./associationField.css";
 
+.field-boolean{
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+}

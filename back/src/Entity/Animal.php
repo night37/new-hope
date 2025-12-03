@@ -37,7 +37,7 @@ use ApiPlatform\OpenApi\Model\Operation;
         ),
         new Get(
             name: 'api_animals_list',
-            uriTemplate: '/backoffice/animal/get_animals_list',
+            uriTemplate: '/backoffice/animal/animalsList',
             controller: 'App\Controller\AnimalController::index',
             description: 'Get the list of animals',
             openapi: new Operation(
@@ -64,7 +64,7 @@ use ApiPlatform\OpenApi\Model\Operation;
                             'example' => 'chien/chat'
                         ]
                     ],
-                                        [
+                    [
                         'name' => 'option',
                         'in' => 'query',
                         'description' => 'race',
@@ -146,7 +146,7 @@ use ApiPlatform\OpenApi\Model\Operation;
                 summary: 'Liste aléatoire des derniers animaux',
                 description: 'Récupère une liste aléatoire des derniers animaux'
             )
-            ),
+        ),
         new Get(
             name: 'api_find_by_id',
             uriTemplate: '/backoffice/animal/findById',
@@ -154,7 +154,7 @@ use ApiPlatform\OpenApi\Model\Operation;
             description: 'find animal by id',
             openapi: new Operation(
                 summary: 'trouver un animal avec son id',
-                 parameters: [
+                parameters: [
                     [
                         'name' => 'option',
                         'in' => 'query',
@@ -181,7 +181,6 @@ class Animal
     public function __construct()
     {
         $this->created_at = new \DateTime();
-
     }
 
 
@@ -202,7 +201,7 @@ class Animal
     #[ORM\Column]
     private ?int $age = null;
 
-    #[Groups(['animal:read'])] 
+    #[Groups(['animal:read'])]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure = null;
@@ -257,7 +256,7 @@ class Animal
 
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt ;
+    private ?\DateTimeImmutable $createdAt;
 
 
     #[ORM\Column]
@@ -352,12 +351,12 @@ class Animal
 
     public function setSize(?Size $size): self
     {
-          // Si une chaîne est fournie au lieu d'une Enum, on la convertit en instance de l'Enum
+        // Si une chaîne est fournie au lieu d'une Enum, on la convertit en instance de l'Enum
         if (is_string($size)) {
             $size = Size::from($size); // Convertir chaîne -> Enum (throw si invalide)
         }
 
-    // Assigner l'instance (ou null) à la propriété
+        // Assigner l'instance (ou null) à la propriété
         $this->size = $size;
 
         return $this;
@@ -374,7 +373,7 @@ class Animal
             $size = Color::from($color); // Convertir chaîne -> Enum (throw si invalide)
         }
 
-    // Assigner l'instance (ou null) à la propriété
+        // Assigner l'instance (ou null) à la propriété
         $this->color = $color;
 
         return $this;
@@ -386,13 +385,13 @@ class Animal
     public function getAffinity(): array
     {
         // Transforme les valeurs en instances d'Affinity
-        return array_map(fn (string $value) => Affinity::from($value), $this->affinity);
+        return array_map(fn(string $value) => Affinity::from($value), $this->affinity);
     }
 
     public function setAffinity(array $affinity): self
     {
         // Convertit les instances d'Affinity en leurs valeurs pour stockage en BDD
-        $this->affinity = array_map(fn (Affinity $enum) => $enum->value, $affinity);
+        $this->affinity = array_map(fn(Affinity $enum) => $enum->value, $affinity);
 
         return $this;
     }
@@ -408,7 +407,7 @@ class Animal
             $adoption_status = AdoptionStatus::from($adoption_status); // Convertir chaîne -> Enum (throw si invalide)
         }
 
-    // Assigner l'instance (ou null) à la propriété
+        // Assigner l'instance (ou null) à la propriété
         $this->adoption_status = $adoption_status;
 
         return $this;
@@ -421,7 +420,7 @@ class Animal
     {
         // Transforme les valeurs en instances de Breed
         // dd($this->breed);
-        return array_map(fn (string $value) => Breed::from($value), $this->breed);
+        return array_map(fn(string $value) => Breed::from($value), $this->breed);
     }
 
     public function setBreed(array $breed): self
@@ -431,11 +430,11 @@ class Animal
             if (is_string($enumOrString)) {
                 return Breed::from($enumOrString); // Convertit une chaîne en Breed
             }
-    
+
             if ($enumOrString instanceof Breed) {
                 return $enumOrString->value; // Conserve la valeur de l'instance
             }
-    
+
             throw new \InvalidArgumentException('Invalid breed specified.');
         }, $breed);
 
@@ -453,7 +452,7 @@ class Animal
             $type = Type::from($type); // Convertir chaîne -> Enum (throw si invalide)
         }
 
-    // Assigner l'instance (ou null) à la propriété
+        // Assigner l'instance (ou null) à la propriété
         $this->type = $type;
 
         return $this;
@@ -474,16 +473,16 @@ class Animal
 
     public function getImages(): array
     {
- 
+
         // Transforme les valeurs en instances d'Affinity
         return $this->images;
     }
 
     public function setImages(array $image): self
     {
-      //todo renvoyer le tableau des images
-      $this->images = $image;
-   
+        //todo renvoyer le tableau des images
+        $this->images = $image;
+
 
         return $this;
     }

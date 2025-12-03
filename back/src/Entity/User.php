@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity('email', message: 'Cet email est déjà utilisé. Veuillez en choisir un autre.')]
+#[UniqueEntity('email', message: 'Une erreur est survenu lors de la creation du compte.')]
 #[ApiResource(
     operations: [
         new Get(),
@@ -45,9 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    // #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?Structure $structure = null;
+
 
     #[ORM\Column(length: 100)]
     private ?string $name = null;
@@ -66,6 +66,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
 
 
@@ -95,7 +98,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
 
         if ((empty($password) || $password === '') && $this->password !== null) {
-            // Ne change pas le mot de passe existant
             return $this;
         }
 
@@ -113,18 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(Role|array $roles): self
     {
         $this->roles = [$roles->name];
-        return $this;
-    }
-
-    public function getStructure(): ?Structure
-    {
-        return $this->structure;
-    }
-
-    public function setStructure(?Structure $structure): static
-    {
-        $this->structure = $structure;
-
         return $this;
     }
 
@@ -203,6 +193,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -1,7 +1,8 @@
 'use server';
 
 async function getJwtToken() {
-    const response = await fetch(`https://new-hope.ddev.site/api/login_check`, {
+   
+    const response = await fetch(`${process.env.NEXT_PUBLIC_JWT_URL}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,7 +23,8 @@ async function getJwtToken() {
 export async function apiQuery(query: string) {
     const token = await getJwtToken();
 
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/${query}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${query}`;
+
     const response = await fetch(url, {
         method: 'GET',
         headers: {

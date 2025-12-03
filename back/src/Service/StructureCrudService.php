@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Service;
+
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Service\EasyPhpFieldService as EasyPhpField;
-use App\Enum\AdoptionStatus;
 
 
 
@@ -12,9 +12,10 @@ use App\Enum\AdoptionStatus;
 class StructureCrudService
 {
 
-    public function __construct( private UserPasswordHasherInterface $passwordHasher){}
+    public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
-    public function getFields(bool $isAdmin) {
+    public function getFields(bool $isAdmin)
+    {
         $fields =  [
             EasyPhpField::TextField('name', 'Nom de la structure'),
             EasyPhpField::ChoiceField('structureType', 'structureType', 'type de structure'),
@@ -31,8 +32,13 @@ class StructureCrudService
         if ($isAdmin) {
             $fields[] =  EasyPhpField::BooleanField('isActive', 'actif');
         }
+        dd($this);
+
+        // $random = random_bytes(10);
+        // $hashedPassword = $this->passwordHasher->hashPassword($selectedUser, $random);
+        // $selectedUser->setPassword($hashedPassword);
+
 
         return $fields;
     }
-
 }

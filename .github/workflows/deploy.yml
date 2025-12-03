@@ -1,7 +1,7 @@
 name: deploy
 on:
   push:
-    branches: [ preprod ]
+    branches: [preprod]
 
 jobs:
   backend:
@@ -10,32 +10,36 @@ jobs:
       run:
         working-directory: ./back
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        tools: composer:2.2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          tools: composer:2.2
 
-    - name: Create temporary .env for build
-      run: |
-        echo "APP_ENV=prod" > .env
-        echo "GEOLOCATION_URL=https://api-adresse.data.gouv.fr" >> .env
-        echo "AUTOCOMPLETE_API_BASE_URL=https://api-adresse.data.gouv.fr" >> .env
-        echo "MAILER_WEB_URL=https://example.com" >> .env
-        echo "MAILER_DSN=\"smtp://127.0.0.1:1025\"" >> .env
-        echo "APP_SECRET=dummy-secret-for-ci-only-$(date +%s)" >> .env
-        echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/fake.db" >> .env
+      - name: Create temporary .env for build
+        run: |
+          echo "APP_ENV=prod" > .env
+          echo "GEOLOCATION_URL=https://api-adresse.data.gouv.fr" >> .env
+          echo "AUTOCOMPLETE_API_BASE_URL=https://api-adresse.data.gouv.fr" >> .env
+          echo "MAILER_WEB_URL=https://example.com" >> .env
+          echo "MAILER_DSN=\"smtp://127.0.0.1:1025\"" >> .env
+          echo "APP_SECRET=dummy-secret-for-ci-only-$(date +%s)" >> .env
+          echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/fake.db" >> .env
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: ./back/vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: ./back/vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('back/composer.lock') }}
 
-    - name: Install Dependencies
-      run: composer install
-
-  
+      - name: Install Dependencies
+        run: composer install
+      - name: Install Assets
+        run: php bin/console assets:install
+      - name: Compile Assets
+        run: php bin/console asset-map:compile
+      - name: Cache Clear
+        run: php bin/console cache:clear

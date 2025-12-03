@@ -1,7 +1,12 @@
+
 {% block body %}
 <h1>Vérification de l'email</h1>
-
-<p>Bonjour {{ user.name }} {{ user.surname }},</p>
+<p>
+  Bonjour {{ user.name }}
+  {% if  user.surname is defined %}
+    {{ user.surname }}
+  {% endif %}
+,</p>
 <p>
   Merci de vous être inscrit sur notre site. Avant de pouvoir vous connecter,
   nous avons besoin de vérifier votre adresse email
@@ -16,7 +21,7 @@
   :
 </p>
 <p>
-  <strong>Ce lien est valide pendant {{ expiresAt|date('d/m/Y H:i') }}</strong>
+  <strong>Ce lien est valide pendant une heure</strong>
 </p>
 {% if sendResetPassword %}
   <a href="{{ url('app_reset_password', { token: resetToken.token }) }}"> définir un mot de passe </a>

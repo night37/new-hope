@@ -26,6 +26,7 @@ export default function AnimalForm() {
                 const filtersList = await animalFilters();
                 const arrayFilters: Filter[] = [];
                 if (filtersList) {
+                    console.log(filtersList);
                     for (const i in filtersList) {
                         const addIselectedToArray = filtersList[i].data.map((el: Filter) => {
                             return {
