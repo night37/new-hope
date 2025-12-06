@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AnimalCrudController extends AbstractCrudController
 {
 
-    public function __construct(private TimestampService $timestampService, private AnimalCrudService $animalCrudService){}
+    public function __construct(private TimestampService $timestampService, private AnimalCrudService $animalCrudService) {}
 
     public static function getEntityFqcn(): string
     {
@@ -28,24 +28,15 @@ class AnimalCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-      
-        $require = $pageName != "edit";
-        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
+
         $require = $pageName != "edit";
         $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true);
         return $this->animalCrudService->getFields($isAdmin, $require);
-        
     }
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
-            ->setEntityLabelInPlural('Animaux')
-            ->setEntityLabelInSingular('Animal')
-            ->setPageTitle('index', 'Animaux')
-            ->setPageTitle('new', 'Ajouter un animal')
-            ->setPageTitle('edit', 'Modifier un animal');
-
+        return $this->animalCrudService->setCrudOptions($crud);
     }
 
     public function configureAssets(Assets $assets): Assets
@@ -70,11 +61,9 @@ class AnimalCrudController extends AbstractCrudController
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if (method_exists($entityInstance, 'setUpdatedAt')) {
-            
+
             $this->timestampService->getUpdatedAt($entityInstance);
         }
         parent::updateEntity($entityManager, $entityInstance);
     }
-
-
 }
