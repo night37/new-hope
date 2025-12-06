@@ -2,16 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
-use App\Entity\Animal;
-use App\Entity\Structure;
+
 use Symfony\Component\HttpFoundation\Response;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Service\DashboardCrudService;
 
 
 #[AdminDashboard(routePath: '/backoffice', routeName: 'admin')]
@@ -21,6 +19,7 @@ class DashboardController extends AbstractDashboardController
 
     public function __construct(
         private ChartBuilderInterface $chartBuilder,
+        private DashboardCrudService $dashboardCrudService
     ) {}
 
     public function index(): Response
@@ -45,33 +44,6 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-
-        /** @var \App\Entity\User|null $user */
-        $user = $this->getUser();
-
-
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::subMenu('gestion de comptes', 'fas fa-list')->setSubItems([
-            MenuItem::linkToCrud('liste des comptes', 'fas fa-list', User::class)->setAction('index'),
-            MenuItem::linkToCrud('ajouter un compte', 'fas fa-plus', User::class)->setAction('new'),
-            MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId()),
-
-        ])->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('gérer mon compte', 'fas fa-list', User::class)->setAction('edit')->setEntityId($user->getId())->setPermission('ROLE_USER');
-        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true)) {
-            yield MenuItem::subMenu('gestion des animaux', 'fas fa-list')->setSubItems([
-                MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index'),
-                MenuItem::linkToCrud('ajouter un animal', 'fas fa-plus', Animal::class)->setAction('new'),
-            ]);
-            MenuItem::linkToCrud('liste des animaux', 'fas fa-list', Animal::class)->setAction('index')->setPermission('ROLE_USER');
-            yield MenuItem::subMenu('gestion des structures', 'fas fa-list')->setSubItems([
-                MenuItem::linkToCrud('liste des structures', 'fas fa-list', Structure::class)->setAction('index'),
-                MenuItem::linkToCrud('ajouter une structure', 'fas fa-plus', Structure::class)->setAction('new'),
-            ])->setPermission('ROLE_ADMIN');
-        }
-        if (isset($structureId)) {
-            yield MenuItem::linkToCrud('gérer ma structure', 'fas fa-list', Structure::class)->setAction('edit')->setEntityId($structureId)->setPermission('ROLE_USER');
-        }
-        yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
+        return $this->dashboardCrudService->getMenuItems();
     }
 }

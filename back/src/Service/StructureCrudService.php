@@ -32,7 +32,6 @@ class StructureCrudService
         if ($isAdmin) {
             $fields[] =  EasyPhpField::BooleanField('isActive', 'actif');
         }
-        dd($this);
 
         // $random = random_bytes(10);
         // $hashedPassword = $this->passwordHasher->hashPassword($selectedUser, $random);
