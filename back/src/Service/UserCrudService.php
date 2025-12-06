@@ -51,7 +51,6 @@ class UserCrudService
     {
         $user->setIsVerified(true);
 
-        // Hash password if it's not already hashed
         if (!$this->isPasswordHashed($user->getPassword())) {
             $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hashedPassword);

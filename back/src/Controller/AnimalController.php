@@ -95,6 +95,7 @@ final class AnimalController extends AbstractController
     {
 
         $data = $request->query->all();
+
         if (!isset($data["id"]) || empty($data["id"])) {
             return $this->json([
                 'message' => 'id is required',

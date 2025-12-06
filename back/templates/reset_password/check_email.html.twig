@@ -5,18 +5,26 @@ justify-center" style="background-image: url('{{
   asset("assets/images/login_background.jpg")
 }}')">
     <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full opacity-75 flex flex-col gap-4">
-        <p>
-            Si un compte correspond à votre adresse e-mail, un e-mail vient d'être
-            envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre
-            mot de passe. Ce lien expirera dans
-            {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')
-            }}.
-        </p>
-        <p>
-            Si vous ne recevez pas d'e-mail dans les prochaines minutes, veuillez vérifier votre dossier de spam ou
-            <a class="text-blue-600 hover:text-blue-500"
-            href="{{ path('app_forgot_password_request') }}">résssayer</a>.
-        </p> 
+        <h1 class="text-2xl font-bold mb-4 text-center">Réinitialisation du mot de passe</h1>
+        {% if errorMessage %}
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Erreur!</strong>
+            <span class="block sm:inline">{{ errorMessage }}</span>
+          </div>
+          {% else %}
+          <p>
+              Si un compte correspond à votre adresse e-mail, un e-mail vient d'être
+              envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre
+              mot de passe. Ce lien expirera dans
+              {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')
+              }}.
+          </p>
+          <p>
+              Si vous ne recevez pas d'e-mail dans les prochaines minutes, veuillez vérifier votre dossier de spam ou
+              <a class="text-blue-600 hover:text-blue-500"
+              href="{{ path('app_forgot_password_request') }}">résssayer</a>.
+          </p>
+        {% endif %}
         <div class="flex justify-center">
           <a
           type="submit"

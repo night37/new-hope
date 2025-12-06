@@ -4,41 +4,34 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Security\EmailVerifier;
-use App\Repository\UserRepository;
 use App\Service\RedirectService;
+use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
+
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class EmailService
 {
-    private $router;
-    private $requestStack;
-    private $tokenStorage;
-    private $emailVerifier;
-    private $redirectService;
+
+
 
 
     public function __construct(
 
-        UrlGeneratorInterface $router,
-        RequestStack $requestStack,
-        TokenStorageInterface $tokenStorage,
-        EmailVerifier $emailVerifier,
-        RedirectService $redirectService
+        private UrlGeneratorInterface $router,
+        private RequestStack $requestStack,
+        private TokenStorageInterface $tokenStorage,
+        private EmailVerifier $emailVerifier,
+        private RedirectService $redirectService,
 
-    ) {
-        $this->router = $router;
-        $this->requestStack = $requestStack;
-        $this->tokenStorage = $tokenStorage;
-        $this->emailVerifier = $emailVerifier;
-        $this->redirectService = $redirectService;
-    }
+
+    ) {}
 
     public function verifieEmail(User $user, string $baseUrl, $basePath): ?RedirectResponse
     {
@@ -129,9 +122,26 @@ class EmailService
     }
 
 
+    public function sendResetPasswordEmail(User $user, ResetPasswordToken $resetToken): TemplatedEmail
+    {
+        return (new TemplatedEmail())
+            ->from(new Address('test@test.com', 'l\'equipe de new hope'))
+            ->to((string) $user->getEmail())
+            ->subject('Your password reset request')
+            ->htmlTemplate('reset_password/email.html.twig')
+            ->context([
+                'resetToken' => $resetToken,
+            ]);
+    }
+
+
+
+
     public function displayMessage(string $type, string $message): void
     {
-        $session = $this->requestStack->getSession();
-        $session->getFlashBag()->add($type, $message);
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request && $request->hasSession()) {
+            $request->getSession()->addFlash($type, $message);
+        }
     }
 }
