@@ -29,7 +29,6 @@ class DashboardController extends AbstractDashboardController
         }
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
-        // ...set chart data and options somehow
 
         return $this->render('admin/dashboard.html.twig', [
             'chart' => $chart,
