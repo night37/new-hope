@@ -141,7 +141,7 @@ class EmailService
     {
         $request = $this->requestStack->getCurrentRequest();
         if ($request && $request->hasSession()) {
-            $request->getSession()->addFlash($type, $message);
+            $request->getSession()->getFlashBag()->add($type, $message);
         }
     }
 }

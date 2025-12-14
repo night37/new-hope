@@ -40,13 +40,12 @@ final class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $userData = $form->getData();
-
             $this->userService->register($userData);
+            return $this->redirectToRoute('app_login');
         }
-
-
 
         return $this->render('user/index.html.twig', [
             'form' => $form
