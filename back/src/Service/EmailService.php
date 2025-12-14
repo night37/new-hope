@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
-
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use App\Service\FlashMessageService;
 
 class EmailService
 {
@@ -29,6 +29,7 @@ class EmailService
         private TokenStorageInterface $tokenStorage,
         private EmailVerifier $emailVerifier,
         private RedirectService $redirectService,
+        private FlashMessageService $flashMessageService,
 
 
     ) {}
@@ -59,7 +60,7 @@ class EmailService
         ]);
 
         $request->getSession()->invalidate();
-        self::displayMessage('danger', 'Vous n\'avez pas encore confirmé votre adresse e-mail ! Veuillez cliquer sur le lien contenu dans l\'e-mail que nous vous avons envoyé.</br> Si vous ne l\'avez pas reçu ou si le lien a expiré, <a class="text-blue-600" href="' . $resendLink . '">cliquez ici</a> pour en recevoir un nouveau.');
+        $this->flashMessageService->displayMessage('danger', 'Vous n\'avez pas encore confirmé votre adresse e-mail ! Veuillez cliquer sur le lien contenu dans l\'e-mail que nous vous avons envoyé.</br> Si vous ne l\'avez pas reçu ou si le lien a expiré, <a class="text-blue-600" href="' . $resendLink . '">cliquez ici</a> pour en recevoir un nouveau.');
 
 
 
@@ -72,18 +73,18 @@ class EmailService
         $email = $request->query->get('email');
 
         if (!$email) {
-            self::displayMessage('danger', 'Aucune adresse email fournie.');
+            $this->flashMessageService->displayMessage('danger', 'Aucune adresse email fournie.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
 
         $user = $userRepository->findOneBy(['email' => $email]);
         if (!$user) {
-            self::displayMessage('danger', 'L\'adresse email n\'est pas associée à un compte.');
+            $this->flashMessageService->displayMessage('danger', 'L\'adresse email n\'est pas associée à un compte.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
 
         if ($user->isVerified()) {
-            self::displayMessage('info', 'Votre compte est déjà vérifié. Vous pouvez vous connecter.');
+            $this->flashMessageService->displayMessage('info', 'Votre compte est déjà vérifié. Vous pouvez vous connecter.');
             return new RedirectResponse($this->router->generate('app_login'));
         }
 
@@ -100,7 +101,7 @@ class EmailService
             $email,
             false
         );
-        self::displayMessage('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
+        $this->flashMessageService->displayMessage('success', 'Un nouvel email de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.');
         return new RedirectResponse($this->router->generate('app_login'));
     }
 
@@ -137,11 +138,11 @@ class EmailService
 
 
 
-    public function displayMessage(string $type, string $message): void
-    {
-        $request = $this->requestStack->getCurrentRequest();
-        if ($request && $request->hasSession()) {
-            $request->getSession()->getFlashBag()->add($type, $message);
-        }
-    }
+    // public function displayMessage(string $type, string $message): void
+    // {
+    //     $request = $this->requestStack->getCurrentRequest();
+    //     if ($request && $request->hasSession()) {
+    //         $request->getSession()->getFlashBag()->add($type, $message);
+    //     }
+    // }
 }

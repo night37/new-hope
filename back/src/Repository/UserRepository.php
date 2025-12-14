@@ -25,7 +25,6 @@ class UserRepository extends ServiceEntityRepository
     public function createUser(User $user)
     {
 
-
         $user->setRoles(Role::ROLE_USER);
         $user->setIsVerified(false);
         $user->setIsActive(false);
@@ -33,6 +32,15 @@ class UserRepository extends ServiceEntityRepository
         $user->setUpdatedAt(new \DateTimeImmutable());
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function activeUser(User $user): void
+    {
+        $user->setIsVerified(true);
+        $user->setIsActive(true);
+        $user->setUpdatedAt(new \DateTimeImmutable());
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
