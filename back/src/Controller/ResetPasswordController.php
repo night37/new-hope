@@ -7,9 +7,9 @@ use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Service\ResetPasswordService;
 use App\Service\EmailService;
+use App\Service\FlashMessageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +30,8 @@ class ResetPasswordController extends AbstractController
         private ResetPasswordHelperInterface $resetPasswordHelper,
         private EntityManagerInterface $entityManager,
         private ResetPasswordService $resetPasswordService,
-        private EmailService $emailService
+        private EmailService $emailService,
+        private FlashMessageService $flashMessageService
     ) {}
 
     #[Route('', name: 'app_forgot_password_request')]
@@ -40,9 +41,8 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $email */
-            $email = $form->get('email')->getData();
 
+            $email = $form->get('email')->getData();
 
             return $this->processSendingPasswordResetEmail(
                 $email,
@@ -84,7 +84,8 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', "Votre mot de passe a été réinitialisé avec succès.");
+
+            $this->flashMessageService->displayMessage('success', "Votre mot de passe a été réinitialisé avec succès.");
             return $this->redirectToRoute('app_login',);
         }
 
@@ -103,7 +104,7 @@ class ResetPasswordController extends AbstractController
         try {
             return $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('danger', "Une erreur est survenue lors de la modification de votre mot de passe. Veuillez réessayer.");
+            $this->flashMessageService->displayMessage('danger', "Une erreur est survenue lors de la modification de votre mot de passe. Veuillez réessayer.");
             return $this->redirectToRoute('app_login');
         }
     }
@@ -113,7 +114,8 @@ class ResetPasswordController extends AbstractController
         $plainPassword = $form->get('plainPassword')->getData();
         $this->resetPasswordService->resetPassword($user, $plainPassword, $token);
         $this->cleanSessionAfterReset();
-        $this->addFlash('success', "Votre mot de passe a été réinitialisé avec succès.");
+
+        $this->flashMessageService->displayMessage('success', "Votre mot de passe a été réinitialisé avec succès.");
         return $this->redirectToRoute('app_login');
     }
 

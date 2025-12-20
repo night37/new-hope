@@ -10,11 +10,11 @@ use App\Service\EmailService;
 use App\Service\LocationService;
 use App\Service\AutocompleteService;
 use App\Repository\StructureRepository;
-use function PHPUnit\Framework\isEmpty;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\FlashMessageService;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +25,8 @@ final class StructureController extends AbstractController
 
     public function __construct(
         private LocationService $locationService,
-        private EmailService $emailService
+        private EmailService $emailService,
+        private FlashMessageService $flashMessageService,
     ) {}
 
 
@@ -58,9 +59,9 @@ final class StructureController extends AbstractController
                 $entityManager->flush();
 
                 $this->emailService->sendEmailConfirmation($structure, false);
-                $this->emailService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
+                $this->flashMessageService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
             } catch (UniqueConstraintViolationException $e) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la création de la structure.');
+                $this->flashMessageService->displayMessage('error', 'Une erreur est survenue lors de la création de la structure.');
             }
             return $this->redirectToRoute('app_login');
         }
@@ -97,7 +98,7 @@ final class StructureController extends AbstractController
     public function  getAllStructures(StructureRepository $structureRepository)
     {
         $response = $structureRepository->getAllStructures();
-        if (isEmpty($response)) {
+        if ($response) {
             return $this->json([
                 'message' => 'display filters structures result',
                 'timestamp' => time(),
