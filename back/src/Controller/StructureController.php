@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Service\FlashMessageService;
-
+use App\Service\StructureService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,7 +27,8 @@ final class StructureController extends AbstractController
         private LocationService $locationService,
         private EmailService $emailService,
         private FlashMessageService $flashMessageService,
-        private StructureRepository $structureRepository
+        private StructureService $structureService,
+        private EntityManagerInterface $em,
     ) {}
 
 
@@ -46,24 +47,9 @@ final class StructureController extends AbstractController
         $form = $this->createForm(StructureType::class, $structure);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $structureData = $form->getData();
+            $this->structureService->createStructure($structureData);
 
-            $structure = $form->getData();
-            $structure->setCreatedAt(new \DateTimeImmutable());
-            $structure->setUpdatedAt(new \DateTimeImmutable());
-            $structure->setIsActive(false);
-            $structure->setIsVerified(false);
-            $structure->setPassword(password_hash($structure->getPassword(), PASSWORD_DEFAULT));
-
-            $this->locationService->getCoordinates($structure);
-            try {
-                $entityManager->persist($structure);
-                $entityManager->flush();
-
-                $this->emailService->sendEmailConfirmation($structure, false);
-                $this->flashMessageService->displayMessage('success', 'Votre compte a été crée avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.');
-            } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessageService->displayMessage('error', 'Une erreur est survenue lors de la création de la structure.');
-            }
             return $this->redirectToRoute('app_login');
         }
         return $this->render('structure/create_structure.html.twig', [
@@ -98,7 +84,7 @@ final class StructureController extends AbstractController
     #[Route('api/getAllStructures', name: "api_structure_get_all_structures", methods: ['GET'])]
     public function  getAllStructures(): Response
     {
-        $response = $this->structureRepository->getAllStructures();
+        $response = $this->structureService->getAllStructures();
 
         if (!$response) {
             return $this->json([
@@ -112,5 +98,13 @@ final class StructureController extends AbstractController
             'timestamp' => time(),
             'structure' => $response,
         ], 200, [], ['groups' => 'structure:read']);
+    }
+
+    #[Route('/verify/structure-email', name: 'app_verify_structure_email')]
+    public function verifyUserEmail(Request $request): Response
+    {
+        $this->structureService->activeStructure();
+
+        return $this->redirectToRoute('app_login');
     }
 }

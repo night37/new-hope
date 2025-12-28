@@ -1,0 +1,32 @@
+
+{% block body %}
+<h1>Vérification de l'email</h1>
+<p>
+  Bonjour {{ structure.name }}
+  {% if  structure.surname is defined %}
+    {{ structure.surname }}
+  {% endif %}
+,</p>
+<p>
+  Merci de vous être inscrit sur notre site. Avant de pouvoir vous connecter,
+  nous avons besoin de vérifier votre adresse email
+</p>
+<p>
+  Veuillez cliquer sur le lien ci-dessous pour confirmer votre adresse email
+{% if sendResetPassword %}
+  et définir un mot de passe.
+{% else %}
+  et vous connecter.
+{% endif %}
+  :
+</p>
+<p>
+  <strong>Ce lien est valide pendant une heure</strong>
+</p>
+{% if sendResetPassword %}
+  <a href="{{ url('app_reset_password', { token: resetToken.token }) }}"> définir un mot de passe </a>
+{% else %}
+  <a href="{{ signedUrl }}">vérifier mon email</a>
+{% endif %}
+
+{% endblock %}

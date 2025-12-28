@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Entity\Structure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,38 @@ class EmailVerifier
         $context['signedUrl'] = $signatureComponents->getSignedUrl();
         $context['expiresAt'] = $signatureComponents->getExpiresAt();
         $context['user'] = $user;
+        $context['sendResetPassword'] = $sendResetPassword;
+
+
+
+        if ($sendResetPassword) {
+            $context['resetToken'] = $this->resetPasswordHelper->generateResetToken($user);
+        }
+
+
+
+
+        $email->context($context);
+
+        $this->mailer->send($email);
+    }
+
+
+    public function sendStructureEmailConfirmation(string $verifyEmailRouteName, Structure $structure, TemplatedEmail $email, bool $sendResetPassword): void
+    {
+
+        $signatureComponents = $this->verifyEmailHelper->generateSignature(
+            $verifyEmailRouteName,
+            $structure->getId(),
+            $structure->getEmail(),
+            ['id' => $structure->getId()]
+
+        );
+
+        $context = $email->getContext();
+        $context['signedUrl'] = $signatureComponents->getSignedUrl();
+        $context['expiresAt'] = $signatureComponents->getExpiresAt();
+        $context['structure'] = $structure;
         $context['sendResetPassword'] = $sendResetPassword;
 
 

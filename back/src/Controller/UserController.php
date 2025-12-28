@@ -43,7 +43,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function verifyUserEmail(Request $request): Response
     {
         $this->userService->activateUser($request);
 

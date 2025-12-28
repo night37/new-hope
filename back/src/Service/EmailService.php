@@ -3,10 +3,12 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\Structure;
 use App\Security\EmailVerifier;
 use App\Service\RedirectService;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
+use App\Service\FlashMessageService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,7 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use App\Service\FlashMessageService;
 
 class EmailService
 {
@@ -117,6 +118,23 @@ class EmailService
                 ->htmlTemplate('registration/confirmation_email.html.twig')
                 ->context([
                     'user' => $user,
+                ]),
+            $sendResetPassword
+        );
+    }
+
+    public function sendStructureEmailConfirmation(Structure $structure, ?bool $sendResetPassword): void
+    {
+        $this->emailVerifier->sendStructureEmailConfirmation(
+            'app_verify_structure_email',
+            $structure,
+            (new TemplatedEmail())
+                ->from(new Address('mailer@example.com', 'AcmeMailBot'))
+                ->to($structure->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('registration/confirmation_structure_email.html.twig')
+                ->context([
+                    'structure' => $structure,
                 ]),
             $sendResetPassword
         );
