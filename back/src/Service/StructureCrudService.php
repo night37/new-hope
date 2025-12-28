@@ -14,18 +14,17 @@ class StructureCrudService
 
     public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
-    public function getFields(bool $isAdmin)
+    public function getFields(bool $isAdmin): array
     {
         $fields =  [
             EasyPhpField::TextField('name', 'Nom de la structure'),
             EasyPhpField::ChoiceField('structureType', 'structureType', 'type de structure'),
             EasyPhpField::TextField('street', 'Rue'),
-            EasyPhpField::IntegerField('zip_code', 'Code postal'),
+            EasyPhpField::IntegerField('zipCode', 'Code postal'),
             EasyPhpField::TextField('city', 'Ville'),
             EasyPhpField::TelephoneField('phone', 'Téléphone'),
             EasyPhpField::TextField('email', 'Email'),
             EasyPhpField::TextEditorField('description', 'Description'),
-            EasyPhpField::AssociationField('users', 'membres', true),
             EasyPhpField::AssociationField('animal', 'animaux', true)
         ];
 

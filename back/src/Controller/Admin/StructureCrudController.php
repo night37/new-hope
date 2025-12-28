@@ -8,7 +8,6 @@ use App\Service\TimestampService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
-use App\Service\EasyPhpFieldService as EasyPhpField;
 use App\Service\StructureCrudService;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -22,11 +21,11 @@ class StructureCrudController extends AbstractCrudController
 
 
     public function __construct(
-    private TimestampService $timestampService,
-    private LocationService $locationService,
-    private StructureCrudService $structureCrudService
-    )
-    {}
+        private TimestampService $timestampService,
+        private LocationService $locationService,
+        private StructureCrudService $structureCrudService,
+
+    ) {}
 
 
     public static function getEntityFqcn(): string
@@ -43,9 +42,9 @@ class StructureCrudController extends AbstractCrudController
         return $this->structureCrudService->getFields($isAdmin);
     }
 
-    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $em, $entityInstance): void
     {
-     
+
         if (method_exists($entityInstance, 'setCreatedAt')) {
 
             $this->timestampService->getCreatedAt($entityInstance);
@@ -53,25 +52,23 @@ class StructureCrudController extends AbstractCrudController
         if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
             $this->locationService->getCoordinates($entityInstance);
         }
-        
-        parent::persistEntity($entityManager, $entityInstance);
 
+        parent::persistEntity($em, $entityInstance);
     }
 
-    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function updateEntity(EntityManagerInterface $em, $entityInstance): void
     {
-     
-      
+
+
         if (method_exists($entityInstance, 'setUpdatedAt')) {
             $this->timestampService->getUpdatedAt($entityInstance);
-            
         }
 
         if (method_exists($entityInstance, 'setStreet') && method_exists($entityInstance, 'setZipCode') && method_exists($entityInstance, 'setCity')) {
             $this->locationService->getCoordinates($entityInstance);
         }
 
-        parent::updateEntity($entityManager, $entityInstance);
+        parent::updateEntity($em, $entityInstance);
     }
 
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -79,11 +76,10 @@ class StructureCrudController extends AbstractCrudController
         if (!$entityInstance instanceof Structure) {
             return;
         }
-      
+
         try {
             parent::deleteEntity($entityManager, $entityInstance);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('danger', 'Impossible de supprimer cette structure car des animaux lui sont associés.');
         }
     }
@@ -92,9 +88,4 @@ class StructureCrudController extends AbstractCrudController
         return $assets
             ->addCssFile(Asset::new('css/admin/fields/fields.css'));
     }
-
-
-    
-
-    
 }

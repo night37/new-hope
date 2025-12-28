@@ -1,7 +1,7 @@
 @import "./associationField.css";
 
-.field-boolean{
-  display: flex;
-  flex-direction: column;
-  background-color: blue;
+.field-boolean > .form-widget > .form-check{
+    display: flex;
+    flex-direction: column-reverse;
+
 }

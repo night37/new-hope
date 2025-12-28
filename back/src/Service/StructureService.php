@@ -16,9 +16,14 @@ class StructureService
     ) {}
 
 
-    public function getAllStructures(): array | string
+    public function getAllStructures(): array
     {
         return $this->structureRepository->getAllStructures();
+    }
+
+    public function getStructureById(int $id): ?Structure
+    {
+        return $this->structureRepository->getStructureById($id);
     }
 
     public function createStructure(Structure $structure): void

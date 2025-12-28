@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Controller\StructureController;
 use App\Repository\StructureRepository;
 use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -81,6 +82,28 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
                 summary: 'Liste des structures',
                 description: 'Liste des structures',
             )
+        ),
+        new Get(
+            name: 'structure_get_structure_by_id',
+            uriTemplate: '/backoffice/structure/{id}',
+            controller: 'App\Controller\StructureController::getStructureById',
+            description: 'Récupère une structure par son ID',
+            openapi: new Operation(
+                summary: 'Récupère une structure par son ID',
+                description: 'Récupère une structure par son ID',
+                parameters: [
+                    new Parameter(
+                        name: 'id',
+                        in: 'path',
+                        description: 'ID de la structure à récupérer',
+                        required: true,
+                        schema: [
+                            'type' => 'integer',
+                            'example' => 1
+                        ]
+                    )
+                ]
+            ),
         )
     ]
 )]
@@ -140,7 +163,7 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $street = null;
 
     #[ORM\Column(length: 15)]
-    private ?string $zip_code = null;
+    private ?string $zipCode = null;
 
     public function __construct()
     {
@@ -361,13 +384,18 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): static
+    public function setZipCode(string $zipCode): static
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

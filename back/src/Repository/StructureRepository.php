@@ -5,7 +5,6 @@ namespace App\Repository;
 use Exception;
 use App\Entity\Structure;
 use App\Service\LocationService;
-use phpDocumentor\Reflection\Location;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,10 +23,13 @@ class StructureRepository extends ServiceEntityRepository
         parent::__construct($registry, Structure::class);
     }
 
+    public function getStructureById(int $id): ?Structure
+    {
+        return $this->find($id);
+    }
 
 
-
-    public function getAllStructures(): array | string
+    public function getAllStructures(): array
     {
 
         return $this->createQueryBuilder('s')

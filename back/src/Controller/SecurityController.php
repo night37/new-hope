@@ -42,8 +42,8 @@ class SecurityController extends AbstractController
 
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
-
         if ($error) {
+
             $this->flashMessageService->displayMessage('danger', 'Identifiants invalides.');
         }
 

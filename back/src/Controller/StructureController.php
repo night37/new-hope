@@ -6,17 +6,11 @@ namespace App\Controller;
 
 use App\Entity\Structure;
 use App\Form\StructureType;
-use App\Service\EmailService;
-use App\Service\LocationService;
 use App\Service\AutocompleteService;
-use App\Repository\StructureRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Service\FlashMessageService;
 use App\Service\StructureService;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class StructureController extends AbstractController
@@ -24,11 +18,8 @@ final class StructureController extends AbstractController
 
 
     public function __construct(
-        private LocationService $locationService,
-        private EmailService $emailService,
-        private FlashMessageService $flashMessageService,
         private StructureService $structureService,
-        private EntityManagerInterface $em,
+        private AutocompleteService $autocompleteService
     ) {}
 
 
@@ -40,8 +31,14 @@ final class StructureController extends AbstractController
         ]);
     }
 
+    #[Route('api/structure/{id}', name: 'api_structure_get_structure_by_id', methods: ['GET'])]
+    public function getStructureById(int $id): ?Structure
+    {
+        return $this->structureService->getStructureById($id);
+    }
+
     #[Route('/demande-creation-structure', name: 'app_create_structure')]
-    public function createStructureRequest(Request $request, EntityManagerInterface $entityManager): Response
+    public function createStructureRequest(Request $request): Response
     {
         $structure = new Structure();
         $form = $this->createForm(StructureType::class, $structure);
@@ -58,7 +55,7 @@ final class StructureController extends AbstractController
     }
 
     #[Route('api/autocomplete', name: 'app_autocomplete')]
-    public function autocomplete(Request $request, AutocompleteService $autocompleteService): Response
+    public function autocomplete(Request $request): Response
     {
         $option = $request->query->get('option');
         $name = $request->query->get('name');
@@ -74,7 +71,7 @@ final class StructureController extends AbstractController
         }
 
 
-        $results = $autocompleteService->autocomplete($option, $name, $departement, $region);
+        $results = $this->autocompleteService->autocomplete($option, $name, $departement, $region);
         if (empty($results)) {
             return $this->json(['message' => 'Aucun résultat trouvé'], Response::HTTP_OK);
         }
@@ -101,7 +98,7 @@ final class StructureController extends AbstractController
     }
 
     #[Route('/verify/structure-email', name: 'app_verify_structure_email')]
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(): Response
     {
         $this->structureService->activeStructure();
 

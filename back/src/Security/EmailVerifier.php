@@ -52,7 +52,7 @@ class EmailVerifier
 
     public function sendStructureEmailConfirmation(string $verifyEmailRouteName, Structure $structure, TemplatedEmail $email, bool $sendResetPassword): void
     {
-
+        dd($structure);
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
             $structure->getId(),

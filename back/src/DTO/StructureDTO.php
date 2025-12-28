@@ -14,7 +14,7 @@ class StructureDTO
         #[Groups(['animal:read'])]
         public readonly string $city,
         #[Groups(['animal:read'])]
-        public readonly string $zip_code,
+        public readonly string $zipCode,
         #[Groups(['animal:read'])]
         public readonly string $phone,
         #[Groups(['animal:read'])]
