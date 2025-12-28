@@ -174,10 +174,7 @@ class Animal
 {
 
     private ?\DateTimeInterface $created_at = null;
-    public function __toString(): string
-    {
-        return $this->name ?? '';
-    }
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -208,7 +205,7 @@ class Animal
 
     #[Groups(['animal:read'])]
     #[ORM\Column]
-    private ?bool $out_department = null;
+    private ?bool $outDepartment = null;
 
     #[ORM\Column]
     #[Groups(['animal:read'])]
@@ -228,7 +225,7 @@ class Animal
 
     #[Groups(['animal:read'])]
     #[ORM\Column(enumType: AdoptionStatus::class)]
-    private ?AdoptionStatus $adoption_status = null;
+    private ?AdoptionStatus $adoptionStatus = null;
 
     #[Groups(['animal:read'])]
     #[ORM\Column(type: 'json')]
@@ -322,12 +319,12 @@ class Animal
 
     public function isOutDepartment(): ?bool
     {
-        return $this->out_department;
+        return $this->outDepartment;
     }
 
-    public function setOutDepartment(bool $out_department): self
+    public function setOutDepartment(bool $outDepartment): self
     {
-        $this->out_department = $out_department;
+        $this->outDepartment = $outDepartment;
 
         return $this;
     }
@@ -398,17 +395,17 @@ class Animal
 
     public function getAdoptionStatus(): ?AdoptionStatus
     {
-        return $this->adoption_status;
+        return $this->adoptionStatus;
     }
 
-    public function setAdoptionStatus(?AdoptionStatus $adoption_status): self
+    public function setAdoptionStatus(?AdoptionStatus $adoptionStatus): self
     {
-        if (is_string($adoption_status)) {
-            $adoption_status = AdoptionStatus::from($adoption_status); // Convertir chaîne -> Enum (throw si invalide)
+        if (is_string($adoptionStatus)) {
+            $adoptionStatus = AdoptionStatus::from($adoptionStatus); // Convertir chaîne -> Enum (throw si invalide)
         }
 
         // Assigner l'instance (ou null) à la propriété
-        $this->adoption_status = $adoption_status;
+        $this->adoptionStatus = $adoptionStatus;
 
         return $this;
     }
@@ -548,5 +545,10 @@ class Animal
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
     }
 }

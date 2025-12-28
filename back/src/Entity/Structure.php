@@ -157,7 +157,7 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return ['ROLE_STRUCTURE'];
+        return ['ROLE_USER', 'ROLE_STRUCTURE'];
     }
 
 

@@ -27,6 +27,7 @@ final class StructureController extends AbstractController
         private LocationService $locationService,
         private EmailService $emailService,
         private FlashMessageService $flashMessageService,
+        private StructureRepository $structureRepository
     ) {}
 
 
@@ -95,15 +96,21 @@ final class StructureController extends AbstractController
     }
 
     #[Route('api/getAllStructures', name: "api_structure_get_all_structures", methods: ['GET'])]
-    public function  getAllStructures(StructureRepository $structureRepository)
+    public function  getAllStructures(): Response
     {
-        $response = $structureRepository->getAllStructures();
-        if ($response) {
+        $response = $this->structureRepository->getAllStructures();
+
+        if (!$response) {
             return $this->json([
-                'message' => 'display filters structures result',
+                'message' => 'Aucune structure trouvée',
                 'timestamp' => time(),
-                'structure' => $response,
+                'structure' => [],
             ], 200, [], ['groups' => 'structure:read']);
         }
+        return $this->json([
+            'message' => 'display filters structures result',
+            'timestamp' => time(),
+            'structure' => $response,
+        ], 200, [], ['groups' => 'structure:read']);
     }
 }

@@ -29,7 +29,7 @@ class AnimalCrudService
             EasyPhpField::ChoiceField('gender', 'gender', 'Sexe'),
             EasyPhpField::ChoiceField('affinity', 'affinity', 'Affinité',  true),
             EasyPhpField::ChoiceField('adoptionStatus', 'adoptionStatus', 'Statut d\'adoption', false, AdoptionStatus::Available),
-            EasyPhpField::BooleanField('out_department', 'Adoptable en dehors du département'),
+            EasyPhpField::BooleanField('outDepartment', 'Adoptable en dehors du département'),
             EasyPhpField::BooleanField('highlight', 'Mettre en avant'),
             EasyPhpField::BooleanField('isVisible', 'Publier'),
             EasyPhpField::BooleanField('isActive', 'Actif'),
