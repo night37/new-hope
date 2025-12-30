@@ -23,7 +23,8 @@ export default function StructureCard({ structure }: { structure: Structure }) {
             <p className="font-handlee">{structure.city}</p>
             <a
                 href={`mailto:${structure.email}`}
-                className="contact-link rounded-3xl border-custom-secondary bg-custom-secondary px-[20px] font-caveat text-lg hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
+                className="contact-link rounded-3xl border-custom-secondary bg-custom-secondary px-[20px] font-caveat 
+                text-lg hover:bg-custom-primary focus:bg-custom-primary active:bg-custom-secondary"
             >
                 {' '}
                 contacter l&apos;association{' '}

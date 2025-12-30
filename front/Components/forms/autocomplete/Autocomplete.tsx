@@ -1,4 +1,4 @@
-import {useMemo, useId } from 'react';
+import {useMemo, useId, useState, useEffect } from 'react';
 import AsyncSelect from 'react-select/async';
 import { locationQuery } from '@/app/api/query';
 import {
@@ -8,7 +8,15 @@ import {
 import { OptionType } from '@/types/autocompleteOption.type';
 import './style.scss';
 
-export  function Autocomplete({ option, onChange, formData }: autocompleteProps) {
+export function Autocomplete({ option, onChange, formData }: autocompleteProps) {
+    
+        const [menuPortalTarget, setMenuPortalTarget] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        setMenuPortalTarget(document.body);
+    }, []);
+
+
     const id: string = useId();
     const loadOptions = async (inputValue: string|undefined) => {
         const response = await locationQuery(
@@ -59,7 +67,7 @@ export  function Autocomplete({ option, onChange, formData }: autocompleteProps)
                 noOptionsMessage={() => 'Aucun résultat'}
                 className="z-1 select flex w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm xl:w-96"
                 cacheOptions={false}
-                menuPortalTarget={document.body}
+                menuPortalTarget={menuPortalTarget}
                 loadOptions={loadOptions}
                 defaultOptions
                 onChange={(selectedOption) => {
@@ -71,3 +79,4 @@ export  function Autocomplete({ option, onChange, formData }: autocompleteProps)
         </div>
     );
 }
+
