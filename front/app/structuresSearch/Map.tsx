@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import { StructureListProps } from '@/types/structureListProps.type';
 import { useStructureStore } from '@/store/structureStore';
+import L from 'leaflet';
 
 import MapUpdater from './MapUpdater';
 import 'leaflet/dist/leaflet.css';
@@ -15,7 +16,7 @@ export default function Map({ structures }: StructureListProps) {
 
     const [mapCenter, setMapCenter] = useState<[number, number]>([46.616669, 1.85]);
     const [zoom, setZoom] = useState<number>(6);
-
+    console.log(structures);
     useEffect(() => {
         let findCoordinate: [number, number] | null = null;
         let zoom: number = 12;
@@ -72,10 +73,20 @@ export default function Map({ structures }: StructureListProps) {
                             <Marker
                                 key={index}
                                 position={[structure.latitude, structure.longitude]}
+                                icon={L.icon({
+                                        iconUrl: '/img/logo.svg',
+                                        iconSize: [25, 41],
+                                        iconAnchor: [12, 41],
+                                        popupAnchor: [1, -34],
+                                        shadowUrl: '/img/logo.svg',
+                                        shadowSize: [41, 41]
+                                    })}
                             >
-                                {/* <Popup>
-                        {structure.name} <br /> {structure.address}
-                      </Popup> */}
+                                <Popup>
+                                    {structure.name} <br />
+                                    {structure.street}<br />
+                                    {structure.city}
+                                </Popup>
                             </Marker>
                         )
                 )}

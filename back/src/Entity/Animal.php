@@ -173,11 +173,9 @@ use ApiPlatform\OpenApi\Model\Operation;
 class Animal
 {
 
-    private ?\DateTimeInterface $created_at = null;
-
     public function __construct()
     {
-        $this->created_at = new \DateTime();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
 
