@@ -33,6 +33,7 @@ class AutocompleteService
             $query .= "&codeDepartement=$departement";
             // $query .= "&code=$departement";
         }
+
         $response = $this->client->request('GET', $query);
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Erreur lors de la requête d\'autocomplétion');

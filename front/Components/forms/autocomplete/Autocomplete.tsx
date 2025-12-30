@@ -1,51 +1,26 @@
-import React, { useCallback, useMemo, useId } from 'react';
+import {useMemo, useId } from 'react';
 import AsyncSelect from 'react-select/async';
 import { locationQuery } from '@/app/api/query';
 import {
     StructureAutocomplete as autocompleteProps,
     LocationValue,
 } from '@/types/structureAutocomplete.type';
-import { AutocompleteApiResponse } from '@/types/autocompleteApiResponse.type';
-import { AutocompleteNotFoundResponse } from '@/types/autocompleteNotFoundResponse.type';
 import { OptionType } from '@/types/autocompleteOption.type';
 import './style.scss';
 
-export function Autocomplete({ option, onChange, formData }: autocompleteProps) {
+export  function Autocomplete({ option, onChange, formData }: autocompleteProps) {
     const id: string = useId();
-    const loadOptions = useCallback(
-        (inputValue: string): Promise<OptionType[]> => {
-            return new Promise<OptionType[]>((resolve) => {
-                let regionCode = undefined;
-                let departementCode = undefined;
-                if (formData) {
-                    regionCode = formData['autocomplete-regions']?.code;
-                    departementCode = formData['autocomplete-departements']?.code;
-                }
-                setTimeout(async () => {
-                    const response: AutocompleteApiResponse[] | AutocompleteNotFoundResponse =
-                        await locationQuery(option, inputValue, departementCode, regionCode);
-                    if (Array.isArray(response) && response.length > 0) {
-                        const data: OptionType[] = response.map((el: AutocompleteApiResponse) => {
-                            return {
-                                value: {
-                                    code: el.code,
-                                    name: el.name,
-                                    codeDepartement: el.codeDepartement,
-                                    codeRegion: el.codeRegion,
-                                    centre: el.centre,
-                                },
-                                label: el.name,
-                            };
-                        });
-                        resolve(data);
-                    } else {
-                        resolve([]);
-                    }
-                }, 1000);
-            });
-        },
-        [option, formData]
-    );
+    const loadOptions = async (inputValue: string|undefined) => {
+        const response = await locationQuery(
+            option,
+            inputValue,
+            formData?.['autocomplete-departements']?.code,
+            formData?.['autocomplete-regions']?.code
+        );
+        return Array.isArray(response)
+            ? response.map(el => ({ value: el, label: el.name }))
+            : [];
+    };
 
     const selectKey = useMemo(() => {
         const regionCode = formData?.['autocomplete-regions']?.code || '';
@@ -84,6 +59,7 @@ export function Autocomplete({ option, onChange, formData }: autocompleteProps) 
                 noOptionsMessage={() => 'Aucun résultat'}
                 className="z-1 select flex w-60 max-w-full cursor-pointer justify-between !rounded-xl border-solid border-custom-primary bg-white bg-[url('/assets/icons/patte.svg')] bg-[length:16px] bg-[position:98%_50%] bg-no-repeat p-2 font-caveat text-large shadow-sm xl:w-96"
                 cacheOptions={false}
+                menuPortalTarget={document.body}
                 loadOptions={loadOptions}
                 defaultOptions
                 onChange={(selectedOption) => {

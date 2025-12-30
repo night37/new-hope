@@ -1,0 +1,24 @@
+meta {
+  name: get region
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://new-hope.ddev.site/api/backoffice/structures/autocomplete?option=regions
+  body: none
+  auth: bearer
+}
+
+params:query {
+  option: regions
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjcxMTQ0NzcsImV4cCI6MTc2NzExODA3Nywicm9sZXMiOlsiUk9MRV9GUk9OVEVORCJdLCJ1c2VybmFtZSI6ImZyb250ZW5kQG5ld2hvcGUuZnIifQ.Ntbb4dajyqXALu4RsPkDYapSOj4ajg3y4wB85jB0qS8m8pSv55V3-_eQX9Szd2n6zaS44HyroZeCyWlSPat3iSLpZ2rpl1SBKucLgPc4f_HNAYaPhQyZMS5hOJwRfsH6icXHFiF3EVxhEJbXBAoamw6Hc5IA4LjrIX5wamacZy6q0rxOeYDKu4Rq19bCFXk6lk6REOs1MI4MMH4-Hcyvy55BzWIg-7jg6CRsBFSRfy76w8CwKffLGStWmg8GjDE5ZJ4wrUOMcQxmQPMFk3a2VCegELTn9Bivavo7RMmhIZz1DUI0e-YaAVurhYIYc42LLAZWVlKYOipxCDWW9uuo3A
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

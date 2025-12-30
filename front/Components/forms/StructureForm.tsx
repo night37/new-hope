@@ -25,6 +25,7 @@ export default function AssociationForm() {
         e.preventDefault();
         setSearchParameters(formData);
         const structuresList = await getStructures();
+        console.log(structuresList);
         setStructuresList(structuresList.structure);
         smoothScroll(600, 80);
         if (currentPath != '/structuresSearch') {
@@ -99,9 +100,7 @@ export default function AssociationForm() {
             const departementResult = await getRegionByCode(value.codeRegion);
             setFormData((prev) => ({
                 ...prev,
-                'autocomplete-communes': value
-                    ? value
-                    : { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
+                'autocomplete-communes': value ?? { code: '', name: '', centre: { latitude: 0, longitude: 0 } },
                 'autocomplete-departements': {
                     code: value.codeDepartement ?? '',
                     name: regionResult[0].nom ?? '',

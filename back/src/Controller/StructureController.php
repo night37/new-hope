@@ -62,7 +62,6 @@ final class StructureController extends AbstractController
         $departement = $request->query->get('departement');
         $region = $request->query->get('region');
 
-
         if (!$option) {
             return $this->json(['message' => 'Le paramètre "option" est requis'], Response::HTTP_BAD_REQUEST);
         }

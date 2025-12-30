@@ -17,7 +17,9 @@ export async function query(option: string, name?: string, departement?: string,
         if (region) {
             query += `&region=${region}`;
         }
+
         const response = await fetch(query);
+
         return await response.json();
     } catch (err) {
         console.error('Erreur lors de la recuperation de la réponse', err);

@@ -60,6 +60,7 @@ export async function locationQuery(
             query += `&region=${region}`;
         }
         const response = await apiQuery(query);
+       
         return await response;
     } catch (err) {
         console.error('Erreur lors de la recuperation de la réponse', err);

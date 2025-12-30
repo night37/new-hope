@@ -16,7 +16,6 @@ export default function Map({ structures }: StructureListProps) {
 
     const [mapCenter, setMapCenter] = useState<[number, number]>([46.616669, 1.85]);
     const [zoom, setZoom] = useState<number>(6);
-    console.log(structures);
     useEffect(() => {
         let findCoordinate: [number, number] | null = null;
         let zoom: number = 12;

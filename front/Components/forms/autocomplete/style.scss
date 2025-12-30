@@ -22,4 +22,36 @@
         box-shadow: none;
         max-width: 90%;
     }
+    
+    div[class$='menu'] {
+        position: absolute;
+        z-index: 9999999999 !important;
+        background-color: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 4px;
+    }
+    
+    div[class$='menuList'] {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    div[class$='option'] {
+        padding: 8px 12px;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+    
+    div[class*='option--is-focused'] {
+        background-color: #e6f7ff;
+    }
+    
+    div[class*='option--is-selected'] {
+        background-color: #1890ff;
+        color: white;
+    }
 }
